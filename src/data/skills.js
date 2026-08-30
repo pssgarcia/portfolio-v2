@@ -1,0 +1,15 @@
+export const skills = [
+  { name: 'PHP', icon: '🐘' },
+  { name: 'Laravel', icon: '🔺' },
+  { name: 'MySQL', icon: '🗄️' },
+  { name: 'Java', icon: '☕' },
+  { name: 'Git', icon: '📦' },
+  { name: 'Vue.js', icon: '💚' },
+  { name: 'React', icon: '⚛️' },
+  { name: 'JavaScript', icon: '⚡' },
+  { name: 'Tailwind CSS', icon: '🌊' },
+  { name: 'AWS', icon: '☁️' },
+  { name: 'Docker', icon: '🐳' },
+  { name: 'Linux', icon: '🐧' },
+  { name: 'REST APIs', icon: '🔗' },
+]

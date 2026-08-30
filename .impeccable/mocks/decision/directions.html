@@ -1,0 +1,1187 @@
+<title>Portfolio Redesign Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Spline+Sans+Mono:wght@400;500&display=swap" />
+
+<style>
+  /* ============================================================
+     CHROME  —  neutral shell above the comps
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --chrome-bg: #211f1c;
+    --chrome-line: #3d3a35;
+    --chrome-fg: #e9e4d9;
+    --chrome-dim: #9c968a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--chrome-bg);
+    color: var(--chrome-fg);
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+    flex-wrap: wrap;
+    padding: 0.7rem 1.15rem;
+    background: var(--chrome-bg);
+    border-bottom: 1px solid var(--chrome-line);
+  }
+  .bar__title {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--chrome-fg);
+    margin-right: auto;
+  }
+  .bar__title b { color: #c39a52; font-weight: 500; }
+  .bar__note {
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--chrome-dim);
+  }
+
+  .seg {
+    display: inline-flex;
+    border: 1px solid var(--chrome-line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .seg button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--chrome-dim);
+    font: inherit;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .seg button + button { border-left: 1px solid var(--chrome-line); }
+  .seg button:hover { color: var(--chrome-fg); }
+  .seg button[aria-pressed="true"] { background: var(--chrome-fg); color: var(--chrome-bg); }
+  .seg button:focus-visible { outline: 2px solid #c39a52; outline-offset: -2px; }
+
+  #stage > .comp { display: none; }
+  #stage[data-dir="a"] #comp-a { display: block; }
+  #stage[data-dir="b"] #comp-b { display: block; }
+  #stage[data-dir="c"] #comp-c { display: block; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .comp { animation: fade 0.28s ease both; }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+  }
+
+  .comp a { color: inherit; }
+  .comp a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .comp img { max-width: 100%; }
+
+  /* ============================================================
+     EDITORIAL STRUCTURE  —  shared by Direction A (light) and
+     Direction C (warm-dark).  Every rule reads from tokens; each
+     comp id supplies its own palette below.
+       Bricolage Grotesque | Spectral | Spline Sans Mono
+       Left-anchored measure, running section index, hairlines,
+       no cards, dated experience ledger, 2-up project ledger.
+       Accent appears only on numerals, the hero kicker, and links.
+     ============================================================ */
+  .ed {
+    --t-body: 1.0625rem;
+    --t-lead: 1.25rem;
+    --t-role: 1.55rem;
+    --t-h2:   2.05rem;
+    --t-h1:   clamp(3.25rem, 2rem + 5vw, 4.75rem);
+
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Spectral", Georgia, "Times New Roman", serif;
+    font-size: var(--t-body);
+    line-height: 1.62;
+  }
+  .ed *::selection { background: var(--accent); color: var(--paper); }
+
+  .ed .wrap {
+    max-width: 1060px;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 5vw, 3.5rem);
+  }
+  .ed .section {
+    padding: 3.75rem 0 3.25rem;
+    border-top: 1px solid var(--rule);
+  }
+  .ed .section:first-of-type { border-top: 0; }
+  .ed .section--star { border-top-color: var(--rule-bold); padding-top: 4.25rem; }
+
+  .ed .tag {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 1.4rem;
+  }
+  .ed .tag .idx {
+    font-size: 0.98rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+  .ed .subhead {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: -0.75rem 0 2.25rem;
+  }
+
+  .ed h2 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+    font-size: var(--t-h2);
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+    margin: 0 0 1.6rem;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .ed .prose { max-width: 42rem; }
+  .ed p { margin: 0 0 1.05rem; max-width: 60ch; }
+  .ed .lead {
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    max-width: 44ch;
+  }
+  .ed .muted { color: var(--ink-soft); }
+
+  /* hero */
+  .ed .hero { padding: 6.5rem 0 3.75rem; display: block; border: 0; }
+  .ed .hero .wrap { display: block; }
+  .ed .hero .kicker {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 1.6rem;
+  }
+  .ed .hero h1 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 800;
+    font-size: var(--t-h1);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.6rem;
+  }
+  .ed .hero .stmt {
+    font-size: clamp(1.3rem, 1.05rem + 0.9vw, 1.65rem);
+    line-height: 1.42;
+    max-width: 38ch;
+    text-wrap: pretty;
+    margin: 0 0 2.6rem;
+    color: var(--ink);
+  }
+  .ed .hero .stmt em { font-style: italic; color: var(--accent); }
+  .ed .metaline {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--ink-mute);
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem;
+    border-top: 1px solid var(--rule); padding-top: 1.2rem;
+    max-width: 46rem;
+  }
+
+  /* stack */
+  .ed .skill { display: grid; grid-template-columns: 8rem 1fr; gap: 1.1rem; padding: 0.85rem 0; align-items: baseline; }
+  .ed .skill + .skill { border-top: 1px solid var(--rule); }
+  .ed .skill dt {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.7rem; letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .ed .skill dd { margin: 0; font-size: 1.05rem; }
+
+  /* experience — dated ledger */
+  .ed .job {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0 2rem;
+    padding: 1.9rem 0;
+  }
+  .ed .job + .job { border-top: 1px solid var(--rule); }
+  .ed .job .when {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-mute); margin: 0; padding-top: 0.55rem; line-height: 1.65;
+  }
+  .ed .job h3 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700; font-size: var(--t-role); margin: 0; letter-spacing: -0.015em; line-height: 1.15;
+  }
+  .ed .job .org {
+    color: var(--ink-soft); font-size: 0.98rem; margin: 0.25rem 0 0;
+  }
+  .ed .job ul { margin: 1rem 0 0; padding: 0; list-style: none; max-width: 62ch; }
+  .ed .job li {
+    position: relative; padding-left: 1.4rem; margin: 0.4rem 0;
+    font-size: 1rem; color: var(--ink-soft);
+  }
+  .ed .job li::before {
+    content: ""; position: absolute; left: 0; top: 0.66em;
+    width: 0.55rem; height: 1px; background: var(--accent);
+  }
+
+  /* projects — two-column numbered ledger */
+  .ed .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 3.25rem; }
+  .ed .proj {
+    display: grid; grid-template-columns: 2.25rem 1fr; gap: 0 1.1rem;
+    padding: 1.5rem 0.4rem;
+    border-top: 1px solid var(--rule);
+  }
+  .ed .proj .n {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.78rem; color: var(--accent); padding-top: 0.3rem;
+  }
+  .ed .proj h3 {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700; font-size: 1.3rem; margin: 0 0 0.35rem; letter-spacing: -0.015em;
+  }
+  .ed .proj p { font-size: 0.95rem; color: var(--ink-soft); margin: 0 0 0.55rem; max-width: 40ch; }
+  .ed .proj .stack {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-mute);
+    display: block; margin-bottom: 0.6rem;
+  }
+  .ed .proj .links {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.66rem; letter-spacing: 0.09em; text-transform: uppercase;
+    display: flex; gap: 1.2rem;
+  }
+  .ed .proj .links a { color: var(--accent); text-decoration: none; }
+  .ed .proj .links a:hover { text-decoration: underline; }
+  .ed .proj .links a.live { color: var(--ink); }
+
+  /* contact */
+  .ed .contact a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .ed .contact a:hover { border-bottom-color: var(--accent); }
+  .ed .pull {
+    font-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500; font-size: clamp(1.5rem, 1rem + 1.8vw, 2.15rem); line-height: 1.24;
+    letter-spacing: -0.02em; max-width: 18ch; margin: 0; color: var(--ink);
+  }
+  .ed .pull b { color: var(--accent); font-weight: 700; }
+
+  /* spec strip */
+  .ed .spec {
+    background: var(--paper-2);
+    border-top: 1px solid var(--rule-bold);
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-mute);
+  }
+  .ed .spec .wrap { padding-top: 2.25rem; padding-bottom: 2.75rem; }
+  .ed .spec .lbl { color: var(--ink-soft); margin: 0 0 0.9rem; }
+  .ed .spec .sw { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0.3rem 1.4rem 0.3rem 0; }
+  .ed .spec .chip { width: 0.9rem; height: 0.9rem; border: 1px solid rgba(128,128,128,0.4); display: inline-block; }
+
+  /* ---- Direction A palette: light warm stone ---- */
+  #comp-a {
+    --paper:      #efece4;
+    --paper-2:    #e8e3d8;
+    --ink:        #181613;
+    --ink-soft:   #4e4a42;
+    --ink-mute:   #696456;
+    --rule:       #d7d3c7;
+    --rule-bold:  #b7b2a3;
+    --accent:     #1d4664;
+  }
+
+  /* ---- Direction C palette: warm-dark, one brass accent ---- */
+  #comp-c {
+    --paper:      #1b1815;
+    --paper-2:    #221e19;
+    --ink:        #e7e0d2;
+    --ink-soft:   #b4ab98;
+    --ink-mute:   #8a8271;
+    --rule:       #332f28;
+    --rule-bold:  #464036;
+    --accent:     #c99b57;
+  }
+
+  /* ============================================================
+     DIRECTION B  —  DARK / DE-GENERIFIED
+     warm brown-black stock, bone text, flat antique-brass accent,
+     one muted verdigris signal.  Instrument Serif | Archivo | mono.
+     Dense, art-directed; Experience is the centrepiece.
+     ============================================================ */
+  #comp-b {
+    --stock: #1a1613;
+    --stock-2: #221c17;
+    --bone: #e7e0d2;
+    --bone-soft: #a99f8b;
+    --rule: #3a332a;
+    --brass: #c39a52;
+    --verdigris: #7aa79c;
+
+    background: var(--stock);
+    color: var(--bone);
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.03rem;
+    line-height: 1.6;
+  }
+  #comp-b .wrap { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+  #comp-b .sec {
+    display: grid;
+    grid-template-columns: 3.75rem 1fr;
+    gap: 0 1.75rem;
+    padding: 3rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  #comp-b .sec > .n {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.8rem; color: var(--brass); letter-spacing: 0.1em;
+    padding-top: 0.4rem;
+    position: sticky;
+    top: 4.75rem;
+    align-self: start;
+  }
+  #comp-b h2 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.5rem);
+    line-height: 1.05;
+    margin: 0 0 1.3rem;
+    text-wrap: balance;
+  }
+  #comp-b p { margin: 0 0 1rem; max-width: 62ch; }
+  #comp-b .lede { color: var(--bone-soft); }
+
+  #comp-b .hero { display: block; border: 0; padding: 5.5rem 0 3.25rem; }
+  #comp-b .hero .kicker {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--brass); margin: 0 0 1.5rem;
+  }
+  #comp-b .hero h1 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(3.4rem, 1.6rem + 8vw, 6.25rem);
+    line-height: 0.94;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.4rem;
+  }
+  #comp-b .hero .stmt {
+    font-size: clamp(1.2rem, 1rem + 0.7vw, 1.45rem);
+    line-height: 1.45;
+    color: var(--bone);
+    max-width: 34ch;
+    text-wrap: balance;
+    margin: 0 0 2.5rem;
+  }
+  #comp-b .hero .stmt em { font-family: "Instrument Serif", Georgia, serif; font-style: italic; color: var(--brass); }
+  #comp-b .metaline {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--bone-soft);
+    display: flex; flex-wrap: wrap; gap: 0.55rem 1.1rem;
+    border-top: 1px solid var(--rule); padding-top: 1.1rem;
+  }
+
+  #comp-b .skill { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem; padding: 0.7rem 0; }
+  #comp-b .skill + .skill { border-top: 1px solid var(--rule); }
+  #comp-b .skill dt {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass);
+    padding-top: 0.15rem;
+  }
+  #comp-b .skill dd { margin: 0; color: var(--bone); }
+
+  #comp-b .xp { border-top: 2px solid var(--rule); padding: 2.2rem 0; }
+  #comp-b .xp:first-of-type { border-top: 0; padding-top: 0.5rem; }
+  #comp-b .xp .when {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass);
+    margin: 0 0 0.6rem;
+  }
+  #comp-b .xp h3 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.05rem);
+    line-height: 1.1;
+    margin: 0;
+  }
+  #comp-b .xp h3 .co { color: var(--bone-soft); }
+  #comp-b .xp .org { color: var(--bone-soft); margin: 0.3rem 0 0; font-size: 0.97rem; }
+  #comp-b .xp ul { margin: 1rem 0 0; padding: 0; list-style: none; }
+  #comp-b .xp li {
+    position: relative; padding-left: 1.5rem; margin: 0.5rem 0;
+    color: var(--bone-soft); max-width: 64ch; font-size: 1rem;
+  }
+  #comp-b .xp li::before {
+    content: "\2014"; position: absolute; left: 0; top: 0; color: var(--brass);
+  }
+
+  #comp-b .case {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 0 1.6rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  #comp-b .case:last-child { border-bottom: 1px solid var(--rule); }
+  #comp-b .case .idx {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 2.6rem; line-height: 1; color: var(--brass);
+  }
+  #comp-b .case h3 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400; font-size: 1.7rem; line-height: 1.1; margin: 0 0 0.4rem;
+  }
+  #comp-b .case p { color: var(--bone-soft); font-size: 0.96rem; margin: 0 0 0.6rem; max-width: 56ch; }
+  #comp-b .case .stack {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bone-soft);
+  }
+  #comp-b .case .foot {
+    margin-top: 0.7rem;
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; gap: 1.1rem; flex-wrap: wrap;
+  }
+  #comp-b .case .foot a { color: var(--bone); text-decoration: none; }
+  #comp-b .case .foot a:hover { color: var(--brass); }
+  #comp-b .case .foot .live { color: var(--verdigris); }
+
+  #comp-b .contact a { color: var(--brass); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  #comp-b .contact a:hover { border-bottom-color: var(--brass); }
+  #comp-b .pull {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-weight: 400; font-size: clamp(1.7rem, 1.1rem + 2.2vw, 2.6rem); line-height: 1.18;
+    max-width: 22ch; margin: 0; color: var(--bone);
+  }
+  #comp-b .pull em { font-style: italic; color: var(--brass); }
+
+  #comp-b .spec {
+    background: var(--stock-2);
+    border-top: 1px solid var(--rule);
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--bone-soft);
+  }
+  #comp-b .spec .wrap { padding-top: 2rem; padding-bottom: 2.5rem; }
+  #comp-b .spec .sw { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0.3rem 1.4rem 0.3rem 0; }
+  #comp-b .spec .chip { width: 0.9rem; height: 0.9rem; border: 1px solid rgba(255,255,255,0.18); display: inline-block; }
+
+  #comp-b .seclabel {
+    font-family: "Spline Sans Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--bone-soft);
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 900px) {
+    .ed .projects { grid-template-columns: 1fr; gap: 0; }
+  }
+  @media (max-width: 720px) {
+    .ed .skill,
+    .ed .job,
+    #comp-b .sec,
+    #comp-b .skill,
+    #comp-b .case {
+      grid-template-columns: 1fr;
+      gap: 0.4rem 0;
+    }
+    .ed .section { padding: 2.75rem 0 2.25rem; }
+    .ed .section--star { padding-top: 3rem; }
+    .ed .prose { max-width: none; }
+    .ed .subhead { margin: -0.4rem 0 1.75rem; }
+    .ed .job .when { padding-top: 0; margin-bottom: 0.5rem; }
+    .ed .proj { grid-template-columns: 1.8rem 1fr; }
+    #comp-b .sec > .n { position: static; padding-top: 0; margin-bottom: 0.4rem; }
+    #comp-b .xp h3 .co { display: block; }
+    .ed .wrap, #comp-b .wrap { padding: 0 1.25rem; }
+  }
+</style>
+
+<div class="bar">
+  <span class="bar__title">Pedro Soares &mdash; Portfolio Redesign &middot; <b>three directions</b></span>
+  <div class="seg" role="group" aria-label="Choose a direction">
+    <button type="button" data-dir="a" aria-pressed="true">A &middot; Light / Editorial</button>
+    <button type="button" data-dir="c" aria-pressed="false">C &middot; Editorial / Dark</button>
+    <button type="button" data-dir="b" aria-pressed="false">B &middot; Dark / De-generified</button>
+  </div>
+  <span class="bar__note">Design comp &mdash; not the live site</span>
+</div>
+
+<div id="stage" data-dir="a">
+
+  <!-- ================= DIRECTION A ================= -->
+  <article class="comp ed" id="comp-a">
+    <header class="hero">
+      <div class="wrap">
+        <p class="kicker">Full-stack developer &middot; backend-focused</p>
+        <h1>Pedro&nbsp;Soares</h1>
+        <p class="stmt">I build web applications end to end &mdash; APIs, data flow, and systems <em>built to scale</em>.</p>
+        <p class="metaline">
+          <span>Belo Horizonte, Brazil</span>
+          <span>B.Sc. Software Engineering &middot; PUC Minas</span>
+          <span>Now: Junior Developer II, Construsite Brasil</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="wrap">
+
+      <section class="section">
+        <p class="tag"><span class="idx">01</span> About</p>
+        <div class="prose">
+          <h2>Where the work comes from</h2>
+          <p class="lead">A full-stack developer with a strong focus on backend &mdash; JavaScript, Vue, and React on the frontend, PHP (Laravel) with MySQL on the backend.</p>
+          <p>My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College &mdash; working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.</p>
+          <p>My work is centered on designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale &mdash; not just interfaces that look good.</p>
+          <p>Currently pursuing a B.Sc. in Software Engineering at PUC Minas, focused on performance, scalability, and clean, maintainable code.</p>
+          <p class="muted">Outside of tech: fitness, music, and fashion. I value consistency, challenges, and continuous growth.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="tag"><span class="idx">02</span> Stack</p>
+        <h2>What I work with</h2>
+        <dl style="margin:0;">
+          <div class="skill"><dt>Backend</dt><dd>PHP &middot; Laravel &middot; MySQL &middot; Java &middot; REST APIs</dd></div>
+          <div class="skill"><dt>Frontend</dt><dd>Vue &middot; React &middot; JavaScript &middot; Tailwind CSS</dd></div>
+          <div class="skill"><dt>Infrastructure</dt><dd>AWS &middot; Docker &middot; Linux &middot; Git</dd></div>
+        </dl>
+      </section>
+
+      <section class="section section--star">
+        <p class="tag"><span class="idx">03</span> Experience</p>
+        <h2>Experience</h2>
+        <p class="subhead">Three roles at Construsite Brasil &middot; since Aug 2024</p>
+        <div>
+          <div class="job">
+            <p class="when">Oct 2025<br />&mdash; Present</p>
+            <div>
+              <h3>Junior Developer II</h3>
+              <p class="org">Construsite Brasil &middot; Belo Horizonte</p>
+              <ul>
+                <li>Built an AI-powered deal-summary feature via OpenAI API integration in a CRM, reducing manual analysis time.</li>
+                <li>Designed an AWS S3 integration for file storage in a legacy PHP 7.4 system, cutting disk usage by ~70%.</li>
+                <li>Developed a full WhatsApp template module in a multi-tenant Laravel 10 CRM, with granular permission control.</li>
+                <li>Resolved a critical cross-database authentication bug affecting 13+ companies.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">Apr 2025<br />&mdash; Oct 2025</p>
+            <div>
+              <h3>Junior Developer I</h3>
+              <p class="org">Construsite Brasil &middot; Belo Horizonte</p>
+              <ul>
+                <li>Maintained and enhanced features across institutional and custom websites using PHP and MySQL.</li>
+                <li>Improved system stability by fixing bugs and optimizing queries.</li>
+                <li>Assisted with integrations between internal services and external APIs in legacy systems.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">Aug 2024<br />&mdash; Apr 2025</p>
+            <div>
+              <h3>Web Development Intern</h3>
+              <p class="org">Construsite Brasil &middot; Belo Horizonte</p>
+              <ul>
+                <li>Supported development and maintenance of web applications using PHP, HTML, CSS, and JavaScript.</li>
+                <li>Collaborated on responsive interfaces and bug fixes to improve UX.</li>
+                <li>Worked with MySQL for data manipulation and feature support.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">Feb 2024<br />&mdash; Present</p>
+            <div>
+              <h3>B.Sc. Software Engineering</h3>
+              <p class="org">PUC Minas &middot; Belo Horizonte &middot; Education</p>
+              <ul>
+                <li>Focused on software architecture, scalable systems, algorithms, and modern development practices.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">2023</p>
+            <div>
+              <h3>Web Development Program</h3>
+              <p class="org">Tamwood International College &middot; Vancouver &middot; Education</p>
+              <ul>
+                <li>Intensive full-stack course: HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, MySQL, Tailwind &mdash; team projects with Git.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="tag"><span class="idx">04</span> Selected work</p>
+        <h2>Selected work</h2>
+        <p class="subhead">Six projects &middot; three with live demos</p>
+        <div>
+          <div class="projects">
+            <div class="proj">
+              <span class="n">01</span>
+              <div>
+                <h3>Street Kicks</h3>
+                <p>Sneaker e-commerce storefront &mdash; product browsing, cart, and a clean checkout flow.</p>
+                <span class="stack">Vue.js &middot; CSS &middot; e-commerce</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/sneakers" target="_blank" rel="noopener">GitHub</a>
+                  <a class="live" href="https://main--pedro-sneakers.netlify.app" target="_blank" rel="noopener">Live &#8599;</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">02</span>
+              <div>
+                <h3>Expense Tracker</h3>
+                <p>Personal finance app &mdash; income and expense tracking with visual summaries and history.</p>
+                <span class="stack">Vue.js &middot; JavaScript &middot; CSS</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/expense_tracker" target="_blank" rel="noopener">GitHub</a>
+                  <a class="live" href="https://pedro-expense-tracker.netlify.app" target="_blank" rel="noopener">Live &#8599;</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">03</span>
+              <div>
+                <h3>Employee Management System</h3>
+                <p>CRUD application for employee records with search, filter, and data-table functionality.</p>
+                <span class="stack">Vue.js &middot; JavaScript &middot; REST API</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/employee_table_vue" target="_blank" rel="noopener">GitHub</a>
+                  <a class="live" href="https://pedro-employee-data.netlify.app" target="_blank" rel="noopener">Live &#8599;</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">04</span>
+              <div>
+                <h3>Readvice</h3>
+                <p>Collaborative book-recommendation platform &mdash; discover reads from preferences and ratings.</p>
+                <span class="stack">Vue.js &middot; JavaScript &middot; API</span>
+                <span class="links">
+                  <a href="https://github.com/DYagmur/ReadVice" target="_blank" rel="noopener">GitHub</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">05</span>
+              <div>
+                <h3>Movie Search Gallery</h3>
+                <p>Movie discovery app on an external API &mdash; search, filtering, and detail views.</p>
+                <span class="stack">React &middot; JavaScript &middot; API</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/movie_land" target="_blank" rel="noopener">GitHub</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">06</span>
+              <div>
+                <h3>Products Invoice System</h3>
+                <p>Invoice generation for product management &mdash; itemized billing, calculations, PDF-ready output.</p>
+                <span class="stack">JavaScript &middot; HTML &middot; CSS</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/invoice_system_js" target="_blank" rel="noopener">GitHub</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact">
+        <p class="tag"><span class="idx">05</span> Contact</p>
+        <div>
+          <p class="pull">Open to talking about <b>systems</b>, back-end work, and interesting problems.</p>
+          <p class="metaline" style="margin-top:2rem; border:0; padding:0;">
+            <span><a href="https://github.com/pssgarcia" target="_blank" rel="noopener">github.com/pssgarcia</a></span>
+            <span><a href="https://www.linkedin.com/in/pedro-soares-b996a5263/" target="_blank" rel="noopener">linkedin.com/in/pedro-soares</a></span>
+            <span><a href="mailto:pedrossgarcia88@gmail.com">pedrossgarcia88@gmail.com</a></span>
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="spec">
+      <div class="wrap">
+        <p class="lbl">Direction A &mdash; spec</p>
+        <div>
+          <span class="sw"><span class="chip" style="background:#efece4;"></span>Paper #EFECE4</span>
+          <span class="sw"><span class="chip" style="background:#181613;"></span>Ink #181613</span>
+          <span class="sw"><span class="chip" style="background:#696456;"></span>Mute #696456</span>
+          <span class="sw"><span class="chip" style="background:#1d4664;"></span>Drafting blue #1D4664</span>
+        </div>
+        <div style="margin-top:0.7rem;">Bricolage Grotesque 800/700 (display) &nbsp;&middot;&nbsp; Spectral (body) &nbsp;&middot;&nbsp; Spline Sans Mono (meta)</div>
+        <div style="margin-top:0.7rem;">Left-anchored measure &middot; running section index &middot; 2-up project ledger &middot; dated experience ledger &middot; accent only on numerals, kicker, links</div>
+      </div>
+    </footer>
+  </article>
+
+  <!-- ================= DIRECTION C  (A's structure, warm-dark skin) ================= -->
+  <article class="comp ed" id="comp-c">
+    <header class="hero">
+      <div class="wrap">
+        <p class="kicker">Full-stack developer &middot; backend-focused</p>
+        <h1>Pedro&nbsp;Soares</h1>
+        <p class="stmt">I build web applications end to end &mdash; APIs, data flow, and systems <em>built to scale</em>.</p>
+        <p class="metaline">
+          <span>Belo Horizonte, Brazil</span>
+          <span>B.Sc. Software Engineering &middot; PUC Minas</span>
+          <span>Now: Junior Developer II, Construsite Brasil</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="wrap">
+
+      <section class="section">
+        <p class="tag"><span class="idx">01</span> About</p>
+        <div class="prose">
+          <h2>Where the work comes from</h2>
+          <p class="lead">A full-stack developer with a strong focus on backend &mdash; JavaScript, Vue, and React on the frontend, PHP (Laravel) with MySQL on the backend.</p>
+          <p>My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College &mdash; working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.</p>
+          <p>My work is centered on designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale &mdash; not just interfaces that look good.</p>
+          <p>Currently pursuing a B.Sc. in Software Engineering at PUC Minas, focused on performance, scalability, and clean, maintainable code.</p>
+          <p class="muted">Outside of tech: fitness, music, and fashion. I value consistency, challenges, and continuous growth.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="tag"><span class="idx">02</span> Stack</p>
+        <h2>What I work with</h2>
+        <dl style="margin:0;">
+          <div class="skill"><dt>Backend</dt><dd>PHP &middot; Laravel &middot; MySQL &middot; Java &middot; REST APIs</dd></div>
+          <div class="skill"><dt>Frontend</dt><dd>Vue &middot; React &middot; JavaScript &middot; Tailwind CSS</dd></div>
+          <div class="skill"><dt>Infrastructure</dt><dd>AWS &middot; Docker &middot; Linux &middot; Git</dd></div>
+        </dl>
+      </section>
+
+      <section class="section section--star">
+        <p class="tag"><span class="idx">03</span> Experience</p>
+        <h2>Experience</h2>
+        <p class="subhead">Three roles at Construsite Brasil &middot; since Aug 2024</p>
+        <div>
+          <div class="job">
+            <p class="when">Oct 2025<br />&mdash; Present</p>
+            <div>
+              <h3>Junior Developer II</h3>
+              <p class="org">Construsite Brasil &middot; Belo Horizonte</p>
+              <ul>
+                <li>Built an AI-powered deal-summary feature via OpenAI API integration in a CRM, reducing manual analysis time.</li>
+                <li>Designed an AWS S3 integration for file storage in a legacy PHP 7.4 system, cutting disk usage by ~70%.</li>
+                <li>Developed a full WhatsApp template module in a multi-tenant Laravel 10 CRM, with granular permission control.</li>
+                <li>Resolved a critical cross-database authentication bug affecting 13+ companies.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">Apr 2025<br />&mdash; Oct 2025</p>
+            <div>
+              <h3>Junior Developer I</h3>
+              <p class="org">Construsite Brasil &middot; Belo Horizonte</p>
+              <ul>
+                <li>Maintained and enhanced features across institutional and custom websites using PHP and MySQL.</li>
+                <li>Improved system stability by fixing bugs and optimizing queries.</li>
+                <li>Assisted with integrations between internal services and external APIs in legacy systems.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">Aug 2024<br />&mdash; Apr 2025</p>
+            <div>
+              <h3>Web Development Intern</h3>
+              <p class="org">Construsite Brasil &middot; Belo Horizonte</p>
+              <ul>
+                <li>Supported development and maintenance of web applications using PHP, HTML, CSS, and JavaScript.</li>
+                <li>Collaborated on responsive interfaces and bug fixes to improve UX.</li>
+                <li>Worked with MySQL for data manipulation and feature support.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">Feb 2024<br />&mdash; Present</p>
+            <div>
+              <h3>B.Sc. Software Engineering</h3>
+              <p class="org">PUC Minas &middot; Belo Horizonte &middot; Education</p>
+              <ul>
+                <li>Focused on software architecture, scalable systems, algorithms, and modern development practices.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="job">
+            <p class="when">2023</p>
+            <div>
+              <h3>Web Development Program</h3>
+              <p class="org">Tamwood International College &middot; Vancouver &middot; Education</p>
+              <ul>
+                <li>Intensive full-stack course: HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, MySQL, Tailwind &mdash; team projects with Git.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="tag"><span class="idx">04</span> Selected work</p>
+        <h2>Selected work</h2>
+        <p class="subhead">Six projects &middot; three with live demos</p>
+        <div>
+          <div class="projects">
+            <div class="proj">
+              <span class="n">01</span>
+              <div>
+                <h3>Street Kicks</h3>
+                <p>Sneaker e-commerce storefront &mdash; product browsing, cart, and a clean checkout flow.</p>
+                <span class="stack">Vue.js &middot; CSS &middot; e-commerce</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/sneakers" target="_blank" rel="noopener">GitHub</a>
+                  <a class="live" href="https://main--pedro-sneakers.netlify.app" target="_blank" rel="noopener">Live &#8599;</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">02</span>
+              <div>
+                <h3>Expense Tracker</h3>
+                <p>Personal finance app &mdash; income and expense tracking with visual summaries and history.</p>
+                <span class="stack">Vue.js &middot; JavaScript &middot; CSS</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/expense_tracker" target="_blank" rel="noopener">GitHub</a>
+                  <a class="live" href="https://pedro-expense-tracker.netlify.app" target="_blank" rel="noopener">Live &#8599;</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">03</span>
+              <div>
+                <h3>Employee Management System</h3>
+                <p>CRUD application for employee records with search, filter, and data-table functionality.</p>
+                <span class="stack">Vue.js &middot; JavaScript &middot; REST API</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/employee_table_vue" target="_blank" rel="noopener">GitHub</a>
+                  <a class="live" href="https://pedro-employee-data.netlify.app" target="_blank" rel="noopener">Live &#8599;</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">04</span>
+              <div>
+                <h3>Readvice</h3>
+                <p>Collaborative book-recommendation platform &mdash; discover reads from preferences and ratings.</p>
+                <span class="stack">Vue.js &middot; JavaScript &middot; API</span>
+                <span class="links">
+                  <a href="https://github.com/DYagmur/ReadVice" target="_blank" rel="noopener">GitHub</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">05</span>
+              <div>
+                <h3>Movie Search Gallery</h3>
+                <p>Movie discovery app on an external API &mdash; search, filtering, and detail views.</p>
+                <span class="stack">React &middot; JavaScript &middot; API</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/movie_land" target="_blank" rel="noopener">GitHub</a>
+                </span>
+              </div>
+            </div>
+            <div class="proj">
+              <span class="n">06</span>
+              <div>
+                <h3>Products Invoice System</h3>
+                <p>Invoice generation for product management &mdash; itemized billing, calculations, PDF-ready output.</p>
+                <span class="stack">JavaScript &middot; HTML &middot; CSS</span>
+                <span class="links">
+                  <a href="https://github.com/pssgarcia/invoice_system_js" target="_blank" rel="noopener">GitHub</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact">
+        <p class="tag"><span class="idx">05</span> Contact</p>
+        <div>
+          <p class="pull">Open to talking about <b>systems</b>, back-end work, and interesting problems.</p>
+          <p class="metaline" style="margin-top:2rem; border:0; padding:0;">
+            <span><a href="https://github.com/pssgarcia" target="_blank" rel="noopener">github.com/pssgarcia</a></span>
+            <span><a href="https://www.linkedin.com/in/pedro-soares-b996a5263/" target="_blank" rel="noopener">linkedin.com/in/pedro-soares</a></span>
+            <span><a href="mailto:pedrossgarcia88@gmail.com">pedrossgarcia88@gmail.com</a></span>
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="spec">
+      <div class="wrap">
+        <p class="lbl">Direction C &mdash; spec</p>
+        <div>
+          <span class="sw"><span class="chip" style="background:#1b1815;"></span>Stock #1B1815</span>
+          <span class="sw"><span class="chip" style="background:#e7e0d2;"></span>Bone #E7E0D2</span>
+          <span class="sw"><span class="chip" style="background:#332f28;"></span>Rule #332F28</span>
+          <span class="sw"><span class="chip" style="background:#c99b57;"></span>Brass #C99B57</span>
+        </div>
+        <div style="margin-top:0.7rem;">Bricolage Grotesque 800/700 (display) &nbsp;&middot;&nbsp; Spectral (body) &nbsp;&middot;&nbsp; Spline Sans Mono (meta)</div>
+        <div style="margin-top:0.7rem;">Direction A&rsquo;s editorial structure in a warm-dark skin &middot; one brass accent, structural only &middot; same ledgers and running index</div>
+      </div>
+    </footer>
+  </article>
+
+  <!-- ================= DIRECTION B ================= -->
+  <article class="comp" id="comp-b">
+    <header class="hero">
+      <div class="wrap">
+        <p class="kicker">Full-stack developer &middot; backend-focused</p>
+        <h1>Pedro Soares</h1>
+        <p class="stmt">I build web applications end to end &mdash; APIs, data flow, and systems <em>built to scale</em>.</p>
+        <p class="metaline">
+          <span>Belo Horizonte, Brazil</span>
+          <span>B.Sc. Software Engineering &middot; PUC Minas</span>
+          <span>Now: Junior Developer II, Construsite Brasil</span>
+        </p>
+      </div>
+    </header>
+
+    <div class="wrap">
+
+      <section class="sec">
+        <div class="n">01</div>
+        <div>
+          <p class="seclabel" style="margin:0 0 1rem;">About</p>
+          <h2>Where the work comes from</h2>
+          <p>My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College &mdash; working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.</p>
+          <p>I&rsquo;m a full-stack developer with a strong focus on backend, based in Belo Horizonte. I develop web applications end to end &mdash; JavaScript, Vue, and React on the frontend, PHP (Laravel) with MySQL on the backend.</p>
+          <p>My work is centered on designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale &mdash; not just interfaces that look good.</p>
+          <p>Currently pursuing a B.Sc. in Software Engineering at PUC Minas, focused on performance, scalability, and clean, maintainable code.</p>
+          <p class="lede">Outside of tech: fitness, music, and fashion. I value consistency, challenges, and continuous growth.</p>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="n">02</div>
+        <div>
+          <p class="seclabel" style="margin:0 0 1rem;">Stack</p>
+          <dl style="margin:0;">
+            <div class="skill"><dt>Backend</dt><dd>PHP &middot; Laravel &middot; MySQL &middot; Java &middot; REST APIs</dd></div>
+            <div class="skill"><dt>Frontend</dt><dd>Vue &middot; React &middot; JavaScript &middot; Tailwind CSS</dd></div>
+            <div class="skill"><dt>Infrastructure</dt><dd>AWS &middot; Docker &middot; Linux &middot; Git</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="n">03</div>
+        <div>
+          <p class="seclabel" style="margin:0 0 1.4rem;">Experience</p>
+          <div class="xp">
+            <p class="when">Oct 2025 &mdash; Present</p>
+            <h3>Junior Developer II <span class="co">&mdash; Construsite Brasil</span></h3>
+            <p class="org">Belo Horizonte, MG</p>
+            <ul>
+              <li>Built an AI-powered deal-summary feature via OpenAI API integration in a CRM, reducing manual analysis time.</li>
+              <li>Designed an AWS S3 integration for file storage in a legacy PHP 7.4 system, cutting disk usage by ~70%.</li>
+              <li>Developed a full WhatsApp template module in a multi-tenant Laravel 10 CRM, with granular permission control.</li>
+              <li>Resolved a critical cross-database authentication bug affecting 13+ companies.</li>
+            </ul>
+          </div>
+          <div class="xp">
+            <p class="when">Apr 2025 &mdash; Oct 2025</p>
+            <h3>Junior Developer I <span class="co">&mdash; Construsite Brasil</span></h3>
+            <p class="org">Belo Horizonte, MG</p>
+            <ul>
+              <li>Maintained and enhanced features across institutional and custom websites using PHP and MySQL.</li>
+              <li>Improved system stability by fixing bugs and optimizing queries.</li>
+              <li>Assisted with integrations between internal services and external APIs in legacy systems.</li>
+            </ul>
+          </div>
+          <div class="xp">
+            <p class="when">Aug 2024 &mdash; Apr 2025</p>
+            <h3>Web Development Intern <span class="co">&mdash; Construsite Brasil</span></h3>
+            <p class="org">Belo Horizonte, MG</p>
+            <ul>
+              <li>Supported development and maintenance of web applications using PHP, HTML, CSS, and JavaScript.</li>
+              <li>Collaborated on responsive interfaces and bug fixes to improve UX.</li>
+              <li>Worked with MySQL for data manipulation and feature support.</li>
+            </ul>
+          </div>
+          <div class="xp">
+            <p class="when">Feb 2024 &mdash; Present &middot; Education</p>
+            <h3>B.Sc. Software Engineering <span class="co">&mdash; PUC Minas</span></h3>
+            <p class="org">Belo Horizonte</p>
+            <ul>
+              <li>Focused on software architecture, scalable systems, algorithms, and modern development practices.</li>
+            </ul>
+          </div>
+          <div class="xp">
+            <p class="when">2023 &middot; Education</p>
+            <h3>Web Development Program <span class="co">&mdash; Tamwood, Vancouver</span></h3>
+            <p class="org">Vancouver, Canada</p>
+            <ul>
+              <li>Intensive full-stack course: HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, MySQL, Tailwind &mdash; team projects with Git.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="n">04</div>
+        <div>
+          <p class="seclabel" style="margin:0 0 1rem;">Selected work</p>
+          <div class="case">
+            <span class="idx">01</span>
+            <span>
+              <h3>Street Kicks</h3>
+              <p>Sneaker e-commerce storefront &mdash; product browsing, cart, and a clean checkout flow.</p>
+              <span class="stack">Vue.js &middot; CSS &middot; e-commerce</span>
+              <span class="foot">
+                <a href="https://github.com/pssgarcia/sneakers" target="_blank" rel="noopener">GitHub &#8599;</a>
+                <a class="live" href="https://main--pedro-sneakers.netlify.app" target="_blank" rel="noopener">&#8226; Live demo</a>
+              </span>
+            </span>
+          </div>
+          <div class="case">
+            <span class="idx">02</span>
+            <span>
+              <h3>Expense Tracker</h3>
+              <p>Personal finance app &mdash; income and expense tracking with visual summaries and transaction history.</p>
+              <span class="stack">Vue.js &middot; JavaScript &middot; CSS</span>
+              <span class="foot">
+                <a href="https://github.com/pssgarcia/expense_tracker" target="_blank" rel="noopener">GitHub &#8599;</a>
+                <a class="live" href="https://pedro-expense-tracker.netlify.app" target="_blank" rel="noopener">&#8226; Live demo</a>
+              </span>
+            </span>
+          </div>
+          <div class="case">
+            <span class="idx">03</span>
+            <span>
+              <h3>Employee Management System</h3>
+              <p>CRUD application for employee records with search, filter, and data-table functionality.</p>
+              <span class="stack">Vue.js &middot; JavaScript &middot; REST API</span>
+              <span class="foot">
+                <a href="https://github.com/pssgarcia/employee_table_vue" target="_blank" rel="noopener">GitHub &#8599;</a>
+                <a class="live" href="https://pedro-employee-data.netlify.app" target="_blank" rel="noopener">&#8226; Live demo</a>
+              </span>
+            </span>
+          </div>
+          <div class="case">
+            <span class="idx">04</span>
+            <span>
+              <h3>Readvice</h3>
+              <p>Collaborative book-recommendation platform &mdash; discover reads from preferences and community ratings.</p>
+              <span class="stack">Vue.js &middot; JavaScript &middot; API</span>
+              <span class="foot">
+                <a href="https://github.com/DYagmur/ReadVice" target="_blank" rel="noopener">GitHub &#8599;</a>
+              </span>
+            </span>
+          </div>
+          <div class="case">
+            <span class="idx">05</span>
+            <span>
+              <h3>Movie Search Gallery</h3>
+              <p>Movie discovery app on an external API &mdash; search, filtering, and detail views.</p>
+              <span class="stack">React &middot; JavaScript &middot; API</span>
+              <span class="foot">
+                <a href="https://github.com/pssgarcia/movie_land" target="_blank" rel="noopener">GitHub &#8599;</a>
+              </span>
+            </span>
+          </div>
+          <div class="case">
+            <span class="idx">06</span>
+            <span>
+              <h3>Products Invoice System</h3>
+              <p>Invoice generation for product management &mdash; itemized billing, calculations, PDF-ready output.</p>
+              <span class="stack">JavaScript &middot; HTML &middot; CSS</span>
+              <span class="foot">
+                <a href="https://github.com/pssgarcia/invoice_system_js" target="_blank" rel="noopener">GitHub &#8599;</a>
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec contact">
+        <div class="n">05</div>
+        <div>
+          <p class="seclabel" style="margin:0 0 1rem;">Contact</p>
+          <p class="pull">Open to talking about <em>systems</em>, back-end work, and interesting problems.</p>
+          <p class="metaline" style="margin-top:1.9rem;">
+            <span><a href="https://github.com/pssgarcia" target="_blank" rel="noopener">github.com/pssgarcia</a></span>
+            <span><a href="https://www.linkedin.com/in/pedro-soares-b996a5263/" target="_blank" rel="noopener">linkedin.com/in/pedro-soares</a></span>
+            <span><a href="mailto:pedrossgarcia88@gmail.com">pedrossgarcia88@gmail.com</a></span>
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="spec">
+      <div class="wrap">
+        <p class="seclabel" style="margin:0 0 0.9rem;">Direction B &mdash; spec</p>
+        <div>
+          <span class="sw"><span class="chip" style="background:#1a1613;"></span>Stock #1A1613</span>
+          <span class="sw"><span class="chip" style="background:#e7e0d2;"></span>Bone #E7E0D2</span>
+          <span class="sw"><span class="chip" style="background:#3a332a;"></span>Rule #3A332A</span>
+          <span class="sw"><span class="chip" style="background:#c39a52;"></span>Brass #C39A52</span>
+          <span class="sw"><span class="chip" style="background:#7aa79c;"></span>Verdigris #7AA79C</span>
+        </div>
+        <div style="margin-top:0.7rem;">Instrument Serif (display) &nbsp;&middot;&nbsp; Archivo (body) &nbsp;&middot;&nbsp; Spline Sans Mono (meta)</div>
+        <div style="margin-top:0.7rem;">Warm dark stock &middot; brass used structurally &middot; Experience dominates &middot; case-study bands &middot; no glow / gradient / glass</div>
+      </div>
+    </footer>
+  </article>
+
+</div>
+
+<script>
+  (function () {
+    var stage = document.getElementById("stage");
+    var buttons = document.querySelectorAll(".seg button");
+    var VALID = ["a", "b", "c"];
+    var KEY = "portfolio-direction-comp";
+
+    try {
+      ["700 1rem 'Bricolage Grotesque'", "800 1rem 'Bricolage Grotesque'", "400 1rem 'Spectral'",
+       "400 1rem 'Instrument Serif'", "400 1rem 'Archivo'", "500 1rem 'Spline Sans Mono'"].forEach(function (f) {
+        if (document.fonts && document.fonts.load) document.fonts.load(f);
+      });
+    } catch (e) {}
+
+    function set(dir) {
+      stage.dataset.dir = dir;
+      buttons.forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.dir === dir));
+      });
+      try { localStorage.setItem(KEY, dir); } catch (e) {}
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { set(b.dataset.dir); });
+    });
+
+    var saved = "a";
+    try { saved = localStorage.getItem(KEY) || "a"; } catch (e) {}
+    if (VALID.indexOf(saved) !== -1 && saved !== "a") set(saved);
+  })();
+</script>

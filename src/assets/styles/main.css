@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Colors — Dark mode (default) */
+    --color-bg: #0a0a0f;
+    --color-surface: #111118;
+    --color-surface-hover: #1a1a24;
+    --color-surface-elevated: #16161f;
+    --color-border: rgba(147, 51, 234, 0.15);
+    --color-border-subtle: rgba(255, 255, 255, 0.06);
+
+    --color-accent: #9333ea;
+    --color-accent-light: #a855f7;
+    --color-accent-deep: #6d28d9;
+    --color-accent-glow: rgba(147, 51, 234, 0.4);
+    --color-accent-muted: rgba(147, 51, 234, 0.1);
+
+    --color-text: #e2e8f0;
+    --color-text-secondary: #94a3b8;
+    --color-text-muted: #64748b;
+    --color-text-heading: #f8fafc;
+
+    /* Glass — Dark */
+    --glass-bg: rgba(17, 17, 24, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: blur(16px);
+
+    /* Layout */
+    --max-width: 1200px;
+    --nav-height: 72px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px var(--color-accent-glow);
+    --shadow-glow-sm-color: rgba(147, 51, 234, 0.2);
+  }
+
+  /* Light Mode Tokens */
+  .dark, [data-theme="light"] {
+    /* Inverted classes: light mode applies when NOT .dark. Wait.
+       Actually, since the site is dark by default, we can set default tokens to light mode
+       and .dark tokens to dark mode. But wait, it's easier to just use [data-theme="light"] 
+       for the light mode overrides to keep existing behavior intact without rewriting all tokens.
+    */
+  }
+
+  [data-theme="light"] {
+    --color-bg: #f5f3ff;
+    --color-surface: #ffffff;
+    --color-surface-hover: #ede9fe;
+    --color-surface-elevated: #faf9ff;
+    --color-border: rgba(109, 40, 217, 0.15);
+    --color-border-subtle: rgba(0, 0, 0, 0.08);
+
+    --color-accent: #7c3aed;
+    --color-accent-light: #9333ea;
+    --color-accent-deep: #5b21b6;
+    --color-accent-glow: rgba(124, 58, 237, 0.3);
+    --color-accent-muted: rgba(124, 58, 237, 0.08);
+
+    --color-text: #1e1b4b;
+    --color-text-secondary: #4c1d95;
+    --color-text-muted: #7c3aed;
+    --color-text-heading: #0f0a1e;
+
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(109, 40, 217, 0.12);
+    --glass-blur: blur(16px);
+
+    --shadow-sm: 0 1px 3px rgba(109, 40, 217, 0.08);
+    --shadow-md: 0 4px 12px rgba(109, 40, 217, 0.1);
+    --shadow-lg: 0 8px 30px rgba(109, 40, 217, 0.12);
+    --shadow-glow: 0 0 20px var(--color-accent-glow);
+    --shadow-glow-sm-color: rgba(124, 58, 237, 0.15);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-height);
+  }
+
+  body {
+    @apply font-sans text-text-primary bg-bg antialiased transition-colors duration-300 ease-in-out;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .section {
+    @apply py-section;
+  }
+
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    @apply rounded-2xl;
+  }
+  
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-250 relative overflow-hidden;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
+    color: #fff;
+    box-shadow: 0 0 10px var(--shadow-glow-sm-color);
+  }
+
+  .btn-primary:hover {
+    @apply -translate-y-0.5;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-accent-light border border-accent;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-accent-muted -translate-y-0.5;
+    box-shadow: 0 0 10px var(--shadow-glow-sm-color);
+  }
+}
+
+@layer utilities {
+  .text-heading {
+    color: var(--color-text-heading);
+  }
+  
+  /* Staggered children animation delays */
+  .stagger-children > :nth-child(1) { transition-delay: 0ms; }
+  .stagger-children > :nth-child(2) { transition-delay: 80ms; }
+  .stagger-children > :nth-child(3) { transition-delay: 160ms; }
+  .stagger-children > :nth-child(4) { transition-delay: 240ms; }
+  .stagger-children > :nth-child(5) { transition-delay: 320ms; }
+  .stagger-children > :nth-child(6) { transition-delay: 400ms; }
+  .stagger-children > :nth-child(7) { transition-delay: 480ms; }
+  .stagger-children > :nth-child(8) { transition-delay: 560ms; }
+  .stagger-children > :nth-child(9) { transition-delay: 640ms; }
+  .stagger-children > :nth-child(10) { transition-delay: 720ms; }
+  .stagger-children > :nth-child(11) { transition-delay: 800ms; }
+  .stagger-children > :nth-child(12) { transition-delay: 880ms; }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-hover);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-deep);
+}
+::selection {
+  background: var(--color-accent-glow);
+  color: #fff;
+}
