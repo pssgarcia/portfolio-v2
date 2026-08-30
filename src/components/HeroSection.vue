@@ -8,8 +8,8 @@ import { profile } from '@/data/profile'
       <p class="hero__kicker">{{ profile.kicker }}</p>
       <h1 class="hero__name h-display">{{ profile.name }}</h1>
       <p class="hero__stmt">
-        I build web applications end to end &mdash; APIs, data flow, and systems
-        <em>built to scale</em>.
+        I build and maintain production web systems &mdash; APIs, integrations,
+        multi&#8209;tenant data &mdash; <em>built to scale</em>.
       </p>
       <p class="metaline metaline--ruled hero__meta">
         <span v-for="item in profile.heroMeta" :key="item">{{ item }}</span>

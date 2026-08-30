@@ -4,6 +4,12 @@ import SectionMark from './SectionMark.vue'
 import { experience } from '@/data/experience'
 
 const { targetRef, isVisible } = useIntersectionObserver()
+
+const words = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']
+const construsiteRoles = experience.filter(
+  (e) => e.type === 'work' && e.org.startsWith('Construsite'),
+).length
+const rolesLabel = `${words[construsiteRoles - 1] ?? construsiteRoles} roles at Construsite Brasil · since Aug 2024`
 </script>
 
 <template>
@@ -12,7 +18,7 @@ const { targetRef, isVisible } = useIntersectionObserver()
       <div ref="targetRef" class="reveal" :class="{ 'is-visible': isVisible }">
         <SectionMark index="02" label="Experience" />
         <h2 class="h-section">Experience</h2>
-        <p class="subhead">Three roles at Construsite Brasil · since Aug 2024</p>
+        <p class="subhead">{{ rolesLabel }}</p>
 
         <div class="ledger">
           <article v-for="job in experience" :key="job.title + job.dateFrom" class="job">

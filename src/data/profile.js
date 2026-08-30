@@ -1,19 +1,20 @@
 export const profile = {
   name: 'Pedro Soares',
-  kicker: 'Full-stack developer · backend-focused',
+  kicker: 'Software engineer · backend & systems',
 
   heroMeta: [
     'Belo Horizonte, Brazil',
     'B.Sc. Software Engineering · PUC Minas',
-    'Now: Junior Developer II, Construsite Brasil',
+    'Now: Junior Developer III, Construsite Brasil',
   ],
 
   about: {
-    lead: 'JavaScript, Vue, and React on the frontend; PHP (Laravel) with MySQL on the backend — and the APIs, data flow, and services that hold them together.',
+    lead: 'PHP and Laravel with MySQL on the backend, Vue and JavaScript on the frontend, Node.js where it fits — and the REST APIs, integrations, and multi-tenant data that hold a SaaS together.',
     paragraphs: [
       'My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College — working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.',
-      'My work is centered on designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale — not just interfaces that look good.',
-      'Currently pursuing a B.Sc. in Software Engineering at PUC Minas, focused on performance, scalability, and clean, maintainable code.',
+      'At Construsite Brasil I have gone from intern to Junior Developer III over two years — shipping end-to-end features in a multi-tenant SaaS CRM, resolving production and tenant-isolation issues, and more recently coordinating the team’s demands, reviewing code, and setting the engineering guidelines we build against.',
+      'The work is about designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale — not just interfaces that look good.',
+      'Currently finishing a B.Sc. in Software Engineering at PUC Minas.',
     ],
     aside: "Outside of tech: fitness, music, and fashion. I value consistency, challenges, and continuous growth.",
   },

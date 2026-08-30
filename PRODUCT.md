@@ -8,7 +8,7 @@ web
 
 ## Users
 
-**Primary:** Recruiters, hiring managers, and technical leads evaluating Pedro Soares for full-stack / backend developer roles. They scan quickly, on desktop or phone, and need to grasp his level, stack, and real production experience in under a minute.
+**Primary:** Recruiters, hiring managers, and technical leads evaluating Pedro Soares for software / backend engineering roles. They scan quickly, on desktop or phone, and need to grasp his level, stack, and real production experience in under a minute.
 
 **Secondary (governing on conflict):** PUC Minas instructors grading this portfolio against the Engenharia de Software sprint rubric. When rubric requirements and recruiter appeal conflict, the rubric wins (user decision).
 
@@ -16,7 +16,7 @@ web
 
 ## Product Purpose
 
-A personal professional portfolio for **Pedro Soares** — a full-stack developer with a backend focus, based in Belo Horizonte, Brazil. It presents his story, skills, projects, work history, and contact channels.
+A personal professional portfolio for **Pedro Soares** — a software engineer with a backend and systems focus, based in Belo Horizonte, Brazil. It presents his story, skills, projects, work history, and contact channels.
 
 It serves two purposes at once:
 1. A professional showcase that supports career opportunities and gives his network a single canonical link.
@@ -28,7 +28,7 @@ Success: a hiring reader quickly understands what Pedro can do and how to reach 
 
 The through-line is **backend and systems substance over interface polish**: "designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale — not just interfaces that look good."
 
-What a generic junior portfolio could not truthfully copy: real production work at Construsite Brasil in a multi-tenant Laravel 10 CRM — an OpenAI-powered deal-summary feature, an AWS S3 storage integration on a legacy PHP 7.4 system (~70% disk reduction), a full WhatsApp template module with granular permissions, and a resolved cross-database authentication bug spanning 13+ companies. Plus international training (Vancouver / Tamwood International College).
+What a generic junior portfolio could not truthfully copy: two years of real production work at Construsite Brasil, intern → Junior Developer III, in a multi-tenant SaaS CRM built on Laravel/PHP. He architected and shipped a rule-based lead-distribution engine (concurrent round-robin queues, configurable rules, standalone rule-evaluation service + management UI), an event-driven notification system on the Observer pattern, an AI-powered deal-summary feature on the OpenAI API, an AWS S3 integration on a legacy PHP 7.4 ERP, and payment/shipping integrations (REDE OAuth 2.0, Mercado Pago, Melhor Envio); he resolved a cross-database tenant-isolation authentication issue affecting multiple companies; and he has taken on technical leadership — coordinating team demands, reviewing and approving code, and setting the team's engineering guidelines. Outside work he built and shipped **Tayro** (tayro.app.br), a two-sided SaaS marketplace on NestJS/TypeScript/Prisma with Clean Architecture, a CI pipeline of 339 tests, and Railway/Vercel deploys. Plus international training (Vancouver / Tamwood International College, Star Student Recognition).
 
 ## Operating Context
 
@@ -48,32 +48,33 @@ What a generic junior portfolio could not truthfully copy: real production work 
 ## Capabilities and Constraints
 
 - **Stack:** Vue 3 (`<script setup>`), Vite 6, vue-router 4, Tailwind CSS 3 with PostCSS. `@` path alias → `src/`.
-- **Design tokens:** CSS custom properties in `src/assets/styles/main.css`, surfaced to Tailwind via `tailwind.config.js` theme extension.
-- **Theming:** dark-first with a light-mode toggle; choice persisted to `localStorage` key `portfolio-theme`; applied as `.dark` class + `data-theme` attribute on `<html>` via `useColorMode`. Contrast must hold in both themes.
-- **Sections:** Hero, About (bio + skill badges), Experience (vertical timeline, work + education), Projects (card grid from data), Contact (info + Netlify form). Navbar has scroll-spy active state, a mobile overlay menu, and the theme toggle. Footer has social links.
-- **Composables:** `useActiveSection` (scroll-spy), `useColorMode` (theme), `useIntersectionObserver` (scroll-reveal animations — many fade/translate transitions throughout).
-- **Content is data-driven:** `src/data/projects.js`, `experience.js`, `skills.js`. Copy elsewhere is inline in components.
-- **Bilingual PT/EN with persistence is REQUIRED (user-confirmed) but NOT yet implemented.** There is no i18n layer. Future work must add one and preserve it; no surface may ship English-only strings. `<html lang>` must track the active language (currently hardcoded `en`).
-- **Inline contact-form validation is a rubric requirement but not yet built** — the current form relies on native `required` plus submit-state handling only.
-- **"Open to work" status:** Pedro is **not** currently seeking new opportunities. The "currently looking for new opportunities" copy in `ContactSection.vue` (and any similar framing) should be removed or softened to a neutral "get in touch" invitation.
+- **Design tokens & system:** CSS custom properties in `src/assets/styles/main.css`; the full visual system is recorded in `DESIGN.md` + `.impeccable/design.json`.
+- **Theming:** two committed looks off one token set — Direction C (warm-dark, default) and Direction A (light warm-paper), flipped by the navbar toggle; choice persisted to `localStorage` key `portfolio-theme` via `useColorMode`. Contrast passes WCAG AA in both.
+- **Sections (post-redesign):** Hero, About (bio prose + grouped skill lists), Experience (dated ledger, work + education, `.section--star` anchor), Selected work (2-up numbered ledger from data), Contact (pull line + channels + Netlify form). Navbar has a deterministic scroll-spy, a mobile overlay menu, and the theme toggle. Footer is one mono line + "Back to top".
+- **Composables:** `useActiveSection` (scroll-position scroll-spy), `useColorMode` (theme), `useIntersectionObserver` (one 0.6s scroll reveal per section, inert under `prefers-reduced-motion`).
+- **Content is data-driven:** `src/data/profile.js`, `experience.js`, `projects.js`, `skills.js`. Keep it there — components should not need editing to update copy.
+- **Fonts:** Bricolage Grotesque / Spectral / Spline Sans Mono, self-hosted via `@fontsource` (no third-party font request).
+- **Bilingual PT/EN with persistence is REQUIRED (user-confirmed) but NOT yet implemented.** No i18n layer yet; strings are English-only in the components/data. `<html lang>` is still hardcoded `en`. This is the main remaining `/impeccable harden` item.
+- **Inline contact-form validation is a rubric requirement, not yet built** — the form relies on native `required` + submit-state handling. Deferred to the `/impeccable harden` pass.
+- **"Open to work" status:** Pedro is **not** actively seeking; the contact copy is a neutral "open to talking about systems…" invitation, no "looking for opportunities" framing.
 
 ## Brand Commitments
 
 - **Name:** "Pedro Soares" for display; full name Pedro Soares de Souza Garcia.
-- **Role line:** "Full-Stack Developer" with an explicit backend emphasis.
+- **Role line:** "Software Engineer" with an explicit backend and systems emphasis.
 - **Voice:** first person, direct, plainspoken, quietly confident, no hype. Substance over surface. Stated personal values: consistency, taking on challenges, continuous growth. Outside interests: fitness, music, fashion.
 - **Place identity:** based in Belo Horizonte, Brazil; origin story runs through Vancouver, Canada (Tamwood International College).
-- **Monogram:** a gradient "P" square mark used as the nav logo.
-- **Incumbent visual world** (self-described "dark tech minimalist"; not yet recorded in DESIGN.md): near-black background (`#0a0a0f`), violet/purple accent (`#9333ea` family), Inter typeface, glassmorphism cards, animated blurred gradient "orbs", faint grid overlay, glow shadows, and fade-in-up scroll reveals. This is incumbent design authority for refinement work; run `/impeccable document` to record it independently.
+- **Visual world:** recorded in `DESIGN.md` — "The Engineer's Ledger": warm-dark editorial (`#1B1815`), one brass accent, Bricolage Grotesque + Spectral + Spline Sans Mono, hairline rules, no cards. `[data-theme="light"]` carries a warm-paper light variant. The former "dark tech minimalist" look (near-black `#0A0A0F`, violet neon, orbs, glass, emoji chips) is now the anti-reference.
 
-## Evidence on Hand
+Content is data-driven — `src/data/experience.js`, `projects.js`, `skills.js`, `profile.js` — updated 2026-08-30 from Pedro's current CV.
 
-- **Projects** with real GitHub repos and some live demos — `src/data/projects.js`: Readvice (book recs), Expense Tracker, Employee Management System, Movie Search Gallery, Products Invoice System, Street Kicks (sneaker store). Project images in `src/assets/img/`.
-- **Work history** — `src/data/experience.js`: Construsite Brasil, Belo Horizonte — Web Development Intern (Aug 2024) → Junior Developer I (Apr 2025) → Junior Developer II (Oct 2025–present), with specific, concrete accomplishments.
-- **Education:** PUC Minas, B.Sc. Software Engineering (Feb 2024–present); Tamwood International College Web Development Program (2023).
+- **Work history** — Construsite Brasil, Belo Horizonte: Web Development Intern (Aug 2024) → Junior Developer I (Apr 2025) → Junior Developer II (Oct 2025) → **Junior Developer III (Jun 2026–present)**. Each role carries specific, concrete accomplishments (lead-distribution engine, notification system, N+1 performance initiative, tenant-isolation auth fix, AWS S3 integration, OpenAI deal-summary, payment/shipping integrations, technical leadership, engineering guidelines).
+- **Projects** — `src/data/projects.js`: **Tayro** (tayro.app.br — live; NestJS/TypeScript/Prisma SaaS marketplace, repo private), plus Street Kicks, Expense Tracker, Employee Management System (all Vue, GitHub + live demo), Readvice, Movie Search Gallery, Products Invoice System (GitHub only). Older project images in `src/assets/img/`.
+- **Education:** PUC Minas, B.Sc. Software Engineering (Feb 2024–present); Tamwood International College Web Development Program (2023), Star Student Recognition. Also Tamwood: Web Development Program and English Language Program certificates.
+- **Languages:** English — fluent (lived and studied in Canada); Portuguese — native.
 - **Photo:** `src/assets/img/my-pic.jpg`.
 - **Contact (user-confirmed correct):** email `pedrossgarcia88@gmail.com`; GitHub `github.com/pssgarcia`; LinkedIn `linkedin.com/in/pedro-soares-b996a5263/`; location Belo Horizonte, Brazil.
-- **Not on hand — must not be fabricated:** testimonials, references, client quotes, performance metrics beyond those already in `experience.js`, a downloadable CV/resume, additional project screenshots, and the actual PUC sprint rubric document.
+- **Not on hand — must not be fabricated:** testimonials, references, client quotes, performance metrics beyond those in the CV/`experience.js`, a downloadable CV file on the site, additional project screenshots, and the actual PUC sprint rubric document.
 
 ## Product Principles
 

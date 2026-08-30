@@ -27,7 +27,13 @@ const pad = (n) => String(n + 1).padStart(2, '0')
               <p class="proj__desc">{{ project.description }}</p>
               <span class="proj__stack">{{ project.techs.join(' · ') }}</span>
               <span class="proj__links">
-                <a :href="project.github" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a
+                  v-if="project.github"
+                  :href="project.github"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >GitHub</a>
+                <span v-else-if="project.repoPrivate" class="proj__links-muted">Private repo</span>
                 <a
                   v-if="project.demo"
                   class="proj__links-live"
@@ -108,6 +114,9 @@ const pad = (n) => String(n + 1).padStart(2, '0')
 }
 .proj__links a.proj__links-live {
   color: var(--color-text);
+}
+.proj__links-muted {
+  color: var(--color-text-mute);
 }
 
 @media (max-width: 900px) {

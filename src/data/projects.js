@@ -1,5 +1,14 @@
-// Ordered by substance: production-relevant Vue work with live demos first.
+// Ordered by substance: production SaaS first, then Vue work with live demos.
 export const projects = [
+  {
+    title: 'Tayro',
+    description:
+      'A two-sided SaaS marketplace connecting brands and fitness creators — campaign lifecycle as a guarded state machine, race-condition-safe application flow, and live media kits from the Instagram API.',
+    techs: ['NestJS', 'TypeScript', 'Prisma', 'PostgreSQL'],
+    github: '',
+    repoPrivate: true,
+    demo: 'https://tayro.app.br/',
+  },
   {
     title: 'Street Kicks',
     description: 'Sneaker e-commerce storefront — product browsing, cart, and a clean checkout flow.',
