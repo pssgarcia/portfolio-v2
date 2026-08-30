@@ -1,8 +1,9 @@
 <script setup>
 import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
 import SectionMark from './SectionMark.vue'
+import SkillBadge from './SkillBadge.vue'
 import { profile } from '@/data/profile'
-import { skillGroups } from '@/data/skills'
+import { skills } from '@/data/skills'
 
 const { targetRef, isVisible } = useIntersectionObserver()
 </script>
@@ -21,54 +22,32 @@ const { targetRef, isVisible } = useIntersectionObserver()
         </div>
 
         <p class="subhead about__stack-mark">What I work with</p>
-        <dl class="stack">
-          <div v-for="group in skillGroups" :key="group.label" class="stack__row">
-            <dt>{{ group.label }}</dt>
-            <dd>{{ group.items.join(' · ') }}</dd>
-          </div>
-        </dl>
+        <div class="about__skills">
+          <SkillBadge
+            v-for="skill in skills"
+            :key="skill.name"
+            :name="skill.name"
+            :icon="skill.icon"
+          />
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.about__aside { color: var(--color-text-soft); }
+.about__aside {
+  color: var(--color-text-soft);
+}
 
 .about__stack-mark {
-  margin: 2.75rem 0 1.25rem;
+  margin: 2.75rem 0 1.5rem;
 }
 
-.stack {
-  margin: 0;
+.about__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
   max-width: 46rem;
-}
-.stack__row {
-  display: grid;
-  grid-template-columns: 8rem 1fr;
-  gap: 1.1rem;
-  padding: 0.85rem 0;
-  align-items: baseline;
-}
-.stack__row + .stack__row {
-  border-top: 1px solid var(--color-rule);
-}
-.stack dt {
-  font-family: var(--font-mono);
-  font-size: var(--t-label);
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--color-text-mute);
-}
-.stack dd {
-  margin: 0;
-  font-size: var(--t-body);
-}
-
-@media (max-width: 720px) {
-  .stack__row {
-    grid-template-columns: 1fr;
-    gap: 0.35rem;
-  }
 }
 </style>

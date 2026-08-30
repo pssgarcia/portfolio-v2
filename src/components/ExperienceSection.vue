@@ -1,6 +1,7 @@
 <script setup>
 import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
 import SectionMark from './SectionMark.vue'
+import TimelineItem from './TimelineItem.vue'
 import { experience } from '@/data/experience'
 
 const { targetRef, isVisible } = useIntersectionObserver()
@@ -20,21 +21,18 @@ const rolesLabel = `${words[construsiteRoles - 1] ?? construsiteRoles} roles at 
         <h2 class="h-section">Experience</h2>
         <p class="subhead">{{ rolesLabel }}</p>
 
-        <div class="ledger">
-          <article v-for="job in experience" :key="job.title + job.dateFrom" class="job">
-            <p class="job__when">
-              {{ job.dateFrom }}<template v-if="job.dateTo"> &mdash; {{ job.dateTo }}</template>
-            </p>
-            <div>
-              <h3 class="job__title">{{ job.title }}</h3>
-              <p class="job__org">
-                {{ job.org }}<span v-if="job.type === 'education'"> · Education</span>
-              </p>
-              <ul class="job__points">
-                <li v-for="point in job.points" :key="point">{{ point }}</li>
-              </ul>
-            </div>
-          </article>
+        <div class="timeline">
+          <span class="timeline__rail" aria-hidden="true"></span>
+          <TimelineItem
+            v-for="job in experience"
+            :key="job.title + job.dateFrom"
+            :date-from="job.dateFrom"
+            :date-to="job.dateTo"
+            :title="job.title"
+            :org="job.org"
+            :type="job.type"
+            :points="job.points"
+          />
         </div>
       </div>
     </div>
@@ -42,75 +40,31 @@ const rolesLabel = `${words[construsiteRoles - 1] ?? construsiteRoles} roles at 
 </template>
 
 <style scoped>
-.ledger { max-width: 62rem; }
-
-.job {
-  display: grid;
-  grid-template-columns: 8.5rem 1fr;
-  gap: 0 2rem;
-  padding: 1.9rem 0;
-}
-.job + .job {
-  border-top: 1px solid var(--color-rule);
-}
-
-.job__when {
-  font-family: var(--font-mono);
-  font-size: var(--t-label-sm);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-mute);
-  margin: 0;
-  padding-top: 0.55rem;
-  line-height: 1.65;
-}
-
-.job__title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--t-role);
-  letter-spacing: -0.015em;
-  line-height: 1.15;
-  margin: 0;
-}
-
-.job__org {
-  color: var(--color-text-soft);
-  font-size: var(--t-caption);
-  margin: 0.25rem 0 0;
-}
-
-.job__points {
-  margin: 1rem 0 0;
-  padding: 0;
-  list-style: none;
-  max-width: 60ch;
-}
-.job__points li {
+.timeline {
   position: relative;
-  padding-left: 1.4rem;
-  margin: 0.4rem 0;
-  font-size: var(--t-body);
-  color: var(--color-text-soft);
+  max-width: 62rem;
 }
-.job__points li::before {
-  content: '';
+
+/* the journey line — sits under the node column */
+.timeline__rail {
   position: absolute;
-  left: 0;
-  top: 0.66em;
-  width: 0.55rem;
-  height: 1px;
-  background: var(--color-accent);
+  top: 0.5rem;
+  bottom: 2rem;
+  left: calc(0.875rem - 0.5px);
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-accent) 6%,
+    var(--color-accent) 94%,
+    transparent
+  );
+  opacity: 0.55;
 }
 
 @media (max-width: 720px) {
-  .job {
-    grid-template-columns: 1fr;
-    gap: 0.4rem 0;
-  }
-  .job__when {
-    padding-top: 0;
-    margin-bottom: 0.5rem;
+  .timeline__rail {
+    left: calc(0.625rem - 0.5px);
   }
 }
 </style>

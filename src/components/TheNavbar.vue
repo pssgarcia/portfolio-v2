@@ -67,7 +67,20 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
         @click="toggleTheme"
         :aria-label="isDark ? 'Switch to light theme' : 'Switch to dark theme'"
       >
-        Theme <span aria-hidden="true">·</span> {{ isDark ? 'Dark' : 'Light' }}
+        <svg v-if="isDark" class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5" />
+          <line x1="12" y1="2.5" x2="12" y2="5" />
+          <line x1="12" y1="19" x2="12" y2="21.5" />
+          <line x1="4.4" y1="4.4" x2="6.1" y2="6.1" />
+          <line x1="17.9" y1="17.9" x2="19.6" y2="19.6" />
+          <line x1="2.5" y1="12" x2="5" y2="12" />
+          <line x1="19" y1="12" x2="21.5" y2="12" />
+          <line x1="4.4" y1="19.6" x2="6.1" y2="17.9" />
+          <line x1="17.9" y1="6.1" x2="19.6" y2="4.4" />
+        </svg>
+        <svg v-else class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20.5 13.2A8 8 0 1 1 10.8 3.5 6.3 6.3 0 0 0 20.5 13.2z" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
       </button>
 
       <button
@@ -88,8 +101,26 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
             <a :href="`#${link.id}`" @click.prevent="goTo(link.id)">{{ link.label }}</a>
           </li>
         </ul>
-        <button class="nav__overlay-theme" type="button" @click="toggleTheme">
-          Theme <span aria-hidden="true">·</span> {{ isDark ? 'Dark' : 'Light' }}
+        <button
+          class="nav__overlay-theme"
+          type="button"
+          @click="toggleTheme"
+          :aria-label="isDark ? 'Switch to light theme' : 'Switch to dark theme'"
+        >
+          <svg v-if="isDark" class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5" />
+            <line x1="12" y1="2.5" x2="12" y2="5" />
+            <line x1="12" y1="19" x2="12" y2="21.5" />
+            <line x1="4.4" y1="4.4" x2="6.1" y2="6.1" />
+            <line x1="17.9" y1="17.9" x2="19.6" y2="19.6" />
+            <line x1="2.5" y1="12" x2="5" y2="12" />
+            <line x1="19" y1="12" x2="21.5" y2="12" />
+            <line x1="4.4" y1="19.6" x2="6.1" y2="17.9" />
+            <line x1="17.9" y1="6.1" x2="19.6" y2="4.4" />
+          </svg>
+          <svg v-else class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20.5 13.2A8 8 0 1 1 10.8 3.5 6.3 6.3 0 0 0 20.5 13.2z" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </button>
       </div>
     </Transition>
@@ -157,20 +188,24 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 
 .nav__theme {
-  font-family: var(--font-mono);
-  font-size: var(--t-label-sm);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
   color: var(--color-text-mute);
   background: transparent;
   border: 1px solid var(--color-rule-bold);
-  padding: 0.35rem 0.7rem;
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 .nav__theme:hover {
-  color: var(--color-text);
+  color: var(--color-accent);
   border-color: var(--color-accent);
+}
+.nav__theme-icon {
+  width: 1.05rem;
+  height: 1.05rem;
 }
 
 .nav__burger {
@@ -224,15 +259,24 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   text-decoration: none;
 }
 .nav__overlay-theme {
-  font-family: var(--font-mono);
-  font-size: var(--t-label-sm);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
   color: var(--color-text-mute);
   background: transparent;
   border: 1px solid var(--color-rule-bold);
-  padding: 0.5rem 1rem;
   cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.nav__overlay-theme:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.nav__overlay-theme .nav__theme-icon {
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .menu-enter-active,

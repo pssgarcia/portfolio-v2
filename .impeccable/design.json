@@ -105,11 +105,17 @@
     "donts": [
       "Don't add cards, panels, filled containers, or any box-shadow.",
       "Don't introduce a second accent colour or move the accent onto a content fill.",
-      "Don't round a corner — border-radius is 0 everywhere.",
-      "Don't use a gradient, glow, blur (except the functional scrolled-nav blur), or a floating decorative shape.",
+      "Don't round a corner — border-radius is 0 everywhere (the timeline node's circle is geometry, not a container).",
+      "Don't use a gradient (the timeline rail's fade is the one exception), glow, blur (except the functional scrolled-nav blur), or a floating decorative shape.",
       "Don't use Spline Sans Mono for prose or a heading, or a system/Inter display face.",
       "Don't add a numbered marker to anything that isn't a fixed, ordered set.",
-      "Don't revive any device from the former dark-violet look (near-black #0A0A0F, neon violet, orbs, glass, emoji chips)."
+      "Don't revive the former dark-violet look (near-black #0A0A0F, neon violet, orbs, glassmorphism, glow shadows)."
+    ],
+    "clientPinned": [
+      "Emoji glyphs on skill badges and the timeline work/education chips — confined to those components.",
+      "Outlined square-cornered chips for skill badges.",
+      "A sun/moon icon for the theme toggle instead of a text label.",
+      "The Experience section rendered as a vertical timeline (accent rail + node dots) rather than a flat ledger."
     ]
   }
 }

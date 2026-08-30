@@ -238,8 +238,10 @@ Sections are separated by a 1px `--color-rule` top border and vertical padding o
 heavier `--color-rule-bold` top border and `4.25rem` top padding (`.section--star`) to
 read as the anchor of the page.
 
-Two internal grids:
-- **Experience:** `8.5rem` date column + content. Date ranges hang in the margin.
+Two internal structures:
+- **Experience:** a vertical timeline — a 1px accent rail down a `1.75rem` node column,
+  a node dot per entry, and the entry content beside it. Client-pinned: the "journey
+  with icons" is kept from the previous design, re-skinned into this palette.
 - **Projects:** two equal columns (`repeat(2, 1fr)`, `gap: 0 3.25rem`), each row a
   numbered entry with a hairline top border.
 
@@ -261,8 +263,10 @@ hairline or a change in type — never a shadow, never a raised card.
 ## Shapes
 
 Square. `border-radius` is `0` on every element, including the submit button and form
-fields. Borders are always 1px hairlines. There is no clipping, no rounded silhouette,
-no pill. Form fields are a single bottom border; there is no field box.
+fields. Borders are always 1px hairlines. Form fields are a single bottom border; there
+is no field box. The one exception is the **timeline node**, a 11px circle on the
+Experience rail — geometry, not a rounded container. Skill badges are square-cornered
+outlined chips (client-pinned; see Components).
 
 ## Components
 
@@ -270,8 +274,10 @@ no pill. Form fields are a single bottom border; there is no field box.
 - Fixed, `4.25rem` tall, transparent at rest. After 24px of scroll it takes a
   `--color-bg-blur` background (90% ground), an 8px blur, and a `--color-rule` bottom border.
 - Left: "PEDRO SOARES" as a mono wordmark (no monogram). Right: four mono nav links,
-  a mono theme toggle ("Theme · Dark" / "Theme · Light" — names the current state), and
-  on mobile a two-line hamburger opening a full-screen overlay.
+  an **icon theme toggle** (client-pinned) — a stroke sun in dark mode, a stroke moon in
+  light, in a square `--color-rule-bold` box, brass on hover, with an `aria-label` naming
+  the action — and on mobile a two-line hamburger opening a full-screen overlay (which
+  carries a larger copy of the same icon toggle).
 - Nav links: mute-bone default, bone on hover, **accent with a 1px accent underline when
   active**. The active section is tracked by a deterministic scroll position check
   (`useActiveSection`), so nav, DOM, and highlight always agree.
@@ -282,10 +288,22 @@ uppercase label. Aligned to the same left edge as the hero name and the body col
 The four numbers correspond to the four fixed content areas — this is the only place
 numbering is used.
 
-### Experience Entry (signature)
-A two-column ledger row: date range in the left margin (mono, mute), title (Bricolage
-700), organisation (soft-bone), then accomplishments as a bullet list where each marker
-is a 0.55rem × 1px accent hairline, not a glyph. Hairline rule between entries.
+### Experience Timeline (signature, client-pinned)
+Kept from the previous design at the client's request and re-skinned into this palette.
+A vertical accent rail runs down a `1.75rem` node column; each role is a node dot on the
+rail — a hollow brass ring for **work**, a filled brass dot for **education** — beside a
+content block: date range (mono, accent), title (Bricolage 700), organisation
+(soft-bone), accomplishments as a bullet list (each marker a 0.55rem × 1px accent
+hairline), and a small outlined **type chip** with an emoji — `💼 Work` / `🎓 Education`.
+The rail and chips are the only decorative-leaning elements in the system and are
+confined to this section.
+
+### Skill Badges (client-pinned)
+Kept from the previous design at the client's request. A flat wrapped cloud of outlined
+chips under the "What I work with" mark, ordered backend-first. Each chip: 1px
+`--color-rule-bold` border (square corners), an emoji glyph, and the name in mono
+uppercase `--t-label-sm`, soft-bone; brass border and full-ink text on hover. The emoji
+are the only glyph icons in the system outside the timeline chips.
 
 ### Project Entry
 Numbered mono index, Bricolage 700 title, one-line description at ~40ch, mono stack
@@ -302,8 +320,9 @@ Hairline top border on every entry.
 - **Shape:** square (0 radius).
 - **Primary (form submit):** flat `--color-accent` fill, `--color-on-accent` text, mono
   uppercase, `0.7rem 1.4rem` padding. Hover drops opacity to 0.88. Disabled at 0.5.
-- **Text buttons (theme toggle, back-to-top):** mono, no fill, `--color-rule-bold`
-  border for the toggle / borderless for back-to-top, colour shift on hover.
+- **Icon toggle (theme):** square `2.25rem` box (`2.75rem` in the mobile overlay), 1px
+  `--color-rule-bold` border, a ~17px stroke icon, brass icon + border on hover.
+- **Text button (back-to-top):** mono, borderless, colour shift on hover.
 
 ### Footer
 A single mono line — copyright + city — and a "Back to top" text button. It does not
@@ -322,10 +341,19 @@ repeat the contact channels that appear directly above it.
 ### Don't:
 - **Don't** add cards, panels, filled containers, or any `box-shadow`.
 - **Don't** introduce a second accent colour or move the accent onto a content fill.
-- **Don't** round a corner — `border-radius` is `0` everywhere.
-- **Don't** use a gradient, glow, blur (except the functional scrolled-nav blur), or a
-  floating decorative shape.
+- **Don't** round a corner — `border-radius` is `0` everywhere (the timeline node's
+  circle is geometry, not a container).
+- **Don't** use a gradient (the timeline rail's fade is the one exception), glow, blur
+  (except the functional scrolled-nav blur), or a floating decorative shape.
 - **Don't** use Spline Sans Mono for prose or a heading, or a system/`Inter` display face.
 - **Don't** add a numbered marker to anything that isn't a fixed, ordered set.
-- **Don't** revive any device from the former dark-violet look (near-black `#0A0A0F`,
-  neon violet, orbs, glass, emoji chips).
+- **Don't** revive the former dark-violet look (near-black `#0A0A0F`, neon violet, orbs,
+  glassmorphism, glow shadows).
+
+### Client-pinned exceptions
+The client asked to keep three devices from the previous design; they override the rules
+above **only where named** and stay confined to their components:
+- **Emoji glyphs** on skill badges and the timeline `💼 / 🎓` chips. Nowhere else —
+  headings, nav, and section marks stay glyph-free.
+- **Outlined chips** for skill badges (square corners, so not a true pill).
+- **An icon** (sun/moon) for the theme toggle instead of a text label.

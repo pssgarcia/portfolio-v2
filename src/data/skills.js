@@ -1,7 +1,22 @@
-// Grouped by layer, backend first to match positioning.
-export const skillGroups = [
-  { label: 'Backend', items: ['PHP', 'Laravel', 'Node.js', 'MySQL', 'SQL', 'REST APIs'] },
-  { label: 'Frontend', items: ['Vue', 'JavaScript'] },
-  { label: 'Infrastructure', items: ['AWS S3', 'Docker', 'Linux', 'Git', 'CI/CD'] },
-  { label: 'Engineering', items: ['OOP', 'SOLID', 'Clean Code', 'Design Patterns', 'Software Architecture', 'Agile / Kanban'] },
+// Flat cloud, ordered by weight — backend and data first, practices last.
+export const skills = [
+  { name: 'PHP', icon: '🐘' },
+  { name: 'Laravel', icon: '🔺' },
+  { name: 'Node.js', icon: '🟢' },
+  { name: 'MySQL', icon: '🗄️' },
+  { name: 'SQL', icon: '🧮' },
+  { name: 'REST APIs', icon: '🔗' },
+  { name: 'Vue.js', icon: '💚' },
+  { name: 'JavaScript', icon: '⚡' },
+  { name: 'AWS S3', icon: '☁️' },
+  { name: 'Docker', icon: '🐳' },
+  { name: 'Linux', icon: '🐧' },
+  { name: 'Git', icon: '📦' },
+  { name: 'CI/CD', icon: '🔁' },
+  { name: 'OOP', icon: '🧩' },
+  { name: 'SOLID', icon: '🏛️' },
+  { name: 'Clean Code', icon: '🧼' },
+  { name: 'Design Patterns', icon: '📐' },
+  { name: 'Software Architecture', icon: '🏗️' },
+  { name: 'Agile / Kanban', icon: '📋' },
 ]
