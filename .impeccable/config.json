@@ -2,7 +2,9 @@
   "buildPath": "comp",
   "detector": {
     "ignoreRules": [],
-    "ignoreFiles": [],
+    "ignoreFiles": [
+      ".impeccable/mocks/decision/directions.html"
+    ],
     "ignoreValues": [
       {
         "rule": "overused-font",
