@@ -1,15 +1,6 @@
-export const skills = [
-  { name: 'PHP', icon: '🐘' },
-  { name: 'Laravel', icon: '🔺' },
-  { name: 'MySQL', icon: '🗄️' },
-  { name: 'Java', icon: '☕' },
-  { name: 'Git', icon: '📦' },
-  { name: 'Vue.js', icon: '💚' },
-  { name: 'React', icon: '⚛️' },
-  { name: 'JavaScript', icon: '⚡' },
-  { name: 'Tailwind CSS', icon: '🌊' },
-  { name: 'AWS', icon: '☁️' },
-  { name: 'Docker', icon: '🐳' },
-  { name: 'Linux', icon: '🐧' },
-  { name: 'REST APIs', icon: '🔗' },
+// Grouped by layer, backend first to match positioning.
+export const skillGroups = [
+  { label: 'Backend', items: ['PHP', 'Laravel', 'MySQL', 'Java', 'REST APIs'] },
+  { label: 'Frontend', items: ['Vue', 'React', 'JavaScript', 'Tailwind CSS'] },
+  { label: 'Infrastructure', items: ['AWS', 'Docker', 'Linux', 'Git'] },
 ]

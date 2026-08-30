@@ -1,84 +1,74 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import SectionHeading from './SectionHeading.vue'
-import SkillBadge from './SkillBadge.vue'
-import { skills } from '@/data/skills'
 import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
+import SectionMark from './SectionMark.vue'
+import { profile } from '@/data/profile'
+import { skillGroups } from '@/data/skills'
 
 const { targetRef, isVisible } = useIntersectionObserver()
-
-const skillsContainerRef = ref(null)
-const skillsVisible = ref(false)
-
-let skillsObserver = null
-
-onMounted(() => {
-  skillsObserver = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        skillsVisible.value = true
-        skillsObserver.unobserve(entry.target)
-      }
-    },
-    { rootMargin: '0px 0px -50px 0px', threshold: 0.1 }
-  )
-  if (skillsContainerRef.value) {
-    skillsObserver.observe(skillsContainerRef.value)
-  }
-})
 </script>
 
 <template>
   <section id="about" class="section">
-    <div class="container">
-      <div ref="targetRef" class="transition-all duration-600 ease-out" :class="isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[30px]'">
-        <SectionHeading title="About Me" subtitle="A bit about who I am and what I do" />
+    <div class="wrap">
+      <div ref="targetRef" class="reveal" :class="{ 'is-visible': isVisible }">
+        <SectionMark index="01" label="About" />
+        <h2 class="h-section">Where the work comes from</h2>
 
-        <div class="max-w-[700px] mx-auto mb-16">
-          <div class="space-y-6">
-            <p class="text-text-secondary text-[clamp(0.875rem,0.8rem+0.375vw,1rem)] leading-[1.8]">
-              My journey began in <span class="text-accent">Vancouver, Canada</span>, where I
-              completed an intensive web development program at Tamwood International College —
-              working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on
-              real-world team projects.
-            </p>
-            <p class="text-text-secondary text-[clamp(0.875rem,0.8rem+0.375vw,1rem)] leading-[1.8]">
-              I'm a full-stack developer with a strong focus on backend, based
-              in <span class="text-accent">Belo Horizonte, Brazil</span>. I develop scalable
-              web applications end-to-end, using JavaScript, Vue, and React on the frontend,
-              and PHP (Laravel) with MySQL on the backend.
-            </p>
-            <p class="text-text-secondary text-[clamp(0.875rem,0.8rem+0.375vw,1rem)] leading-[1.8]">
-              My work is centered around designing APIs, managing data flow, and building
-              systems that are <span class="text-accent">reliable, efficient, and built to scale</span>
-              — not just interfaces that look good.
-            </p>
-            <p class="text-text-secondary text-[clamp(0.875rem,0.8rem+0.375vw,1rem)] leading-[1.8]">
-              Currently pursuing a Bachelor's degree in Software Engineering at PUC Minas,
-              I focus on performance, scalability, and writing clean, maintainable code
-              that solves real problems.
-            </p>
-            <p class="text-text-secondary text-[clamp(0.875rem,0.8rem+0.375vw,1rem)] leading-[1.8]">
-              Outside of tech, I'm into fitness, music, and fashion. I value consistency,
-              challenges, and continuous growth.
-            </p>
-          </div>
+        <div class="prose">
+          <p class="lead">{{ profile.about.lead }}</p>
+          <p v-for="p in profile.about.paragraphs" :key="p">{{ p }}</p>
+          <p class="about__aside">{{ profile.about.aside }}</p>
         </div>
 
-        <div class="text-center" ref="skillsContainerRef">
-          <h3 class="text-[clamp(1.125rem,1rem+0.625vw,1.25rem)] font-semibold mb-8 text-text-heading">Technologies I work with</h3>
-          <div class="flex flex-wrap justify-center gap-3 md:gap-4 max-w-[750px] mx-auto stagger-children">
-            <SkillBadge
-              v-for="skill in skills"
-              :key="skill.name"
-              :name="skill.name"
-              :icon="skill.icon"
-              class="transition-all duration-500 ease-out"
-              :class="skillsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[20px]'"
-            />
+        <p class="subhead about__stack-mark">What I work with</p>
+        <dl class="stack">
+          <div v-for="group in skillGroups" :key="group.label" class="stack__row">
+            <dt>{{ group.label }}</dt>
+            <dd>{{ group.items.join(' · ') }}</dd>
           </div>
-        </div>
+        </dl>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.about__aside { color: var(--color-text-soft); }
+
+.about__stack-mark {
+  margin: 2.75rem 0 1.25rem;
+}
+
+.stack {
+  margin: 0;
+  max-width: 46rem;
+}
+.stack__row {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1.1rem;
+  padding: 0.85rem 0;
+  align-items: baseline;
+}
+.stack__row + .stack__row {
+  border-top: 1px solid var(--color-rule);
+}
+.stack dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+.stack dd {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 720px) {
+  .stack__row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+</style>

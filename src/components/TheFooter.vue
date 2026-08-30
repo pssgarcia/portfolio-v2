@@ -1,33 +1,40 @@
 <script setup>
-const currentYear = new Date().getFullYear()
+import { profile } from '@/data/profile'
 
-const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/pssgarcia' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/pedro-soares-b996a5263/' },
-  { label: 'Email', href: 'mailto:pedrossgarcia88@gmail.com' },
-]
+const currentYear = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="border-t border-border-subtle py-12 relative">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-[1px] bg-gradient-to-r from-transparent via-accent to-transparent"></div>
-    <div class="w-full max-w-[1200px] mx-auto px-4 md:px-12 flex flex-col items-center gap-6">
-      <div class="flex gap-8">
-        <a
-          v-for="link in socialLinks"
-          :key="link.label"
-          :href="link.href"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-[clamp(0.8125rem,0.75rem+0.3125vw,0.9375rem)] text-text-secondary font-medium transition-colors duration-150 hover:text-accent-light"
-        >
-          {{ link.label }}
-        </a>
-      </div>
-      <p class="text-[clamp(0.75rem,0.7rem+0.25vw,0.875rem)] text-text-muted">
-        © {{ currentYear }} Pedro Soares. Built with
-        <span class="text-accent">Vue.js</span>
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p class="footer__links metaline">
+        <span v-for="c in profile.contact.channels" :key="c.href">
+          <a class="link" :href="c.href" target="_blank" rel="noopener noreferrer">{{ c.label }}</a>
+        </span>
       </p>
+      <p class="footer__copy">&copy; {{ currentYear }} Pedro Soares</p>
     </div>
   </footer>
 </template>
+
+<style scoped>
+.footer {
+  border-top: 1px solid var(--color-rule);
+  padding: 2.5rem 0 3.5rem;
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+.footer__copy {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+  margin: 0;
+}
+</style>
