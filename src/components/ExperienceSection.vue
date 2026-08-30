@@ -50,7 +50,7 @@ const { targetRef, isVisible } = useIntersectionObserver()
 
 .job__when {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-mute);
@@ -70,7 +70,7 @@ const { targetRef, isVisible } = useIntersectionObserver()
 
 .job__org {
   color: var(--color-text-soft);
-  font-size: 0.98rem;
+  font-size: var(--t-caption);
   margin: 0.25rem 0 0;
 }
 
@@ -84,7 +84,7 @@ const { targetRef, isVisible } = useIntersectionObserver()
   position: relative;
   padding-left: 1.4rem;
   margin: 0.4rem 0;
-  font-size: 1rem;
+  font-size: var(--t-body);
   color: var(--color-text-soft);
 }
 .job__points li::before {

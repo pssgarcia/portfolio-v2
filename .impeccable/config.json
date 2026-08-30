@@ -1,3 +1,18 @@
 {
-  "buildPath": "comp"
+  "buildPath": "comp",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "files": [
+          ".impeccable/mocks/decision/directions.html"
+        ],
+        "createdAt": "2026-08-30T18:28:25.819Z",
+        "reason": "Direction-round comp fixture: Instrument Serif is Direction B's deliberate display face, one of three directions the user compared. Not used in the shipping app (Bricolage Grotesque + Spectral)."
+      }
+    ]
+  }
 }

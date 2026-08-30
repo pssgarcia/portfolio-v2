@@ -1,18 +1,16 @@
 <script setup>
-import { profile } from '@/data/profile'
-
 const currentYear = new Date().getFullYear()
+
+function toTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <template>
   <footer class="footer">
     <div class="wrap footer__inner">
-      <p class="footer__links metaline">
-        <span v-for="c in profile.contact.channels" :key="c.href">
-          <a class="link" :href="c.href" target="_blank" rel="noopener noreferrer">{{ c.label }}</a>
-        </span>
-      </p>
-      <p class="footer__copy">&copy; {{ currentYear }} Pedro Soares</p>
+      <p class="footer__copy">&copy; {{ currentYear }} Pedro Soares &middot; Belo Horizonte, Brazil</p>
+      <button class="footer__top" type="button" @click="toTop">Back to top</button>
     </div>
   </footer>
 </template>
@@ -20,21 +18,33 @@ const currentYear = new Date().getFullYear()
 <style scoped>
 .footer {
   border-top: 1px solid var(--color-rule);
-  padding: 2.5rem 0 3.5rem;
+  padding: 2.25rem 0 3rem;
 }
 .footer__inner {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1rem 2rem;
-}
-.footer__copy {
+  gap: 0.75rem 2rem;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-mute);
+}
+.footer__copy {
   margin: 0;
+}
+.footer__top {
+  font: inherit;
+  color: var(--color-text-mute);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.footer__top:hover {
+  color: var(--color-text);
 }
 </style>

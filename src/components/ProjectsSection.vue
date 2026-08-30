@@ -34,7 +34,7 @@ const pad = (n) => String(n + 1).padStart(2, '0')
                   :href="project.demo"
                   target="_blank"
                   rel="noopener noreferrer"
-                >Live &#8599;</a>
+                >Live demo</a>
               </span>
             </div>
           </article>
@@ -61,7 +61,7 @@ const pad = (n) => String(n + 1).padStart(2, '0')
 
 .proj__n {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: var(--t-label);
   color: var(--color-accent);
   padding-top: 0.3rem;
 }
@@ -69,13 +69,13 @@ const pad = (n) => String(n + 1).padStart(2, '0')
 .proj__title {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: var(--t-title-sm);
   letter-spacing: -0.015em;
   margin: 0 0 0.35rem;
 }
 
 .proj__desc {
-  font-size: 0.95rem;
+  font-size: var(--t-caption);
   color: var(--color-text-soft);
   margin: 0 0 0.55rem;
   max-width: 40ch;
@@ -84,7 +84,7 @@ const pad = (n) => String(n + 1).padStart(2, '0')
 .proj__stack {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-text-mute);
@@ -95,7 +95,7 @@ const pad = (n) => String(n + 1).padStart(2, '0')
   display: flex;
   gap: 1.2rem;
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }

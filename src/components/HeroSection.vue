@@ -25,7 +25,7 @@ import { profile } from '@/data/profile'
 
 .hero__kicker {
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: var(--t-label);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-accent);
@@ -38,7 +38,7 @@ import { profile } from '@/data/profile'
 }
 
 .hero__stmt {
-  font-size: clamp(1.3rem, 1.05rem + 0.9vw, 1.65rem);
+  font-size: var(--t-statement);
   line-height: 1.42;
   max-width: 38ch;
   text-wrap: pretty;

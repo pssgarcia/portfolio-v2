@@ -113,7 +113,7 @@ const handleSubmit = async () => {
 .contact__pull {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.5rem, 1rem + 1.8vw, 2.15rem);
+  font-size: var(--t-pull);
   line-height: 1.24;
   letter-spacing: -0.02em;
   max-width: 16ch;
@@ -149,7 +149,7 @@ const handleSubmit = async () => {
 }
 .field label {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-mute);
@@ -157,7 +157,7 @@ const handleSubmit = async () => {
 .field input,
 .field textarea {
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: var(--t-body);
   color: var(--color-text);
   background: transparent;
   border: 0;
@@ -178,7 +178,7 @@ const handleSubmit = async () => {
 .contact__submit {
   align-self: flex-start;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--t-label);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-on-accent);
@@ -197,11 +197,11 @@ const handleSubmit = async () => {
 }
 
 .contact__note {
-  font-size: 0.9rem;
+  font-size: var(--t-caption);
   margin: 0;
 }
 .contact__note--ok { color: var(--color-text-soft); }
-.contact__note--err { color: #d98b6a; }
+.contact__note--err { color: var(--color-error); }
 
 @media (max-width: 720px) {
   .contact {

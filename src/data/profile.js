@@ -9,7 +9,7 @@ export const profile = {
   ],
 
   about: {
-    lead: 'A full-stack developer with a strong focus on backend — JavaScript, Vue, and React on the frontend, PHP (Laravel) with MySQL on the backend.',
+    lead: 'JavaScript, Vue, and React on the frontend; PHP (Laravel) with MySQL on the backend — and the APIs, data flow, and services that hold them together.',
     paragraphs: [
       'My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College — working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.',
       'My work is centered on designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale — not just interfaces that look good.',

@@ -55,14 +55,14 @@ const { targetRef, isVisible } = useIntersectionObserver()
 }
 .stack dt {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--t-label);
   letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--color-text-mute);
 }
 .stack dd {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: var(--t-body);
 }
 
 @media (max-width: 720px) {

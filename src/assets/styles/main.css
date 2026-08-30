@@ -24,21 +24,29 @@
 
     --color-text:       #e7e0d2;
     --color-text-soft:  #b4ab98;
-    --color-text-mute:  #8a8271;
+    --color-text-mute:  #968d79;
 
     --color-accent:     #c99b57;
     --color-on-accent:  #1b1815;
+    --color-error:      #d98b6a;
 
-    --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Bricolage Grotesque Variable", "Helvetica Neue", Arial, sans-serif;
     --font-body:    "Spectral", Georgia, "Times New Roman", serif;
-    --font-mono:    "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --font-mono:    "Spline Sans Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
     /* type scale */
-    --t-body: 1.0625rem;
-    --t-lead: 1.25rem;
-    --t-role: 1.55rem;
-    --t-h2:   2.05rem;
-    --t-h1:   clamp(3.25rem, 2rem + 5vw, 4.75rem);
+    --t-h1:        clamp(3.25rem, 2rem + 5vw, 4.75rem);
+    --t-h2:        2.05rem;
+    --t-pull:      clamp(1.5rem, 1rem + 1.8vw, 2.15rem);
+    --t-role:      1.55rem;
+    --t-statement: clamp(1.3rem, 1.05rem + 0.9vw, 1.65rem);
+    --t-lead:      1.25rem;
+    --t-title-sm:  1.3rem;
+    --t-body:      1.0625rem;
+    --t-caption:   0.95rem;
+    --t-numeral:   0.98rem;
+    --t-label:     0.72rem;
+    --t-label-sm:  0.68rem;
 
     --wrap: 1060px;
     --measure: 42rem;
@@ -57,10 +65,11 @@
 
     --color-text:       #181613;
     --color-text-soft:  #4e4a42;
-    --color-text-mute:  #696456;
+    --color-text-mute:  #615d50;
 
     --color-accent:     #1d4664;
     --color-on-accent:  #efece4;
+    --color-error:      #a3462a;
 
     color-scheme: light;
   }
@@ -121,17 +130,17 @@
     align-items: baseline;
     gap: 0.85rem;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--t-label);
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-text-mute);
     margin: 0 0 1.4rem;
   }
-  .tag__idx { font-size: 0.98rem; letter-spacing: 0.05em; color: var(--color-accent); }
+  .tag__idx { font-size: var(--t-numeral); letter-spacing: 0.05em; color: var(--color-accent); }
 
   .subhead {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--t-label);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text-mute);
@@ -151,7 +160,7 @@
 
   .metaline {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--t-label);
     letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--color-text-mute);

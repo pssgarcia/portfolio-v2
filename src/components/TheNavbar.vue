@@ -67,7 +67,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
         @click="toggleTheme"
         :aria-label="isDark ? 'Switch to light theme' : 'Switch to dark theme'"
       >
-        {{ isDark ? 'Light' : 'Dark' }}
+        Theme <span aria-hidden="true">·</span> {{ isDark ? 'Dark' : 'Light' }}
       </button>
 
       <button
@@ -89,7 +89,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
           </li>
         </ul>
         <button class="nav__overlay-theme" type="button" @click="toggleTheme">
-          {{ isDark ? 'Light theme' : 'Dark theme' }}
+          Theme <span aria-hidden="true">·</span> {{ isDark ? 'Dark' : 'Light' }}
         </button>
       </div>
     </Transition>
@@ -122,7 +122,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 .nav__mark {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--t-label);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-text);
@@ -139,7 +139,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 }
 .nav__links a {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-mute);
@@ -158,7 +158,7 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 
 .nav__theme {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-mute);
@@ -219,13 +219,13 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .nav__overlay a {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.75rem;
+  font-size: var(--t-role);
   color: var(--color-text);
   text-decoration: none;
 }
 .nav__overlay-theme {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: var(--t-label-sm);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-text-mute);
