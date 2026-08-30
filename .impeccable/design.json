@@ -72,16 +72,16 @@
       "kind": "custom",
       "refersTo": null,
       "description": "Two-column ledger row: date range in the margin, hairline bullet markers.",
-      "html": "<article class=\"ds-job\"><p class=\"ds-job-when\">Oct 2025 — Present</p><div><h3 class=\"ds-job-title\">Junior Developer II</h3><p class=\"ds-job-org\">Construsite Brasil · Belo Horizonte</p><ul class=\"ds-job-points\"><li>Built an AI-powered deal-summary feature via OpenAI API integration.</li></ul></div></article>",
+      "html": "<article class=\"ds-job\"><p class=\"ds-job-when\">Oct 2025 to Present</p><div><h3 class=\"ds-job-title\">Junior Developer II</h3><p class=\"ds-job-org\">Construsite Brasil · Belo Horizonte</p><ul class=\"ds-job-points\"><li>Built an AI-powered deal-summary feature via OpenAI API integration.</li></ul></div></article>",
       "css": ".ds-job { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0 2rem; padding: 1.9rem 0; border-top: 1px solid var(--color-rule, #332f28); } .ds-job-when { font-family: var(--font-mono, monospace); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-mute, #968d79); margin: 0; padding-top: 0.55rem; } .ds-job-title { font-family: var(--font-display, sans-serif); font-weight: 700; font-size: 1.55rem; letter-spacing: -0.015em; margin: 0; } .ds-job-org { color: var(--color-text-soft, #b4ab98); font-size: 0.98rem; margin: 0.25rem 0 0; } .ds-job-points { margin: 1rem 0 0; padding: 0; list-style: none; } .ds-job-points li { position: relative; padding-left: 1.4rem; margin: 0.4rem 0; font-size: 1rem; color: var(--color-text-soft, #b4ab98); } .ds-job-points li::before { content: ''; position: absolute; left: 0; top: 0.66em; width: 0.55rem; height: 1px; background: var(--color-accent, #c99b57); }"
     }
   ],
   "narrative": {
     "northStar": "The Engineer's Ledger",
-    "overview": "The site is set like a well-made technical ledger printed on dark stock: everything is accounted for, nothing is decorated. Structure is carried entirely by type and by 1px hairline rules — no cards, no panels, no shadows, no gradients. The reading column is a single left-anchored measure. The world is warm, not clinical: a brown-black ground (#1B1815), bone text, and a single flat antique-brass accent (#C99B57) used only where it means something. A light theme swaps the same structure onto warm stone paper with a deep drafting-ink blue accent. This is a deliberate replacement of the project's former dark tech minimalist look (near-black #0A0A0F, violet neon, animated gradient orbs, glassmorphism, emoji skill chips), which is now the anti-reference.",
+    "overview": "The site is set like a well-made technical ledger printed on dark stock: everything is accounted for, nothing is decorated. Structure is carried entirely by type and by 1px hairline rules, no cards, no panels, no shadows, no gradients. The reading column is a single left-anchored measure. The world is warm, not clinical: a brown-black ground (#1B1815), bone text, and a single flat antique-brass accent (#C99B57) used only where it means something. A light theme swaps the same structure onto warm stone paper with a deep drafting-ink blue accent. This is a deliberate replacement of the project's former dark tech minimalist look (near-black #0A0A0F, violet neon, animated gradient orbs, glassmorphism, emoji skill chips), which is now the anti-reference.",
     "keyCharacteristics": [
       "Warm-dark ground, one brass accent, zero second hue.",
-      "Hairline rules and type — never boxes — carry structure.",
+      "Hairline rules and type, never boxes, carry structure.",
       "One left-anchored reading measure; running section index aligned to the page edge.",
       "Grotesque display + serif body + mono for data. No system fonts, no display Inter.",
       "Flat. No shadow anywhere except a functional blur on the scrolled nav.",
@@ -90,9 +90,9 @@
     "rules": [
       { "name": "The One Accent Rule", "body": "The accent appears in four places only: section numerals, the hero kicker, links, and one bold word in the contact line. A fifth use, or a second colour, breaks the rule.", "section": "colors" },
       { "name": "The Warm-Ground Rule", "body": "The ground is always warm (brown-black or stone paper). A cool near-black or blue-grey slate is the AI-portfolio default this design exists to refuse.", "section": "colors" },
-      { "name": "The Mono-for-Data Rule", "body": "Spline Sans Mono is for measured or enumerated things — dates, indices, labels, stack lists. Never body copy, never a headline, never a technical costume on decorative text.", "section": "typography" },
+      { "name": "The Mono-for-Data Rule", "body": "Spline Sans Mono is for measured or enumerated things, dates, indices, labels, stack lists. Never body copy, never a headline, never a technical costume on decorative text.", "section": "typography" },
       { "name": "The One Lead Rule", "body": "Each section has at most one lead-size paragraph; everything after it drops to body size and soft-bone colour. The step down is the hierarchy.", "section": "typography" },
-      { "name": "The Flat Rule", "body": "Surfaces are flat. If a component needs to feel separated, it gets a hairline or a change in type — never a shadow, never a raised card.", "section": "elevation" }
+      { "name": "The Flat Rule", "body": "Surfaces are flat. If a component needs to feel separated, it gets a hairline or a change in type, never a shadow, never a raised card.", "section": "elevation" }
     ],
     "dos": [
       "Do carry structure with hairline --color-rule borders and the type scale.",
@@ -105,14 +105,14 @@
     "donts": [
       "Don't add cards, panels, filled containers, or any box-shadow.",
       "Don't introduce a second accent colour or move the accent onto a content fill.",
-      "Don't round a corner — border-radius is 0 everywhere (the timeline node's circle is geometry, not a container).",
+      "Don't round a corner, border-radius is 0 everywhere (the timeline node's circle is geometry, not a container).",
       "Don't use a gradient (the timeline rail's fade is the one exception), glow, blur (except the functional scrolled-nav blur), or a floating decorative shape.",
       "Don't use Spline Sans Mono for prose or a heading, or a system/Inter display face.",
       "Don't add a numbered marker to anything that isn't a fixed, ordered set.",
       "Don't revive the former dark-violet look (near-black #0A0A0F, neon violet, orbs, glassmorphism, glow shadows)."
     ],
     "clientPinned": [
-      "Emoji glyphs on skill badges and the timeline work/education chips — confined to those components.",
+      "Emoji glyphs on skill badges and the timeline work/education chips, confined to those components.",
       "Outlined square-cornered chips for skill badges.",
       "A sun/moon icon for the theme toggle instead of a text label.",
       "The Experience section rendered as a vertical timeline (accent rail + node dots) rather than a flat ledger."

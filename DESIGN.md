@@ -123,11 +123,11 @@ components:
 
 The site is set like a well-made technical ledger printed on dark stock: everything is
 accounted for, nothing is decorated. Structure is carried entirely by type and by 1px
-hairline rules — no cards, no panels, no shadows, no gradients. The reading column is a
+hairline rules, no cards, no panels, no shadows, no gradients. The reading column is a
 single left-anchored measure; the eye always knows where the next line begins. Where a
 generic developer portfolio reaches for glow, glass, floating shapes, and a purple
-accent, this one refuses all of it and lets the content — real production work, a dated
-job history, ranked projects — do the talking.
+accent, this one refuses all of it and lets the content, real production work, a dated
+job history, ranked projects, do the talking.
 
 The world is warm, not clinical: a brown-black ground (`#1B1815`), bone text, and a
 single flat antique-brass accent (`#C99B57`) used only where it means something. A light
@@ -140,7 +140,7 @@ chips). That look is the anti-reference; none of its devices return.
 
 **Key Characteristics:**
 - Warm-dark ground, one brass accent, zero second hue.
-- Hairline rules and type — never boxes — carry structure.
+- Hairline rules and type, never boxes, carry structure.
 - One left-anchored reading measure; running section index aligned to the page edge.
 - Grotesque display + serif body + mono for data. No system fonts, no display Inter.
 - Flat. No shadow anywhere except a functional blur on the scrolled nav.
@@ -148,7 +148,7 @@ chips). That look is the anti-reference; none of its devices return.
 
 ## Colors
 
-A warm monochrome — brown-black through bone — with exactly one accent.
+A warm monochrome, brown-black through bone, with exactly one accent.
 
 ### Primary
 - **Antique Brass** (`#C99B57`): the only accent. Section numerals (`01`–`04`), the hero
@@ -158,10 +158,10 @@ A warm monochrome — brown-black through bone — with exactly one accent.
 
 ### Neutral
 - **Warm Stock** (`#1B1815`): the page ground. Brown undertone, never a cool near-black.
-- **Raised Stock** (`#221E19`): the one recessed surface — the spec/footer band only.
+- **Raised Stock** (`#221E19`): the one recessed surface, the spec/footer band only.
 - **Bone** (`#E7E0D2`): primary text, display type.
-- **Soft Bone** (`#B4AB98`): secondary text — body paragraphs inside a section, list items.
-- **Mute Bone** (`#968D79`): tertiary — mono labels, dates, indices, captions. Sits at
+- **Soft Bone** (`#B4AB98`): secondary text, body paragraphs inside a section, list items.
+- **Mute Bone** (`#968D79`): tertiary, mono labels, dates, indices, captions. Sits at
   ~5.3:1 on the ground; do not darken it further.
 - **Rule** (`#332F28`): every hairline separator and border.
 - **Rule Bold** (`#464036`): the heavier top border on the Experience section and input
@@ -169,7 +169,7 @@ A warm monochrome — brown-black through bone — with exactly one accent.
 
 ### Semantic
 - **Error** (`#D98B6A` dark / `#A3462A` light): the contact form's error message only.
-  A muted terracotta — never the accent, never a saturated alert red.
+  A muted terracotta, never the accent, never a saturated alert red.
 
 ### Light theme
 `[data-theme="light"]` redefines the same token names: ground `#EFECE4` (warm stone),
@@ -189,7 +189,7 @@ cool near-black or blue-grey slate is the AI-portfolio default this design exist
 **Body Font:** Spectral (fallback: Georgia, Times New Roman)
 **Label / Mono Font:** Spline Sans Mono Variable (fallback: ui-monospace, SF Mono, Menlo)
 
-All three are self-hosted via `@fontsource` — no third-party font request.
+All three are self-hosted via `@fontsource`, no third-party font request.
 
 **Character:** A characterful grotesque set heavy and tight for names and headings,
 against a screen-first serif for reading, with a monospace reserved for anything
@@ -219,7 +219,7 @@ long-form bio comfortable; the mono makes dates and indices read as data, not de
   0.08–0.20em): dates, stack lists, field labels, nav items, meta rows, kicker.
 
 ### Named Rules
-**The Mono-for-Data Rule.** Spline Sans Mono is for measured or enumerated things —
+**The Mono-for-Data Rule.** Spline Sans Mono is for measured or enumerated things , 
 dates, indices, labels, stack lists. Never body copy, never a headline, never a
 "technical" costume on decorative text.
 
@@ -234,12 +234,12 @@ wrap (prose 42rem); on wide screens the right margin is deliberate quiet, not an
 grid.
 
 Sections are separated by a 1px `--color-rule` top border and vertical padding of
-`3.75rem 0 3.25rem` — more above a heading than below it. The Experience section takes a
+`3.75rem 0 3.25rem`, more above a heading than below it. The Experience section takes a
 heavier `--color-rule-bold` top border and `4.25rem` top padding (`.section--star`) to
 read as the anchor of the page.
 
 Two internal structures:
-- **Experience:** a vertical timeline — a 1px accent rail down a `1.75rem` node column,
+- **Experience:** a vertical timeline, a 1px accent rail down a `1.75rem` node column,
   a node dot per entry, and the entry content beside it. Client-pinned: the "journey
   with icons" is kept from the previous design, re-skinned into this palette.
 - **Projects:** two equal columns (`repeat(2, 1fr)`, `gap: 0 3.25rem`), each row a
@@ -254,18 +254,18 @@ condenses to a hamburger overlay. `--nav-height` is `4.25rem`.
 Flat. There are no shadows anywhere in the system. Depth is conveyed by hairline rules,
 by the type hierarchy, and by the single recessed `--color-surface` band at the foot of
 the page. The only `backdrop-filter` is an 8px blur on the navigation *after* scroll, as
-a functional legibility treatment for the sticky bar — not a decorative glass effect.
+a functional legibility treatment for the sticky bar, not a decorative glass effect.
 
 ### Named Rules
 **The Flat Rule.** Surfaces are flat. If a component needs to feel separated, it gets a
-hairline or a change in type — never a shadow, never a raised card.
+hairline or a change in type, never a shadow, never a raised card.
 
 ## Shapes
 
 Square. `border-radius` is `0` on every element, including the submit button and form
 fields. Borders are always 1px hairlines. Form fields are a single bottom border; there
 is no field box. The one exception is the **timeline node**, a 11px circle on the
-Experience rail — geometry, not a rounded container. Skill badges are square-cornered
+Experience rail, geometry, not a rounded container. Skill badges are square-cornered
 outlined chips (client-pinned; see Components).
 
 ## Components
@@ -274,9 +274,9 @@ outlined chips (client-pinned; see Components).
 - Fixed, `4.25rem` tall, transparent at rest. After 24px of scroll it takes a
   `--color-bg-blur` background (90% ground), an 8px blur, and a `--color-rule` bottom border.
 - Left: "PEDRO SOARES" as a mono wordmark (no monogram). Right: four mono nav links,
-  an **icon theme toggle** (client-pinned) — a stroke sun in dark mode, a stroke moon in
+  an **icon theme toggle** (client-pinned), a stroke sun in dark mode, a stroke moon in
   light, in a square `--color-rule-bold` box, brass on hover, with an `aria-label` naming
-  the action — and on mobile a two-line hamburger opening a full-screen overlay (which
+  the action, and on mobile a two-line hamburger opening a full-screen overlay (which
   carries a larger copy of the same icon toggle).
 - Nav links: mute-bone default, bone on hover, **accent with a 1px accent underline when
   active**. The active section is tracked by a deterministic scroll position check
@@ -285,16 +285,16 @@ outlined chips (client-pinned; see Components).
 ### Section Mark (signature)
 A mono line above every section heading: an accent numeral (`01`) followed by an
 uppercase label. Aligned to the same left edge as the hero name and the body column.
-The four numbers correspond to the four fixed content areas — this is the only place
+The four numbers correspond to the four fixed content areas, this is the only place
 numbering is used.
 
 ### Experience Timeline (signature, client-pinned)
 Kept from the previous design at the client's request and re-skinned into this palette.
 A vertical accent rail runs down a `1.75rem` node column; each role is a node dot on the
-rail — a hollow brass ring for **work**, a filled brass dot for **education** — beside a
+rail, a hollow brass ring for **work**, a filled brass dot for **education**, beside a
 content block: date range (mono, accent), title (Bricolage 700), organisation
 (soft-bone), accomplishments as a bullet list (each marker a 0.55rem × 1px accent
-hairline), and a small outlined **type chip** with an emoji — `💼 Work` / `🎓 Education`.
+hairline), and a small outlined **type chip** with an emoji, `💼 Work` / `🎓 Education`.
 The rail and chips are the only decorative-leaning elements in the system and are
 confined to this section.
 
@@ -325,7 +325,7 @@ Hairline top border on every entry.
 - **Text button (back-to-top):** mono, borderless, colour shift on hover.
 
 ### Footer
-A single mono line — copyright + city — and a "Back to top" text button. It does not
+A single mono line, copyright + city, and a "Back to top" text button. It does not
 repeat the contact channels that appear directly above it.
 
 ## Do's and Don'ts
@@ -341,7 +341,7 @@ repeat the contact channels that appear directly above it.
 ### Don't:
 - **Don't** add cards, panels, filled containers, or any `box-shadow`.
 - **Don't** introduce a second accent colour or move the accent onto a content fill.
-- **Don't** round a corner — `border-radius` is `0` everywhere (the timeline node's
+- **Don't** round a corner, `border-radius` is `0` everywhere (the timeline node's
   circle is geometry, not a container).
 - **Don't** use a gradient (the timeline rail's fade is the one exception), glow, blur
   (except the functional scrolled-nav blur), or a floating decorative shape.
@@ -353,7 +353,7 @@ repeat the contact channels that appear directly above it.
 ### Client-pinned exceptions
 The client asked to keep three devices from the previous design; they override the rules
 above **only where named** and stay confined to their components:
-- **Emoji glyphs** on skill badges and the timeline `💼 / 🎓` chips. Nowhere else —
+- **Emoji glyphs** on skill badges and the timeline `💼 / 🎓` chips. Nowhere else , 
   headings, nav, and section marks stay glyph-free.
 - **Outlined chips** for skill badges (square corners, so not a true pill).
 - **An icon** (sun/moon) for the theme toggle instead of a text label.
