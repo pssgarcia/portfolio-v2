@@ -15,7 +15,7 @@ defineProps({
 
     <div class="tl__body">
       <p class="tl__when">
-        {{ dateFrom }}<template v-if="dateTo"> &mdash; {{ dateTo }}</template>
+        {{ dateFrom }}<template v-if="dateTo"> to {{ dateTo }}</template>
       </p>
       <h3 class="tl__title">{{ title }}</h3>
       <p class="tl__org">{{ org }}</p>

@@ -92,7 +92,7 @@ const handleSubmit = async () => {
               Message sent. I&rsquo;ll get back to you soon.
             </p>
             <p v-if="submitStatus === 'error'" class="contact__note contact__note--err" role="alert">
-              Something went wrong — please email me directly at pedrossgarcia88@gmail.com.
+              Something went wrong. Please email me directly at pedrossgarcia88@gmail.com.
             </p>
           </form>
         </div>

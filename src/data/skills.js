@@ -1,4 +1,4 @@
-// Flat cloud, ordered by weight — backend and data first, practices last.
+// Flat cloud, ordered by weight; backend and data first, practices last.
 export const skills = [
   { name: 'PHP', icon: '🐘' },
   { name: 'Laravel', icon: '🔺' },

@@ -23,7 +23,7 @@ export function useIntersectionObserver(options = {}) {
     if (isVisible.value || !targetRef.value) return
 
     // Anything already at or above the fold (including after a deep-link jump)
-    // is shown straight away — never left stuck at opacity 0.
+    // is shown straight away, never left stuck at opacity 0.
     const rect = targetRef.value.getBoundingClientRect()
     if (rect.top < window.innerHeight * 0.9) {
       isVisible.value = true

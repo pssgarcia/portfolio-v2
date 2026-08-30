@@ -9,14 +9,14 @@ export const profile = {
   ],
 
   about: {
-    lead: 'PHP and Laravel with MySQL on the backend, Vue and JavaScript on the frontend, Node.js where it fits — and the REST APIs, integrations, and multi-tenant data that hold a SaaS together.',
+    lead: 'PHP and Laravel with MySQL on the backend, Vue and JavaScript on the frontend, Node.js where it fits, plus the REST APIs, integrations, and multi-tenant data that hold a SaaS together.',
     paragraphs: [
-      'My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College — working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.',
-      'At Construsite Brasil I have gone from intern to Junior Developer III over two years — shipping end-to-end features in a multi-tenant SaaS CRM, resolving production and tenant-isolation issues, and more recently coordinating the team’s demands, reviewing code, and setting the engineering guidelines we build against.',
-      'The work is about designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale — not just interfaces that look good.',
+      'My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College, working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.',
+      'At Construsite Brasil I have gone from intern to Junior Developer III over two years, shipping end-to-end features in a multi-tenant SaaS CRM, resolving production and tenant-isolation issues, and more recently coordinating the team’s demands, reviewing code, and setting the engineering guidelines we build against.',
+      'The work is about designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale. Not just interfaces that look good.',
       'Currently finishing a B.Sc. in Software Engineering at PUC Minas.',
     ],
-    aside: "Outside of tech: fitness, music, and fashion. I value consistency, challenges, and continuous growth.",
+    aside: 'Outside of tech: fitness, music, and fashion. I value consistency, challenges, and continuous growth.',
   },
 
   contact: {

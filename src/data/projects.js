@@ -3,7 +3,7 @@ export const projects = [
   {
     title: 'Tayro',
     description:
-      'A two-sided SaaS marketplace connecting brands and fitness creators — campaign lifecycle as a guarded state machine, race-condition-safe application flow, and live media kits from the Instagram API.',
+      'A two-sided SaaS marketplace connecting brands and fitness creators. Campaign lifecycle as a guarded state machine, race-condition-safe application flow, and live media kits from the Instagram API.',
     techs: ['NestJS', 'TypeScript', 'Prisma', 'PostgreSQL'],
     github: '',
     repoPrivate: true,
@@ -11,14 +11,14 @@ export const projects = [
   },
   {
     title: 'Street Kicks',
-    description: 'Sneaker e-commerce storefront — product browsing, cart, and a clean checkout flow.',
+    description: 'Sneaker e-commerce storefront with product browsing, cart, and a clean checkout flow.',
     techs: ['Vue.js', 'CSS', 'e-commerce'],
     github: 'https://github.com/pssgarcia/sneakers',
     demo: 'https://main--pedro-sneakers.netlify.app',
   },
   {
     title: 'Expense Tracker',
-    description: 'Personal finance app — income and expense tracking with visual summaries and transaction history.',
+    description: 'Personal finance app for tracking income and expenses, with visual summaries and transaction history.',
     techs: ['Vue.js', 'JavaScript', 'CSS'],
     github: 'https://github.com/pssgarcia/expense_tracker',
     demo: 'https://pedro-expense-tracker.netlify.app',
@@ -32,21 +32,21 @@ export const projects = [
   },
   {
     title: 'Readvice',
-    description: 'Collaborative book-recommendation platform — discover reads from preferences and community ratings.',
+    description: 'Collaborative book-recommendation platform for discovering reads from preferences and community ratings.',
     techs: ['Vue.js', 'JavaScript', 'API'],
     github: 'https://github.com/DYagmur/ReadVice',
     demo: '',
   },
   {
     title: 'Movie Search Gallery',
-    description: 'Movie discovery app on an external API — search, filtering, and detail views.',
+    description: 'Movie discovery app on an external API, with search, filtering, and detail views.',
     techs: ['React', 'JavaScript', 'API'],
     github: 'https://github.com/pssgarcia/movie_land',
     demo: '',
   },
   {
     title: 'Products Invoice System',
-    description: 'Invoice generation for product management — itemized billing, calculations, PDF-ready output.',
+    description: 'Invoice generation for product management: itemized billing, calculations, and PDF-ready output.',
     techs: ['JavaScript', 'HTML', 'CSS'],
     github: 'https://github.com/pssgarcia/invoice_system_js',
     demo: '',

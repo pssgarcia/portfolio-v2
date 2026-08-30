@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ============================================================
-   Editorial portfolio — Direction C (Editorial / Dark)
+   Editorial portfolio, Direction C (Editorial / Dark)
    Dark is the committed look; [data-theme="light"] carries the
    Direction A palette for the theme toggle. Structure is shared:
    left-anchored measure, running section index, hairline rules,
@@ -15,7 +15,7 @@
 
 @layer base {
   :root {
-    /* Direction C — warm-dark stock */
+    /* Direction C: warm-dark stock */
     --color-bg:         #1b1815;
     --color-bg-blur:    rgba(27, 24, 21, 0.9);
     --color-surface:    #221e19;
@@ -55,7 +55,7 @@
     color-scheme: dark;
   }
 
-  /* Direction A — light editorial (theme toggle) */
+  /* Direction A: light editorial (theme toggle) */
   [data-theme="light"] {
     --color-bg:         #efece4;
     --color-bg-blur:    rgba(239, 236, 228, 0.9);
@@ -113,7 +113,7 @@
     padding-inline: clamp(1.5rem, 5vw, 3.5rem);
   }
 
-  /* section shell — a hairline above, more space above a heading than below it */
+  /* section shell: a hairline above, more space above a heading than below it */
   .section {
     padding: 3.75rem 0 3.25rem;
     border-top: 1px solid var(--color-rule);
@@ -199,7 +199,7 @@
     text-wrap: balance;
   }
 
-  /* scroll reveal — subtle, once, and inert under reduced motion */
+  /* scroll reveal: subtle, once, and inert under reduced motion */
   .reveal {
     opacity: 0;
     transform: translateY(12px);

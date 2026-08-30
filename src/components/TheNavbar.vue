@@ -5,7 +5,7 @@ import { useColorMode } from '@/composables/useColorMode'
 
 const { isDark, toggle: toggleTheme } = useColorMode()
 
-// Kept in DOM order — navbar, sections, and scroll-spy all agree.
+// Kept in DOM order; navbar, sections, and scroll-spy all agree.
 const navLinks = [
   { label: 'About', id: 'about' },
   { label: 'Experience', id: 'experience' },

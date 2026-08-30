@@ -45,7 +45,7 @@ const rolesLabel = `${words[construsiteRoles - 1] ?? construsiteRoles} roles at 
   max-width: 62rem;
 }
 
-/* the journey line — sits under the node column */
+/* the journey line, under the node column */
 .timeline__rail {
   position: absolute;
   top: 0.5rem;
