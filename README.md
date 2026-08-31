@@ -1,4 +1,4 @@
-# Portfólio Profissional — Pedro Soares
+# Portfólio Profissional — Pedro Soares de Souza Garcia
 
 https://pedrossgarcia.com.br/
 
@@ -22,11 +22,6 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 - **Formulário de contato com validação _inline_ em tempo real** (no _blur_ e no envio): nome, e-mail (formato) e mensagem (tamanho mínimo), com mensagens de erro sob cada campo, `aria-invalid`/`aria-describedby` e foco no primeiro campo inválido. O envio faz `POST` de JSON para `/api/contact`, uma _serverless function_ na Vercel que revalida os dados, descarta _honeypot_ e envia o e-mail via **Resend**.
 - **Conteúdo centralizado em arquivos de dados** (`src/data/*.js` e `src/i18n/ui.js`), para atualizar textos sem tocar nos componentes.
 - **Movimento respeitando `prefers-reduced-motion`.**
-
-### Previsto para sprints futuras
-
-- Persistência das mensagens de contato (hoje só há o envio de e-mail via Resend).
-- Blog / CMS.
 
 ---
 
@@ -143,8 +138,6 @@ O `npm run dev` serve só o front-end; o formulário de contato precisa da funç
 `api/contact.js`. Para exercitá-la localmente, copie `.env.example` para `.env`,
 preencha `RESEND_API_KEY` e `CONTACT_FROM`, e rode `vercel dev` (Vercel CLI) no
 lugar de `npm run dev`. As mesmas variáveis devem existir no projeto na Vercel.
-
-Não há suíte de testes nem linter configurados.
 
 ---
 
