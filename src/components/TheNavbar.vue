@@ -123,6 +123,7 @@ onUnmounted(() => {
       </button>
     </div>
 
+    <Teleport to="body">
     <Transition name="menu">
       <div v-if="isMenuOpen" class="nav__overlay" @click.self="closeMenu">
         <ul>
@@ -164,6 +165,7 @@ onUnmounted(() => {
         </div>
       </div>
     </Transition>
+    </Teleport>
 
     <span
       class="nav__progress"
@@ -305,6 +307,8 @@ onUnmounted(() => {
 .nav__overlay {
   position: fixed;
   inset: 0;
+  /* below the nav (z 1000) so the burger stays on top and toggles the close */
+  z-index: 900;
   background: var(--color-bg);
   display: flex;
   flex-direction: column;
