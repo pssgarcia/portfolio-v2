@@ -1,4 +1,7 @@
 <script setup>
+import { useLanguage } from '@/composables/useLanguage'
+
+const { t } = useLanguage()
 const currentYear = new Date().getFullYear()
 
 function toTop() {
@@ -9,8 +12,8 @@ function toTop() {
 <template>
   <footer class="footer">
     <div class="wrap footer__inner">
-      <p class="footer__copy">&copy; {{ currentYear }} Pedro Soares &middot; Belo Horizonte, Brazil</p>
-      <button class="footer__top" type="button" @click="toTop">Back to top</button>
+      <p class="footer__copy">{{ t('footerLine', { year: currentYear }) }}</p>
+      <button class="footer__top" type="button" @click="toTop">{{ t('backToTop') }}</button>
     </div>
   </footer>
 </template>

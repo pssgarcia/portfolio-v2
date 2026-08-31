@@ -1,25 +1,19 @@
 <script setup>
 import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
-import SectionMark from './SectionMark.vue'
+import { useContent } from '@/composables/useContent'
+import { useLanguage } from '@/composables/useLanguage'
 import TimelineItem from './TimelineItem.vue'
-import { experience } from '@/data/experience'
 
 const { targetRef, isVisible } = useIntersectionObserver()
-
-const words = ['One', 'Two', 'Three', 'Four', 'Five', 'Six']
-const construsiteRoles = experience.filter(
-  (e) => e.type === 'work' && e.org.startsWith('Construsite'),
-).length
-const rolesLabel = `${words[construsiteRoles - 1] ?? construsiteRoles} roles at Construsite Brasil · since Aug 2024`
+const { experience } = useContent()
+const { t } = useLanguage()
 </script>
 
 <template>
   <section id="experience" class="section section--star">
     <div class="wrap">
       <div ref="targetRef" class="reveal" :class="{ 'is-visible': isVisible }">
-        <SectionMark index="02" label="Experience" />
-        <h2 class="h-section">Experience</h2>
-        <p class="subhead">{{ rolesLabel }}</p>
+        <h2 class="h-section">{{ t('experienceHeading') }}</h2>
 
         <div class="timeline">
           <span class="timeline__rail" aria-hidden="true"></span>

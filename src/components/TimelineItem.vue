@@ -1,4 +1,8 @@
 <script setup>
+import { useLanguage } from '@/composables/useLanguage'
+
+const { t } = useLanguage()
+
 defineProps({
   dateFrom: { type: String, required: true },
   dateTo: { type: String, default: '' },
@@ -15,7 +19,8 @@ defineProps({
 
     <div class="tl__body">
       <p class="tl__when">
-        {{ dateFrom }}<template v-if="dateTo"> to {{ dateTo }}</template>
+        <span>{{ dateFrom }}</span>
+        <span v-if="dateTo">{{ t('timelineTo') }} {{ dateTo }}</span>
       </p>
       <h3 class="tl__title">{{ title }}</h3>
       <p class="tl__org">{{ org }}</p>
@@ -26,7 +31,7 @@ defineProps({
 
       <span class="tl__chip">
         <span aria-hidden="true">{{ type === 'education' ? '🎓' : '💼' }}</span>
-        {{ type === 'education' ? 'Education' : 'Work' }}
+        {{ type === 'education' ? t('chipEducation') : t('chipWork') }}
       </span>
     </div>
   </article>
@@ -62,6 +67,9 @@ defineProps({
 }
 
 .tl__when {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
   font-family: var(--font-mono);
   font-size: var(--t-label-sm);
   letter-spacing: 0.1em;

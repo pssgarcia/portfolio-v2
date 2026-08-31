@@ -1,19 +1,19 @@
 <script setup>
 import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
-import SectionMark from './SectionMark.vue'
+import { useContent } from '@/composables/useContent'
+import { useLanguage } from '@/composables/useLanguage'
 import SkillBadge from './SkillBadge.vue'
-import { profile } from '@/data/profile'
-import { skills } from '@/data/skills'
 
 const { targetRef, isVisible } = useIntersectionObserver()
+const { profile, skills } = useContent()
+const { t } = useLanguage()
 </script>
 
 <template>
   <section id="about" class="section">
     <div class="wrap">
       <div ref="targetRef" class="reveal" :class="{ 'is-visible': isVisible }">
-        <SectionMark index="01" label="About" />
-        <h2 class="h-section">Where the work comes from</h2>
+        <h2 class="h-section">{{ t('aboutHeading') }}</h2>
 
         <div class="prose">
           <p class="lead">{{ profile.about.lead }}</p>
@@ -21,7 +21,7 @@ const { targetRef, isVisible } = useIntersectionObserver()
           <p class="about__aside">{{ profile.about.aside }}</p>
         </div>
 
-        <p class="subhead about__stack-mark">What I work with</p>
+        <p class="subhead about__stack-mark">{{ t('aboutStackMark') }}</p>
         <div class="about__skills">
           <SkillBadge
             v-for="skill in skills"
