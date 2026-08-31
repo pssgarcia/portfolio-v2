@@ -2,143 +2,379 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useActiveSection } from '@/composables/useActiveSection'
 import { useColorMode } from '@/composables/useColorMode'
+import { useLanguage } from '@/composables/useLanguage'
+import FlagIcon from './FlagIcon.vue'
 
 const { isDark, toggle: toggleTheme } = useColorMode()
+const { lang, toggle: toggleLang, t } = useLanguage()
 
+// Kept in DOM order; navbar, sections, and scroll-spy all agree.
 const navLinks = [
-  { label: 'Home', href: '#hero' },
-  { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Contact', href: '#contact' },
+  { key: 'navAbout', id: 'about' },
+  { key: 'navExperience', id: 'experience' },
+  { key: 'navProjects', id: 'projects' },
+  { key: 'navContact', id: 'contact' },
 ]
 
-const { activeSection } = useActiveSection([
-  'hero', 'about', 'projects', 'experience', 'contact'
-])
+const { activeSection } = useActiveSection(['about', 'experience', 'projects', 'contact'])
 
 const isScrolled = ref(false)
-const isMobileMenuOpen = ref(false)
+const isMenuOpen = ref(false)
+const scrollProgress = ref(0)
 
-function handleScroll() {
-  isScrolled.value = window.scrollY > 50
+let ticking = false
+function onScroll() {
+  if (ticking) return
+  ticking = true
+  requestAnimationFrame(() => {
+    const y = window.scrollY
+    isScrolled.value = y > 24
+    const max = document.documentElement.scrollHeight - window.innerHeight
+    scrollProgress.value = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0
+    ticking = false
+  })
 }
 
-function toggleMobileMenu() {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
-  document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : ''
-}
-
-function closeMobileMenu() {
-  isMobileMenuOpen.value = false
+function closeMenu() {
+  isMenuOpen.value = false
   document.body.style.overflow = ''
 }
 
-function scrollTo(href) {
-  closeMobileMenu()
-  const el = document.querySelector(href)
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
-  }
+function toggleMenu() {
+  isMenuOpen.value = !isMenuOpen.value
+  document.body.style.overflow = isMenuOpen.value ? 'hidden' : ''
+}
+
+function goTo(id) {
+  closeMenu()
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true })
-  handleScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
 })
-
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('scroll', onScroll)
+  document.body.style.overflow = ''
 })
 </script>
 
 <template>
-  <nav
-    id="main-nav"
-    class="fixed top-0 left-0 right-0 z-[1000] h-[var(--nav-height)] transition-all duration-250 bg-transparent"
-    :class="{ 'bg-[rgba(10,10,15,0.88)] backdrop-blur-[20px] border-b border-border-subtle shadow-[0_4px_30px_rgba(0,0,0,0.3)]': isScrolled && isDark && !isMobileMenuOpen, 'bg-[rgba(245,243,255,0.88)] backdrop-blur-[20px] border-b border-border-subtle shadow-[0_4px_20px_rgba(109,40,217,0.08)]': isScrolled && !isDark && !isMobileMenuOpen }"
-  >
-    <div class="h-full container flex items-center justify-between">
+  <nav class="nav" :class="{ 'is-scrolled': isScrolled, 'is-open': isMenuOpen }">
+    <div class="wrap nav__inner">
       <a
         href="#hero"
-        class="flex items-center gap-2 no-underline z-[1001]"
-        @click.prevent="scrollTo('#hero')"
-      >
-        <span class="flex items-center justify-center w-9 h-9 bg-gradient-to-br from-accent to-accent-deep rounded-sm font-extrabold text-[1.1rem] text-white">P</span>
-      </a>
+        class="nav__mark"
+        :aria-label="t('navHome')"
+        @click.prevent="goTo('hero')"
+      >P</a>
 
-      <div class="flex items-center gap-6">
-        <ul class="hidden md:flex items-center gap-8">
-          <li v-for="link in navLinks" :key="link.href">
-            <a
-              :href="link.href"
-              class="text-[clamp(0.8125rem,0.75rem+0.3125vw,0.9375rem)] font-medium text-text-secondary transition-colors duration-150 relative py-1 hover:text-text-heading after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:rounded-full after:transition-all after:duration-250 hover:after:w-full"
-              :class="{ 'text-accent-light after:w-full': activeSection === link.href.slice(1) }"
-              @click.prevent="scrollTo(link.href)"
-            >
-              {{ link.label }}
-            </a>
-          </li>
-        </ul>
-
-        <!-- Theme toggle -->
-        <button
-          id="theme-toggle"
-          class="flex shrink-0 items-center justify-center w-9 h-9 rounded-full bg-surface border border-border-subtle text-text-secondary transition-all duration-250 hover:text-accent hover:border-accent hover:bg-accent-muted"
-          @click="toggleTheme"
-          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-        >
-          <!-- Sun icon (shown in dark mode) -->
-          <svg v-if="isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-
-        <button
-          id="mobile-menu-toggle"
-          class="flex md:hidden flex-col justify-center gap-[5px] w-7 h-7 bg-transparent border-none cursor-pointer z-[1001] p-0"
-          @click="toggleMobileMenu"
-          :aria-expanded="isMobileMenuOpen"
-          aria-label="Toggle navigation menu"
-        >
-          <span class="block w-full h-[2px] bg-text-primary rounded-full transition-all duration-250 origin-center" :class="{ 'translate-y-[7px] rotate-45': isMobileMenuOpen }"></span>
-          <span class="block w-full h-[2px] bg-text-primary rounded-full transition-all duration-250 origin-center" :class="{ 'opacity-0 scale-x-0': isMobileMenuOpen }"></span>
-          <span class="block w-full h-[2px] bg-text-primary rounded-full transition-all duration-250 origin-center" :class="{ '-translate-y-[7px] -rotate-45': isMobileMenuOpen }"></span>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <Transition
-    enter-active-class="transition-opacity duration-300 ease"
-    leave-active-class="transition-opacity duration-200 ease"
-    enter-from-class="opacity-0"
-    leave-to-class="opacity-0"
-  >
-    <div v-if="isMobileMenuOpen" class="fixed inset-0 bg-[rgba(10,10,15,0.95)] backdrop-blur-[30px] flex items-center justify-center z-[990]" @click.self="closeMobileMenu">
-      <ul class="flex flex-col items-center gap-12">
-        <li v-for="(link, i) in navLinks" :key="link.href" class="animate-fade-in-up" :style="{ transitionDelay: `${i * 60}ms`, animationFillMode: 'both' }">
+      <ul class="nav__links">
+        <li v-for="link in navLinks" :key="link.id">
           <a
-            :href="link.href"
-            class="text-[clamp(1.5rem,1.2rem+1.5vw,2rem)] font-semibold text-text-secondary transition-colors duration-150 hover:text-accent-light"
-            :class="{ 'text-accent-light': activeSection === link.href.slice(1) }"
-            @click.prevent="scrollTo(link.href)"
-          >
-            {{ link.label }}
-          </a>
+            :href="`#${link.id}`"
+            :class="{ 'is-active': activeSection === link.id }"
+            @click.prevent="goTo(link.id)"
+          >{{ t(link.key) }}</a>
         </li>
       </ul>
+
+      <button
+        class="nav__lang"
+        type="button"
+        :aria-label="t('langSwitch')"
+        :title="t('langSwitch')"
+        @click="toggleLang"
+      >
+        <FlagIcon :code="lang" />
+      </button>
+
+      <button
+        class="nav__theme"
+        type="button"
+        @click="toggleTheme"
+        :aria-label="isDark ? t('themeToLight') : t('themeToDark')"
+      >
+        <svg v-if="isDark" class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5" />
+          <line x1="12" y1="2.5" x2="12" y2="5" />
+          <line x1="12" y1="19" x2="12" y2="21.5" />
+          <line x1="4.4" y1="4.4" x2="6.1" y2="6.1" />
+          <line x1="17.9" y1="17.9" x2="19.6" y2="19.6" />
+          <line x1="2.5" y1="12" x2="5" y2="12" />
+          <line x1="19" y1="12" x2="21.5" y2="12" />
+          <line x1="4.4" y1="19.6" x2="6.1" y2="17.9" />
+          <line x1="17.9" y1="6.1" x2="19.6" y2="4.4" />
+        </svg>
+        <svg v-else class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20.5 13.2A8 8 0 1 1 10.8 3.5 6.3 6.3 0 0 0 20.5 13.2z" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <button
+        class="nav__burger"
+        type="button"
+        :aria-expanded="isMenuOpen"
+        :aria-label="isMenuOpen ? t('menuClose') : t('menuOpen')"
+        @click="toggleMenu"
+      >
+        <span></span><span></span>
+      </button>
     </div>
-  </Transition>
+
+    <Transition name="menu">
+      <div v-if="isMenuOpen" class="nav__overlay" @click.self="closeMenu">
+        <ul>
+          <li v-for="link in navLinks" :key="link.id">
+            <a :href="`#${link.id}`" @click.prevent="goTo(link.id)">{{ t(link.key) }}</a>
+          </li>
+        </ul>
+        <div class="nav__overlay-controls">
+          <button
+            class="nav__overlay-btn"
+            type="button"
+            :aria-label="t('langSwitch')"
+            :title="t('langSwitch')"
+            @click="toggleLang"
+          >
+            <FlagIcon :code="lang" />
+          </button>
+          <button
+            class="nav__overlay-btn"
+            type="button"
+            @click="toggleTheme"
+            :aria-label="isDark ? t('themeToLight') : t('themeToDark')"
+          >
+            <svg v-if="isDark" class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.5" />
+              <line x1="12" y1="2.5" x2="12" y2="5" />
+              <line x1="12" y1="19" x2="12" y2="21.5" />
+              <line x1="4.4" y1="4.4" x2="6.1" y2="6.1" />
+              <line x1="17.9" y1="17.9" x2="19.6" y2="19.6" />
+              <line x1="2.5" y1="12" x2="5" y2="12" />
+              <line x1="19" y1="12" x2="21.5" y2="12" />
+              <line x1="4.4" y1="19.6" x2="6.1" y2="17.9" />
+              <line x1="17.9" y1="6.1" x2="19.6" y2="4.4" />
+            </svg>
+            <svg v-else class="nav__theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M20.5 13.2A8 8 0 1 1 10.8 3.5 6.3 6.3 0 0 0 20.5 13.2z" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </Transition>
+
+    <span
+      class="nav__progress"
+      :style="{ transform: `scaleX(${scrollProgress})` }"
+      role="progressbar"
+      aria-hidden="true"
+    ></span>
+  </nav>
 </template>
+
+<style scoped>
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  background: var(--color-bg-blur);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+  border-bottom: 1px solid var(--color-rule);
+}
+.nav.is-scrolled {
+  background: var(--color-bg);
+  border-bottom-color: var(--color-rule-bold);
+}
+
+/* reading-progress bar, seated on the nav's bottom edge */
+.nav__progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.12s ease-out;
+  will-change: transform;
+}
+
+.nav__inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav__mark {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-text);
+  text-decoration: none;
+  margin-right: auto;
+  transition: color 0.15s ease;
+}
+.nav__mark:hover {
+  color: var(--color-accent);
+}
+
+.nav__links {
+  display: flex;
+  gap: 1.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav__links a {
+  font-family: var(--font-mono);
+  font-size: var(--t-label-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.nav__links a:hover {
+  color: var(--color-text);
+}
+.nav__links a.is-active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.nav__lang,
+.nav__theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--color-text-mute);
+  background: transparent;
+  border: 1px solid var(--color-rule-bold);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.nav__lang {
+  font-family: var(--font-mono);
+  font-size: var(--t-label-sm);
+  letter-spacing: 0.06em;
+}
+.nav__lang:hover,
+.nav__theme:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.nav__theme-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.nav__burger span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-text);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav.is-open .nav__burger span:first-child { transform: translateY(3.25px) rotate(45deg); }
+.nav.is-open .nav__burger span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+.nav__overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+.nav__overlay ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  text-align: center;
+}
+.nav__overlay a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-role);
+  color: var(--color-text);
+  text-decoration: none;
+}
+.nav__overlay-controls {
+  display: flex;
+  gap: 1rem;
+}
+.nav__overlay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--color-text-mute);
+  background: transparent;
+  border: 1px solid var(--color-rule-bold);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  letter-spacing: 0.06em;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.nav__overlay-btn:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.nav__overlay-btn .nav__theme-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+.nav__overlay-btn :deep(.flag) {
+  width: 1.45rem;
+}
+
+.menu-enter-active,
+.menu-leave-active { transition: opacity 0.2s ease; }
+.menu-enter-from,
+.menu-leave-to { opacity: 0; }
+
+@media (max-width: 720px) {
+  .nav__links,
+  .nav__lang,
+  .nav__theme { display: none; }
+  .nav__burger { display: flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__burger span,
+  .menu-enter-active,
+  .menu-leave-active,
+  .nav__progress { transition: none; }
+}
+</style>

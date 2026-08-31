@@ -2,81 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   Editorial portfolio, Direction C (Editorial / Dark)
+   Dark is the committed look; [data-theme="light"] carries the
+   Direction A palette for the theme toggle. Structure is shared:
+   left-anchored measure, hairline rules,
+   no cards, dated experience ledger, 2-up project ledger.
+   Bricolage Grotesque (display) · Newsreader (body) · Spline Sans Mono (meta)
+   Accent (brass / drafting blue) appears only on the hero kicker,
+   links, the contact bold word, and the Experience rail.
+   ============================================================ */
+
 @layer base {
   :root {
-    /* Colors — Dark mode (default) */
-    --color-bg: #0a0a0f;
-    --color-surface: #111118;
-    --color-surface-hover: #1a1a24;
-    --color-surface-elevated: #16161f;
-    --color-border: rgba(147, 51, 234, 0.15);
-    --color-border-subtle: rgba(255, 255, 255, 0.06);
+    /* Direction C: warm-dark stock */
+    --color-bg:         #1b1815;
+    --color-bg-blur:    rgba(27, 24, 21, 0.9);
+    --color-surface:    #221e19;
+    --color-rule:       #332f28;
+    --color-rule-bold:  #464036;
 
-    --color-accent: #9333ea;
-    --color-accent-light: #a855f7;
-    --color-accent-deep: #6d28d9;
-    --color-accent-glow: rgba(147, 51, 234, 0.4);
-    --color-accent-muted: rgba(147, 51, 234, 0.1);
+    --color-text:       #e7e0d2;
+    --color-text-soft:  #b4ab98;
+    --color-text-mute:  #968d79;
 
-    --color-text: #e2e8f0;
-    --color-text-secondary: #94a3b8;
-    --color-text-muted: #64748b;
-    --color-text-heading: #f8fafc;
+    --color-accent:     #c99b57;
+    --color-on-accent:  #1b1815;
+    --color-error:      #d98b6a;
 
-    /* Glass — Dark */
-    --glass-bg: rgba(17, 17, 24, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-blur: blur(16px);
+    --font-display: "Bricolage Grotesque Variable", "Helvetica Neue", Arial, sans-serif;
+    --font-body:    "Newsreader Variable", Georgia, "Times New Roman", serif;
+    --font-mono:    "Spline Sans Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
-    /* Layout */
-    --max-width: 1200px;
-    --nav-height: 72px;
+    /* type scale */
+    --t-h1:        clamp(3.25rem, 2rem + 5vw, 4.75rem);
+    --t-h2:        2.05rem;
+    --t-pull:      clamp(1.5rem, 1rem + 1.8vw, 2.15rem);
+    --t-role:      1.55rem;
+    --t-statement: clamp(1.3rem, 1.05rem + 0.9vw, 1.65rem);
+    --t-lead:      1.25rem;
+    --t-title-sm:  1.3rem;
+    --t-body:      1.0625rem;
+    --t-caption:   0.95rem;
+    --t-label:     0.72rem;
+    --t-label-sm:  0.68rem;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 20px var(--color-accent-glow);
-    --shadow-glow-sm-color: rgba(147, 51, 234, 0.2);
+    --wrap: 1060px;
+    --measure: 42rem;
+    --nav-height: 4.25rem;
+
+    color-scheme: dark;
   }
 
-  /* Light Mode Tokens */
-  .dark, [data-theme="light"] {
-    /* Inverted classes: light mode applies when NOT .dark. Wait.
-       Actually, since the site is dark by default, we can set default tokens to light mode
-       and .dark tokens to dark mode. But wait, it's easier to just use [data-theme="light"] 
-       for the light mode overrides to keep existing behavior intact without rewriting all tokens.
-    */
-  }
-
+  /* Direction A: light editorial (theme toggle) */
   [data-theme="light"] {
-    --color-bg: #f5f3ff;
-    --color-surface: #ffffff;
-    --color-surface-hover: #ede9fe;
-    --color-surface-elevated: #faf9ff;
-    --color-border: rgba(109, 40, 217, 0.15);
-    --color-border-subtle: rgba(0, 0, 0, 0.08);
+    --color-bg:         #efece4;
+    --color-bg-blur:    rgba(239, 236, 228, 0.9);
+    --color-surface:    #e8e3d8;
+    --color-rule:       #d7d3c7;
+    --color-rule-bold:  #b7b2a3;
 
-    --color-accent: #7c3aed;
-    --color-accent-light: #9333ea;
-    --color-accent-deep: #5b21b6;
-    --color-accent-glow: rgba(124, 58, 237, 0.3);
-    --color-accent-muted: rgba(124, 58, 237, 0.08);
+    --color-text:       #181613;
+    --color-text-soft:  #4e4a42;
+    --color-text-mute:  #615d50;
 
-    --color-text: #1e1b4b;
-    --color-text-secondary: #4c1d95;
-    --color-text-muted: #7c3aed;
-    --color-text-heading: #0f0a1e;
+    --color-accent:     #1d4664;
+    --color-on-accent:  #efece4;
+    --color-error:      #a3462a;
 
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(109, 40, 217, 0.12);
-    --glass-blur: blur(16px);
-
-    --shadow-sm: 0 1px 3px rgba(109, 40, 217, 0.08);
-    --shadow-md: 0 4px 12px rgba(109, 40, 217, 0.1);
-    --shadow-lg: 0 8px 30px rgba(109, 40, 217, 0.12);
-    --shadow-glow: 0 0 20px var(--color-accent-glow);
-    --shadow-glow-sm-color: rgba(124, 58, 237, 0.15);
+    color-scheme: light;
   }
 
   html {
@@ -85,84 +79,119 @@
   }
 
   body {
-    @apply font-sans text-text-primary bg-bg antialiased transition-colors duration-300 ease-in-out;
-    line-height: 1.6;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--t-body);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  ::selection { background: var(--color-accent); color: var(--color-on-accent); }
+
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
 @layer components {
+  .wrap {
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 5vw, 3.5rem);
+  }
+
+  /* section shell: a hairline above, more space above a heading than below it */
   .section {
-    @apply py-section;
+    padding: 3.75rem 0 3.25rem;
+    border-top: 1px solid var(--color-rule);
+  }
+  .section:first-of-type { border-top: 0; }
+  .section--star {
+    border-top-color: var(--color-rule-bold);
+    padding-top: 4.25rem;
   }
 
-  .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--glass-border);
-    @apply rounded-2xl;
-  }
-  
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-250 relative overflow-hidden;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-deep));
-    color: #fff;
-    box-shadow: 0 0 10px var(--shadow-glow-sm-color);
+  .subhead {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: var(--t-lead);
+    line-height: 1.4;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-text-soft);
+    margin: -0.75rem 0 2.25rem;
   }
 
-  .btn-primary:hover {
-    @apply -translate-y-0.5;
-    box-shadow: var(--shadow-glow);
+  .prose { max-width: var(--measure); }
+  .prose > p { margin: 0 0 1.05rem; max-width: 60ch; }
+
+  .lead {
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--color-text);
+    margin: 0 0 1.5rem;
+    max-width: 44ch;
   }
 
-  .btn-secondary {
-    @apply bg-transparent text-accent-light border border-accent;
+  .metaline {
+    font-family: var(--font-mono);
+    font-size: var(--t-label);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+  }
+  .link {
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-rule);
+    transition: border-color 0.15s ease;
+  }
+  .link:hover { border-bottom-color: var(--color-accent); }
+
+  .h-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.96;
+  }
+  .h-section {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--t-h2);
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+    margin: 0 0 1.6rem;
+    max-width: 22ch;
+    text-wrap: balance;
   }
 
-  .btn-secondary:hover {
-    @apply bg-accent-muted -translate-y-0.5;
-    box-shadow: 0 0 10px var(--shadow-glow-sm-color);
+  /* scroll reveal: subtle, once, and inert under reduced motion */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
   }
 }
 
-@layer utilities {
-  .text-heading {
-    color: var(--color-text-heading);
-  }
-  
-  /* Staggered children animation delays */
-  .stagger-children > :nth-child(1) { transition-delay: 0ms; }
-  .stagger-children > :nth-child(2) { transition-delay: 80ms; }
-  .stagger-children > :nth-child(3) { transition-delay: 160ms; }
-  .stagger-children > :nth-child(4) { transition-delay: 240ms; }
-  .stagger-children > :nth-child(5) { transition-delay: 320ms; }
-  .stagger-children > :nth-child(6) { transition-delay: 400ms; }
-  .stagger-children > :nth-child(7) { transition-delay: 480ms; }
-  .stagger-children > :nth-child(8) { transition-delay: 560ms; }
-  .stagger-children > :nth-child(9) { transition-delay: 640ms; }
-  .stagger-children > :nth-child(10) { transition-delay: 720ms; }
-  .stagger-children > :nth-child(11) { transition-delay: 800ms; }
-  .stagger-children > :nth-child(12) { transition-delay: 880ms; }
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-surface-hover);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-deep);
-}
-::selection {
-  background: var(--color-accent-glow);
-  color: #fff;
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
 }

@@ -6,8 +6,36 @@ defineProps({
 </script>
 
 <template>
-  <span class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-surface border border-border-subtle rounded-full text-[clamp(0.875rem,0.8rem+0.375vw,1rem)] font-medium text-text-primary transition-all duration-250 cursor-default hover:border-accent hover:bg-accent-muted hover:-translate-y-0.5 hover:shadow-glow-sm">
-    <span class="text-[1.2em] leading-none">{{ icon }}</span>
-    <span class="whitespace-nowrap">{{ name }}</span>
+  <span class="badge">
+    <span class="badge__icon" aria-hidden="true">{{ icon }}</span>
+    <span class="badge__name">{{ name }}</span>
   </span>
 </template>
+
+<style scoped>
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--color-rule-bold);
+  font-family: var(--font-mono);
+  font-size: var(--t-label-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  transition: color 0.15s ease, border-color 0.15s ease;
+  cursor: default;
+}
+.badge:hover {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+.badge__icon {
+  font-size: 1.05em;
+  line-height: 1;
+}
+.badge__name {
+  white-space: nowrap;
+}
+</style>

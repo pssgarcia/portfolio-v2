@@ -1,33 +1,53 @@
 <script setup>
+import { useLanguage } from '@/composables/useLanguage'
+
+const { t } = useLanguage()
 const currentYear = new Date().getFullYear()
 
-const socialLinks = [
-  { label: 'GitHub', href: 'https://github.com/pssgarcia' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/pedro-soares-b996a5263/' },
-  { label: 'Email', href: 'mailto:pedrossgarcia88@gmail.com' },
-]
+function toTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 </script>
 
 <template>
-  <footer class="border-t border-border-subtle py-12 relative">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-[1px] bg-gradient-to-r from-transparent via-accent to-transparent"></div>
-    <div class="w-full max-w-[1200px] mx-auto px-4 md:px-12 flex flex-col items-center gap-6">
-      <div class="flex gap-8">
-        <a
-          v-for="link in socialLinks"
-          :key="link.label"
-          :href="link.href"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-[clamp(0.8125rem,0.75rem+0.3125vw,0.9375rem)] text-text-secondary font-medium transition-colors duration-150 hover:text-accent-light"
-        >
-          {{ link.label }}
-        </a>
-      </div>
-      <p class="text-[clamp(0.75rem,0.7rem+0.25vw,0.875rem)] text-text-muted">
-        © {{ currentYear }} Pedro Soares. Built with
-        <span class="text-accent">Vue.js</span>
-      </p>
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p class="footer__copy">{{ t('footerLine', { year: currentYear }) }}</p>
+      <button class="footer__top" type="button" @click="toTop">{{ t('backToTop') }}</button>
     </div>
   </footer>
 </template>
+
+<style scoped>
+.footer {
+  border-top: 1px solid var(--color-rule);
+  padding: 2.25rem 0 3rem;
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-label-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-mute);
+}
+.footer__copy {
+  margin: 0;
+}
+.footer__top {
+  font: inherit;
+  color: var(--color-text-mute);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.footer__top:hover {
+  color: var(--color-text);
+}
+</style>
