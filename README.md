@@ -1,27 +1,30 @@
 # Portfólio Profissional — Pedro Soares
 
-Portfólio pessoal em estilo **dark tech minimalista**, desenvolvido como projeto acadêmico das sprints de Engenharia de Software da PUC Minas. O site apresenta a trajetória de **Pedro Soares**, desenvolvedor full-stack com foco em back-end, baseado em Belo Horizonte — com seções sobre formação, projetos, experiências e contato.
+Portfólio pessoal desenvolvido como projeto acadêmico das sprints de **Engenharia de Software da PUC Minas**. O site é um _single-page_ bilíngue (PT/EN) que apresenta a trajetória de **Pedro Soares**, desenvolvedor full-stack com foco em back-end e sistemas, em Belo Horizonte, organizado em quatro áreas de conteúdo: **Sobre**, **Experiência**, **Projetos** e **Contato**.
+
+O visual segue a direção **"The Engineer's Ledger"**: um mundo editorial _warm-dark_ (fundo marrom-escuro `#1B1815`, um único acento em latão `#C99B57`), estruturado por tipografia e fios de 1px — sem cards, sombras ou gradientes decorativos. Um tema claro (papel de pedra quente, acento azul-nanquim) é acessível pelo _toggle_ de tema no cabeçalho.
 
 ---
 
 ## Visão geral
 
-O objetivo é construir um site moderno, responsivo e de fácil manutenção, servindo como vitrine profissional e ponto de partida para futuras funcionalidades (i18n PT/EN, validação de formulário em tempo real, back-end de contato).
+O objetivo é um site moderno, responsivo e de fácil manutenção, servindo como vitrine profissional e como entrega avaliável contra o rubric das sprints.
 
 ### Principais características
 
-- **Single-page** com navegação por âncoras entre 5 seções: Hero, Sobre, Experiência, Projetos e Contato.
-- **Cabeçalho fixo** com _scroll-spy_ (destaque da seção ativa), menu mobile em overlay e alternância de tema.
-- **Tema claro/escuro** com preferência persistida no `localStorage` (`portfolio-theme`).
-- **Conteúdo centralizado em arquivos de dados** (`src/data/`) para facilitar a manutenção.
-- **Responsividade** para desktop, tablet e mobile.
-- **Formulário de contato** integrado ao Netlify Forms.
+- **Quatro áreas de conteúdo** em _single-page_ com navegação por âncoras e _scroll-spy_: Sobre (`#about`), Experiência (`#experience`), Projetos (`#projects`), Contato (`#contact`).
+- **Layout com cabeçalho fixo, área de conteúdo e rodapé.** O cabeçalho tem menu mobile em _overlay_, _toggle_ de tema (sol/lua) e _toggle_ de idioma (bandeira BR/US).
+- **Internacionalização PT/EN** com o idioma escolhido **persistido** em `localStorage` (`portfolio-language`); `<html lang>` e `<title>` acompanham o idioma ativo. Padrão: **pt-BR**.
+- **Tema claro/escuro** persistido em `localStorage` (`portfolio-theme`).
+- **Responsividade** para desktop, tablet e mobile; contraste WCAG AA nos dois temas.
+- **Formulário de contato com validação _inline_ em tempo real** (no _blur_ e no envio): nome, e-mail (formato) e mensagem (tamanho mínimo), com mensagens de erro sob cada campo, `aria-invalid`/`aria-describedby` e foco no primeiro campo inválido. Envio via **Netlify Forms**.
+- **Conteúdo centralizado em arquivos de dados** (`src/data/*.js` e `src/i18n/ui.js`), para atualizar textos sem tocar nos componentes.
+- **Movimento respeitando `prefers-reduced-motion`.**
 
-### Planejado (sprints futuras)
+### Previsto para sprints futuras
 
-- **Internacionalização (PT/EN)** com persistência do idioma escolhido — ainda não implementada.
-- **Validação do formulário de contato em tempo real** — atualmente há apenas validação nativa (`required`) e feedback de envio.
-- **Back-end de contato** (envio de e-mail / persistência).
+- Back-end de contato real (envio de e-mail / persistência).
+- Blog / CMS.
 
 ---
 
@@ -32,9 +35,13 @@ O objetivo é construir um site moderno, responsivo e de fácil manutenção, se
 | Biblioteca UI | [Vue 3](https://vuejs.org/) (`<script setup>`) | Componentes declarativos e reativos. |
 | Build / dev server | [Vite 6](https://vitejs.dev/) | Dev server rápido com HMR e build otimizado. |
 | Roteamento | [Vue Router 4](https://router.vuejs.org/) | Rota única hoje; pronto para expansão. |
-| Estilos | [Tailwind CSS 3](https://tailwindcss.com/) + PostCSS | Utilitários consistentes sobre _design tokens_ em CSS custom properties. |
-| Tipografia | [Inter](https://rsms.me/inter/) (Google Fonts) | Fonte sans-serif neutra e legível. |
-| Deploy | [Netlify](https://www.netlify.com/) | Hospedagem com CI/CD e Netlify Forms para o contato. |
+| Estilos | [Tailwind CSS 3](https://tailwindcss.com/) + PostCSS | Utilitários pontuais sobre _design tokens_ em CSS custom properties (`src/assets/styles/main.css`). |
+| Tipografia | Bricolage Grotesque · Newsreader · Spline Sans Mono, via [`@fontsource`](https://fontsource.org/) | _Self-hosted_, sem requisição a terceiros. Grotesca para display, serifada para leitura, monoespaçada para dados e o bloco de código do hero. |
+| Ícones | [simple-icons](https://simpleicons.org/) (pacote de dados, _tree-shaken_) | Marcas coloridas das tecnologias nos cards de projeto. |
+| i18n | Composable próprio (`useLanguage` + `src/i18n/ui.js`) | Leve, no estilo do projeto; sem dependência de biblioteca. |
+| Deploy | [Netlify](https://www.netlify.com/) (Node 22) | Hospedagem com CI/CD, _SPA redirect_ e **Netlify Forms** para o contato. |
+
+> A primeira sprint focou no front-end estático. Internacionalização, validação _inline_ do formulário e vínculo de `<html lang>` foram entregues na sprint de _hardening_.
 
 ---
 
@@ -42,62 +49,71 @@ O objetivo é construir um site moderno, responsivo e de fácil manutenção, se
 
 ```text
 .
-├── index.html                  # Entry HTML + form oculto do Netlify Forms
-├── vite.config.js              # Config do Vite + alias "@" → src/
-├── tailwind.config.js          # Tema, cores mapeadas para CSS vars, keyframes de animação
-├── postcss.config.js
-├── netlify.toml                # Build (dist) + redirect SPA + Node 22
+├── index.html                     # Entry HTML + form oculto do Netlify Forms + contrato de direção (comentário)
+├── vite.config.js                 # Config do Vite + alias "@" → src/
+├── tailwind.config.js             # Tema mapeado para as CSS vars
+├── netlify.toml                   # build "npm run build" · publish "dist" · SPA redirect · Node 22
 └── src/
-    ├── main.js                 # Bootstrap da app (createApp + router + CSS global)
-    ├── App.vue                 # Layout raiz: TheNavbar + <router-view> + TheFooter
-    ├── router/
-    │   └── index.js            # Rota única "/" → HomeView; scrollBehavior com âncoras
-    ├── views/
-    │   └── HomeView.vue        # Compõe todas as seções da página
+    ├── main.js                    # Bootstrap (createApp + router), imports de fonte, CSS global
+    ├── App.vue                    # Layout raiz: TheNavbar + <router-view> + TheFooter
+    ├── router/index.js            # Rota única "/" → HomeView; scrollBehavior com âncoras
+    ├── views/HomeView.vue         # Compõe as seções: Hero, About, Experience, Projects, Contact
+    ├── assets/
+    │   ├── img/                   # Foto pessoal e screenshots de projetos
+    │   └── styles/main.css        # Design tokens (:root + [data-theme="light"]) + classes compartilhadas
+    ├── i18n/ui.js                 # Dicionário { en, pt } das strings de interface (nav, títulos, formulário, erros)
     ├── components/
-    │   ├── TheNavbar.vue       # Nav fixa, scroll-spy, menu mobile, toggle de tema
-    │   ├── TheFooter.vue       # Rodapé com links sociais
-    │   ├── HeroSection.vue     # Apresentação + CTAs
-    │   ├── AboutSection.vue    # Bio + grade de tecnologias (SkillBadge)
-    │   ├── ExperienceSection.vue # Timeline vertical (trabalho + formação)
-    │   ├── ProjectsSection.vue # Grade de cards de projetos
-    │   ├── ContactSection.vue  # Canais de contato + formulário (Netlify Forms)
-    │   ├── SectionHeading.vue  # Título/subtítulo reutilizável de seção
-    │   ├── SkillBadge.vue      # Badge de tecnologia
-    │   ├── ProjectCard.vue     # Card de projeto
-    │   └── TimelineItem.vue    # Item da timeline de experiência
+    │   ├── TheNavbar.vue          # Nav fixa, scroll-spy, menu mobile, toggle de tema e de idioma
+    │   ├── TheFooter.vue          # Rodapé: linha mono + "Voltar ao topo"
+    │   ├── HeroSection.vue        # Cena de editor de código (linha de cargo, nome, bloco de código que se digita, cursor)
+    │   ├── AboutSection.vue       # Bio + grade de tecnologias (SkillBadge)
+    │   ├── ExperienceSection.vue  # Timeline vertical (trabalho + formação)
+    │   ├── ProjectsSection.vue    # Projetos em destaque (com screenshot) + ledger 2-colunas
+    │   ├── ContactSection.vue     # Canais + formulário com validação inline (Netlify Forms)
+    │   ├── TimelineItem.vue       # Um item da timeline de experiência
+    │   ├── SkillBadge.vue         # Chip de tecnologia (emoji + nome)
+    │   ├── FlagIcon.vue           # Bandeira BR/US desenhada em SVG, para o toggle de idioma
+    │   └── TechIcon.vue           # Glyph de marca colorido + nome, para as tags de tecnologia dos projetos
     ├── composables/
-    │   ├── useActiveSection.js       # Detecta a seção visível (scroll-spy)
-    │   ├── useColorMode.js           # Estado do tema + persistência
-    │   └── useIntersectionObserver.js # Animações de revelação ao rolar
-    ├── data/
-    │   ├── projects.js         # Lista de projetos
-    │   ├── experience.js       # Histórico profissional e acadêmico
-    │   └── skills.js           # Tecnologias
-    └── assets/
-        ├── img/               # Foto pessoal e imagens dos projetos
-        └── styles/
-            └── main.css       # Tokens de cor, tema claro/escuro, classes de componente
+    │   ├── useColorMode.js            # Estado do tema + persistência
+    │   ├── useLanguage.js             # Estado do idioma + persistência + <html lang>/<title> + t(chave, vars)
+    │   ├── useContent.js              # Conteúdo editorial reativo ao idioma ativo
+    │   ├── useActiveSection.js        # Scroll-spy determinístico
+    │   └── useIntersectionObserver.js # Uma revelação de 0.6s por seção
+    └── data/
+        ├── profile.js             # profileContent { en, pt }: nome, hero, prosa do Sobre, canais de contato
+        ├── experience.js          # experienceContent { en, pt }: cargos + formação
+        ├── projects.js            # projectsContent { en, pt }: projetos (título/descrição/techs/links/screenshot)
+        └── skills.js              # skillsContent { en, pt }: { nome, icon }
 ```
 
 ---
 
-## Seções da página
+## Protótipos de interface
 
-### 1. Hero
-Apresentação pessoal com nome, cargo, resumo e CTAs para "Projetos" e "Contato".
+### 1. Sobre (`#about`)
 
-### 2. Sobre (`#about`)
-Bio narrativa (Vancouver → Belo Horizonte) e grade de tecnologias com que trabalha.
+Hero como uma cena de editor de código (nome, cargo e a frase de posicionamento em código), seguido da bio narrativa (Vancouver → Belo Horizonte) e da grade de tecnologias.
 
-### 3. Experiência (`#experience`)
-Timeline vertical com histórico profissional (Construsite Brasil) e formação (PUC Minas, Tamwood).
+![Seção Sobre](docs/sobre.jpg)
 
-### 4. Projetos (`#projects`)
-Grade de cards com descrição, tecnologias e links para repositório/demo.
+### 2. Experiência (`#experience`)
 
-### 5. Contato (`#contact`)
-Canais de contato (GitHub, LinkedIn, e-mail) e formulário validado, integrado ao Netlify Forms.
+Timeline vertical com o histórico profissional na Construsite Brasil (estágio → Desenvolvedor Júnior III) e a formação (PUC Minas, Tamwood International College).
+
+![Seção Experiência](docs/experiencia.jpg)
+
+### 3. Projetos (`#projects`)
+
+Projetos em destaque abrem com um screenshot da _landing_; os demais seguem em um _ledger_ de duas colunas. Cada entrada traz descrição, tecnologias (com ícone da marca) e links para repositório e demo.
+
+![Seção Projetos](docs/projetos.jpg)
+
+### 4. Contato (`#contact`)
+
+Canais de contato (GitHub, LinkedIn, e-mail) e o formulário com validação _inline_, integrado ao Netlify Forms.
+
+![Seção Contato](docs/contato.jpg)
 
 ---
 
@@ -109,26 +125,20 @@ Requisitos: [Node.js](https://nodejs.org/) 22+
 # Instale as dependências
 npm install
 
-# Inicie o servidor de desenvolvimento
-npm run dev
-```
+# Servidor de desenvolvimento
+npm run dev            # http://localhost:5173
 
-O site estará disponível em `http://localhost:5173`.
-
-```bash
-# Build de produção
-npm run build
-
-# Preview do build
+# Build de produção e preview
+npm run build          # → dist/
 npm run preview
 ```
 
+Não há suíte de testes nem linter configurados.
+
 ---
 
-## Autores
+## Autor
 
 **Pedro Soares de Souza Garcia**
-**Daniel Vieira Verissimo**
-**Pedro Henrique Carvalho Pereira**
 
 [GitHub](https://github.com/pssgarcia) · [LinkedIn](https://www.linkedin.com/in/pedro-soares-b996a5263/)
