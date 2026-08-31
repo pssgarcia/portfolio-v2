@@ -151,11 +151,19 @@ const pad = (n) => String(n + 1).padStart(2, '0')
 
 .proj__links {
   display: flex;
+  align-items: baseline;
   gap: 1.2rem;
   font-family: var(--font-mono);
   font-size: var(--t-label-sm);
   letter-spacing: 0.09em;
   text-transform: uppercase;
+}
+/* the live demo link sits at the right edge, opposite the repo link */
+.proj__links-live {
+  margin-left: auto;
+}
+.proj--wide .proj__links {
+  max-width: 46rem;
 }
 .proj__links a {
   color: var(--color-accent);

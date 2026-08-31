@@ -9,7 +9,7 @@ const base = [
   {
     title: 'Tayro',
     description:
-      'A two-sided SaaS marketplace connecting brands and fitness creators. Campaign lifecycle as a guarded state machine, race-condition-safe application flow, and live media kits from the Instagram API.',
+      'A two-sided SaaS platform connecting brands and fitness creators. Campaign lifecycle as a guarded state machine, race-condition-safe application flow, and live media kits from the Instagram API.',
     techs: ['NestJS', 'TypeScript', 'Prisma', 'PostgreSQL'],
     github: '',
     repoPrivate: true,
@@ -61,7 +61,7 @@ const base = [
 
 const ptDescriptions = {
   Tayro:
-    'Marketplace SaaS de dois lados conectando marcas e criadores fitness. Ciclo de vida de campanha como máquina de estados guardada, fluxo de aplicação seguro contra condições de corrida e mídia kits ao vivo pela API do Instagram.',
+    'Plataforma SaaS de dois lados conectando marcas e criadores fitness. Ciclo de vida de campanha como máquina de estados guardada, fluxo de aplicação seguro contra condições de corrida e mídia kits ao vivo pela API do Instagram.',
   'Barbearia do Davi':
     'Landing page focada em agendamento para uma barbearia em Belo Horizonte: marcação pelo WhatsApp, um título animado que se alterna e um fluxo de serviços e localização. Feito para um cliente real.',
   Readvice:
