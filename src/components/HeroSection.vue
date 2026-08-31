@@ -47,15 +47,8 @@ onMounted(async () => {
   const line = lines[lines.length - 1]
   const caret = box.querySelector('.hero__caret')
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
-  const compact = matchMedia('(max-width: 720px)').matches
 
   line.insertAdjacentElement('afterend', caret)
-
-  if (compact) {
-    caret.style.display = 'none'
-    return
-  }
-
   line.style.width = '0px' // hide only the last line up front
 
   if (document.fonts && document.fonts.ready) {
@@ -250,12 +243,15 @@ onMounted(async () => {
     min-height: clamp(26rem, 78vh, 34rem);
     padding: calc(var(--nav-height) + 2.5rem) 0 3rem;
   }
+  /* shrink the code so the typed line (38 mono chars) fits without a scrollbar */
   .hero__code {
-    font-size: var(--t-caption);
+    font-size: clamp(0.68rem, 3.2vw, 0.95rem);
     line-height: 1.8;
   }
-  .hero__code-ln { white-space: normal; }
-  .hero__ln {
+  /* lines 1-2 wrap with a hanging indent; the last line stays on one line so
+     it can still be typed out */
+  .hero__code-ln:not(:last-child) { white-space: normal; }
+  .hero__code-ln:not(:last-child) .hero__ln {
     display: block;
     width: auto;
     overflow: visible;
@@ -263,7 +259,6 @@ onMounted(async () => {
     padding-left: 1.5ch;
     text-indent: -1.5ch;
   }
-  .hero__caret { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
