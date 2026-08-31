@@ -57,12 +57,12 @@ const edgePath = ([a, b]) => {
       <h1 class="hero__name h-display">{{ profile.name }}</h1>
 
       <div class="hero__code">
-        <div class="hero__code-ln"><span class="tok-c">// {{ profile.hero.comment }}</span></div>
-        <div class="hero__code-ln"><span class="tok-k">const</span> focus = [<template
+        <div class="hero__code-ln hero__code-ln--1"><span class="tok-c">// {{ profile.hero.comment }}</span></div>
+        <div class="hero__code-ln hero__code-ln--2"><span class="tok-k">const</span> focus = [<template
           v-for="(f, i) in profile.hero.focus"
           :key="f"
         ><span class="tok-s">"{{ f }}"</span><span v-if="i < profile.hero.focus.length - 1">, </span></template>]</div>
-        <div class="hero__code-ln">build(focus, { impact: <span class="tok-hl">"real_world"</span> })<span class="hero__caret" aria-hidden="true"></span></div>
+        <div class="hero__code-ln hero__code-ln--3">build(focus, { impact: <span class="tok-str">"real_world"</span> })<span class="hero__caret" aria-hidden="true"></span></div>
       </div>
     </div>
   </header>
@@ -147,18 +147,31 @@ const edgePath = ([a, b]) => {
   gap: 0.15rem;
   max-width: 100%;
   overflow-x: auto;
-  clip-path: inset(0 100% 0 0);
-  animation: hero-type 1.9s steps(54) 0.5s both;
 }
-.hero__code-ln { white-space: nowrap; }
+
+/* each line types itself out in turn */
+.hero__code-ln {
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  animation: hero-type-ln 0.7s steps(24) both;
+}
+.hero__code-ln--1 { animation-delay: 0.5s; animation-duration: 0.55s; }
+.hero__code-ln--2 { animation-delay: 1.05s; animation-duration: 0.85s; }
+.hero__code-ln--3 { animation-delay: 1.95s; animation-duration: 0.95s; }
+
 .tok-c { color: var(--color-text-mute); }
 .tok-k { color: var(--color-text-soft); font-weight: 500; }
 .tok-s { color: var(--color-accent); }
-.tok-hl {
-  background: var(--color-accent);
-  color: var(--color-on-accent);
+
+/* the impact string: types in as plain code, then a "selection" sweeps
+   across it and leaves it marked in accent (like a click-drag in an editor) */
+.tok-str {
   padding: 0.05em 0.4em;
+  color: var(--color-accent);
+  background: linear-gradient(var(--color-accent), var(--color-accent)) left center / 0% 100% no-repeat;
+  animation: hero-select 0.34s steps(8) 3.15s forwards;
 }
+
 .hero__caret {
   display: inline-block;
   width: 2px;
@@ -166,10 +179,16 @@ const edgePath = ([a, b]) => {
   background: var(--color-text);
   vertical-align: -0.22em;
   margin-left: 0.14ch;
-  animation: hero-caret-blink 1.06s linear 2.4s infinite both;
+  animation: hero-caret-blink 1.06s linear 2.95s infinite both;
 }
 
-@keyframes hero-type { to { clip-path: inset(0 0 0 0); } }
+@keyframes hero-type-ln { to { clip-path: inset(0 0 0 0); } }
+@keyframes hero-select {
+  0%   { background-size: 0% 100%; color: var(--color-accent); }
+  64%  { color: var(--color-accent); }
+  65%  { color: var(--color-on-accent); }
+  100% { background-size: 100% 100%; color: var(--color-on-accent); }
+}
 /* a real text cursor: solid, hard on/off, no fade */
 @keyframes hero-caret-blink {
   0%, 50% { opacity: 1; }
@@ -198,7 +217,12 @@ const edgePath = ([a, b]) => {
   .hero__net-g,
   .hero__role,
   .hero__name { animation: none; }
-  .hero__code { animation: none; clip-path: none; }
+  .hero__code-ln { animation: none; clip-path: none; }
+  .tok-str {
+    animation: none;
+    background-size: 100% 100%;
+    color: var(--color-on-accent);
+  }
   /* The caret is a text cursor, not decorative motion: it keeps its plain blink
      even here (opacity-only, no movement). Deliberate override of the global
      reduced-motion guard, for this one element. */
