@@ -20,11 +20,11 @@ export const profileContent = {
     },
 
     about: {
-      lead: 'PHP and Laravel with MySQL on the backend, Vue and JavaScript on the frontend, Node.js where it fits, plus the REST APIs, integrations, and multi-tenant data that hold a SaaS together.',
+      lead: 'Across the stack, with a stronger pull toward the backend: PHP, Laravel, and MySQL, with Vue and JavaScript on the frontend and Node.js when the product calls for it.',
       paragraphs: [
-        'My journey began in Vancouver, Canada, where I completed an intensive web development program at Tamwood International College, working with HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP, and MySQL on real team projects.',
-        'At Construsite Brasil I have gone from intern to Junior Developer III over two years, shipping features end-to-end across a multi-tenant SaaS CRM, e-commerce platforms, institutional sites, internal systems, and APIs, resolving production and tenant-isolation issues, and more recently coordinating the team’s demands, reviewing code, and setting the engineering guidelines we build against.',
-        'The work is about designing APIs, managing data flow, and building systems that are reliable, efficient, and built to scale. Not just interfaces that look good.',
+        'My path started in Vancouver, Canada, with an intensive web development program at Tamwood International College. Since then I have gone from intern to Junior Developer III at Construsite Brasil, working on SaaS products, e-commerce platforms, internal systems, and APIs.',
+        'Over the past two years I have taken on more ownership, moving beyond feature work into system design, performance, integrations, and technical decisions, and resolving production and performance issues along the way. I like building the parts that make everything else possible, and I care about how software works under the hood.',
+        'For a stretch I also stepped in as interim team lead: taking in demands, delegating tasks, reviewing and approving code, testing, and helping teammates get unblocked.',
         'Currently finishing a B.Sc. in Software Engineering at PUC Minas.',
       ],
       aside: 'Outside of tech: fitness, music, and fashion. I value consistency, challenges, and continuous growth.',
@@ -43,11 +43,11 @@ export const profileContent = {
     },
 
     about: {
-      lead: 'PHP e Laravel com MySQL no backend, Vue e JavaScript no frontend, Node.js quando faz sentido, além das APIs REST, integrações e dados multi-tenant que sustentam um SaaS.',
+      lead: 'Em toda a stack, com inclinação maior para o backend: PHP, Laravel e MySQL, com Vue e JavaScript no frontend e Node.js quando o produto pede.',
       paragraphs: [
-        'Minha trajetória começou em Vancouver, no Canadá, onde concluí um programa intensivo de desenvolvimento web no Tamwood International College, trabalhando com HTML, CSS, JavaScript, Node.js, React, Vue.js, PHP e MySQL em projetos reais de equipe.',
-        'Na Construsite Brasil passei de estagiário a Desenvolvedor Júnior III em dois anos, entregando features de ponta a ponta em CRM SaaS multi-tenant, plataformas de e-commerce, sites institucionais, sistemas internos e APIs, resolvendo problemas de produção e de isolamento entre tenants e, mais recentemente, coordenando as demandas do time, revisando código e definindo as diretrizes de engenharia que seguimos.',
-        'O trabalho é sobre projetar APIs, gerenciar o fluxo de dados e construir sistemas confiáveis, eficientes e escaláveis. Não só interfaces bonitas.',
+        'Meu caminho começou em Vancouver, no Canadá, num programa intensivo de desenvolvimento web no Tamwood International College. De lá para cá, fui de estagiário a Desenvolvedor Júnior III na Construsite Brasil, trabalhando com produtos SaaS, plataformas de e-commerce, sistemas internos e APIs.',
+        'Nos últimos dois anos assumi mais responsabilidade, indo além do desenvolvimento de features para design de sistemas, performance, integrações e decisões técnicas, resolvendo problemas de produção e de performance pelo caminho. Gosto de construir as partes que sustentam todo o resto e me importo com como o software funciona por baixo dos panos.',
+        'Por um período também assumi a liderança do time de forma interina: recebendo demandas, delegando tarefas, revisando e aprovando código, testando e ajudando a equipe a destravar.',
         'Atualmente concluindo o bacharelado em Engenharia de Software na PUC Minas.',
       ],
       aside: 'Fora da tecnologia: treino, música e moda. Valorizo consistência, desafios e crescimento contínuo.',
