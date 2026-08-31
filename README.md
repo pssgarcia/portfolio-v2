@@ -17,13 +17,13 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 - **Internacionalização PT/EN** com o idioma escolhido **persistido** em `localStorage` (`portfolio-language`); `<html lang>` e `<title>` acompanham o idioma ativo. Padrão: **pt-BR**.
 - **Tema claro/escuro** persistido em `localStorage` (`portfolio-theme`).
 - **Responsividade** para desktop, tablet e mobile; contraste WCAG AA nos dois temas.
-- **Formulário de contato com validação _inline_ em tempo real** (no _blur_ e no envio): nome, e-mail (formato) e mensagem (tamanho mínimo), com mensagens de erro sob cada campo, `aria-invalid`/`aria-describedby` e foco no primeiro campo inválido. Envio via **Netlify Forms**.
+- **Formulário de contato com validação _inline_ em tempo real** (no _blur_ e no envio): nome, e-mail (formato) e mensagem (tamanho mínimo), com mensagens de erro sob cada campo, `aria-invalid`/`aria-describedby` e foco no primeiro campo inválido. O envio faz `POST` de JSON para `/api/contact` (endpoint ainda não implementado; por ora o formulário cai no aviso de "me escreva direto por e-mail").
 - **Conteúdo centralizado em arquivos de dados** (`src/data/*.js` e `src/i18n/ui.js`), para atualizar textos sem tocar nos componentes.
 - **Movimento respeitando `prefers-reduced-motion`.**
 
 ### Previsto para sprints futuras
 
-- Back-end de contato real (envio de e-mail / persistência).
+- Back-end de contato real: uma _serverless function_ em `/api/contact` na Vercel (envio de e-mail / persistência).
 - Blog / CMS.
 
 ---
@@ -39,9 +39,9 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 | Tipografia | Bricolage Grotesque · Newsreader · Spline Sans Mono, via [`@fontsource`](https://fontsource.org/) | _Self-hosted_, sem requisição a terceiros. Grotesca para display, serifada para leitura, monoespaçada para dados e o bloco de código do hero. |
 | Ícones | [simple-icons](https://simpleicons.org/) (pacote de dados, _tree-shaken_) | Marcas coloridas das tecnologias nos cards de projeto. |
 | i18n | Composable próprio (`useLanguage` + `src/i18n/ui.js`) | Leve, no estilo do projeto; sem dependência de biblioteca. |
-| Deploy | [Netlify](https://www.netlify.com/) (Node 22) | Hospedagem com CI/CD, _SPA redirect_ e **Netlify Forms** para o contato. |
+| Deploy | [Vercel](https://vercel.com/) | Hospedagem com CI/CD, preset Vite e _rewrite_ SPA (`vercel.json`). |
 
-> A primeira sprint focou no front-end estático. Internacionalização, validação _inline_ do formulário e vínculo de `<html lang>` foram entregues na sprint de _hardening_.
+> A primeira sprint focou no front-end estático. Internacionalização, validação _inline_ do formulário e vínculo de `<html lang>` foram entregues na sprint de _hardening_. A hospedagem migrou de Netlify para Vercel.
 
 ---
 
@@ -49,10 +49,10 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 
 ```text
 .
-├── index.html                     # Entry HTML + form oculto do Netlify Forms + contrato de direção (comentário)
+├── index.html                     # Entry HTML + contrato de direção (comentário)
 ├── vite.config.js                 # Config do Vite + alias "@" → src/
 ├── tailwind.config.js             # Tema mapeado para as CSS vars
-├── netlify.toml                   # build "npm run build" · publish "dist" · SPA redirect · Node 22
+├── vercel.json                    # rewrite SPA de todas as rotas para /index.html
 └── src/
     ├── main.js                    # Bootstrap (createApp + router), imports de fonte, CSS global
     ├── App.vue                    # Layout raiz: TheNavbar + <router-view> + TheFooter
@@ -69,7 +69,7 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
     │   ├── AboutSection.vue       # Bio + grade de tecnologias (SkillBadge)
     │   ├── ExperienceSection.vue  # Timeline vertical (trabalho + formação)
     │   ├── ProjectsSection.vue    # Projetos em destaque (com screenshot) + ledger 2-colunas
-    │   ├── ContactSection.vue     # Canais + formulário com validação inline (Netlify Forms)
+    │   ├── ContactSection.vue     # Canais + formulário com validação inline (POST para /api/contact)
     │   ├── TimelineItem.vue       # Um item da timeline de experiência
     │   ├── SkillBadge.vue         # Chip de tecnologia (emoji + nome)
     │   ├── FlagIcon.vue           # Bandeira BR/US desenhada em SVG, para o toggle de idioma
@@ -111,7 +111,7 @@ Projetos em destaque abrem com um screenshot da _landing_; os demais seguem em u
 
 ### 4. Contato (`#contact`)
 
-Canais de contato (GitHub, LinkedIn, e-mail) e o formulário com validação _inline_, integrado ao Netlify Forms.
+Canais de contato (GitHub, LinkedIn, e-mail) e o formulário com validação _inline_ (envio por `POST` para `/api/contact`).
 
 ![Seção Contato](docs/contato.jpg)
 

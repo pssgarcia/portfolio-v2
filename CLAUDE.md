@@ -16,7 +16,7 @@ This file is the fast orientation.
 - **simple-icons** (data package, tree-shaken) for the coloured project tech glyphs in `TechIcon.vue`
 - Fonts self-hosted via `@fontsource` (Bricolage Grotesque, Newsreader, Spline Sans Mono), imported in `src/main.js`, no third-party font request
 - `@` path alias resolves to `src/`
-- Deploy: Netlify (`netlify.toml`: build `npm run build`, publish `dist`, SPA redirect, Node 22). Contact form uses Netlify Forms (hidden static form in `index.html` plus a JS POST).
+- Deploy: Vercel (`vercel.json`: SPA rewrite to `/index.html`; framework auto-detected as Vite, build `npm run build`, output `dist`). Contact form POSTs JSON to `/api/contact` (endpoint not built yet, so submissions currently show the "email me directly" fallback).
 
 ```bash
 npm install
@@ -30,7 +30,7 @@ There is no test suite and no linter configured.
 ## Layout of the code
 
 ```
-index.html                     entry + Netlify form + the direction contract (HTML comment in <body>)
+index.html                     entry + the direction contract (HTML comment in <body>)
 src/
   main.js                      app bootstrap + @fontsource imports + global CSS
   App.vue                      TheNavbar + <router-view> + TheFooter

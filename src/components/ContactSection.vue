@@ -9,6 +9,7 @@ const { profile } = useContent()
 const { t } = useLanguage()
 
 const form = reactive({ name: '', email: '', message: '' })
+const honeypot = ref('')
 const touched = reactive({ name: false, email: false, message: false })
 const submitAttempted = ref(false)
 const isSubmitting = ref(false)
@@ -48,19 +49,23 @@ async function handleSubmit() {
     return
   }
 
+  // Honeypot: a bot filled a field a human never sees. Feign success, send nothing.
+  if (honeypot.value) {
+    submitStatus.value = 'success'
+    return
+  }
+
   isSubmitting.value = true
   submitStatus.value = ''
   try {
-    const formData = new URLSearchParams()
-    formData.append('form-name', 'contact')
-    formData.append('name', form.name.trim())
-    formData.append('email', form.email.trim())
-    formData.append('message', form.message.trim())
-
-    const response = await fetch('/', {
+    const response = await fetch('/api/contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData.toString(),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        message: form.message.trim(),
+      }),
     })
 
     if (response.ok) {
@@ -115,16 +120,12 @@ async function handleSubmit() {
 
           <form
             class="contact__form"
-            name="contact"
             method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
             novalidate
             @submit.prevent="handleSubmit"
           >
-            <input type="hidden" name="form-name" value="contact" />
-            <p class="contact__honeypot">
-              <label>{{ t('formHoneypot') }} <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+            <p class="contact__honeypot" aria-hidden="true">
+              <label>{{ t('formHoneypot') }} <input v-model="honeypot" name="company" tabindex="-1" autocomplete="off" /></label>
             </p>
 
             <div class="field" :class="{ 'field--error': showError('name') }">
