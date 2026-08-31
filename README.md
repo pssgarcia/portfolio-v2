@@ -17,13 +17,13 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 - **Internacionalização PT/EN** com o idioma escolhido **persistido** em `localStorage` (`portfolio-language`); `<html lang>` e `<title>` acompanham o idioma ativo. Padrão: **pt-BR**.
 - **Tema claro/escuro** persistido em `localStorage` (`portfolio-theme`).
 - **Responsividade** para desktop, tablet e mobile; contraste WCAG AA nos dois temas.
-- **Formulário de contato com validação _inline_ em tempo real** (no _blur_ e no envio): nome, e-mail (formato) e mensagem (tamanho mínimo), com mensagens de erro sob cada campo, `aria-invalid`/`aria-describedby` e foco no primeiro campo inválido. O envio faz `POST` de JSON para `/api/contact` (endpoint ainda não implementado; por ora o formulário cai no aviso de "me escreva direto por e-mail").
+- **Formulário de contato com validação _inline_ em tempo real** (no _blur_ e no envio): nome, e-mail (formato) e mensagem (tamanho mínimo), com mensagens de erro sob cada campo, `aria-invalid`/`aria-describedby` e foco no primeiro campo inválido. O envio faz `POST` de JSON para `/api/contact`, uma _serverless function_ na Vercel que revalida os dados, descarta _honeypot_ e envia o e-mail via **Resend**.
 - **Conteúdo centralizado em arquivos de dados** (`src/data/*.js` e `src/i18n/ui.js`), para atualizar textos sem tocar nos componentes.
 - **Movimento respeitando `prefers-reduced-motion`.**
 
 ### Previsto para sprints futuras
 
-- Back-end de contato real: uma _serverless function_ em `/api/contact` na Vercel (envio de e-mail / persistência).
+- Persistência das mensagens de contato (hoje só há o envio de e-mail via Resend).
 - Blog / CMS.
 
 ---
@@ -39,7 +39,8 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 | Tipografia | Bricolage Grotesque · Newsreader · Spline Sans Mono, via [`@fontsource`](https://fontsource.org/) | _Self-hosted_, sem requisição a terceiros. Grotesca para display, serifada para leitura, monoespaçada para dados e o bloco de código do hero. |
 | Ícones | [simple-icons](https://simpleicons.org/) (pacote de dados, _tree-shaken_) | Marcas coloridas das tecnologias nos cards de projeto. |
 | i18n | Composable próprio (`useLanguage` + `src/i18n/ui.js`) | Leve, no estilo do projeto; sem dependência de biblioteca. |
-| Deploy | [Vercel](https://vercel.com/) | Hospedagem com CI/CD, preset Vite e _rewrite_ SPA (`vercel.json`). |
+| Formulário de contato | _Serverless function_ `api/contact.js` + [Resend](https://resend.com/) | Valida no servidor e envia o e-mail; sem backend próprio. |
+| Deploy | [Vercel](https://vercel.com/) | Hospedagem com CI/CD, preset Vite, _rewrite_ SPA e Functions (`vercel.json`). |
 
 > A primeira sprint focou no front-end estático. Internacionalização, validação _inline_ do formulário e vínculo de `<html lang>` foram entregues na sprint de _hardening_. A hospedagem migrou de Netlify para Vercel.
 
@@ -52,7 +53,10 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 ├── index.html                     # Entry HTML + contrato de direção (comentário)
 ├── vite.config.js                 # Config do Vite + alias "@" → src/
 ├── tailwind.config.js             # Tema mapeado para as CSS vars
-├── vercel.json                    # rewrite SPA de todas as rotas para /index.html
+├── vercel.json                    # rewrite SPA (rotas não-/api → /index.html)
+├── .env.example                   # RESEND_API_KEY, CONTACT_FROM (copiar para .env)
+├── api/
+│   └── contact.js                 # Serverless function: valida o formulário e envia via Resend
 └── src/
     ├── main.js                    # Bootstrap (createApp + router), imports de fonte, CSS global
     ├── App.vue                    # Layout raiz: TheNavbar + <router-view> + TheFooter
@@ -132,6 +136,11 @@ npm run dev            # http://localhost:5173
 npm run build          # → dist/
 npm run preview
 ```
+
+O `npm run dev` serve só o front-end; o formulário de contato precisa da função
+`api/contact.js`. Para exercitá-la localmente, copie `.env.example` para `.env`,
+preencha `RESEND_API_KEY` e `CONTACT_FROM`, e rode `vercel dev` (Vercel CLI) no
+lugar de `npm run dev`. As mesmas variáveis devem existir no projeto na Vercel.
 
 Não há suíte de testes nem linter configurados.
 

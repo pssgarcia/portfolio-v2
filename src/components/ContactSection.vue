@@ -49,12 +49,6 @@ async function handleSubmit() {
     return
   }
 
-  // Honeypot: a bot filled a field a human never sees. Feign success, send nothing.
-  if (honeypot.value) {
-    submitStatus.value = 'success'
-    return
-  }
-
   isSubmitting.value = true
   submitStatus.value = ''
   try {
@@ -65,6 +59,7 @@ async function handleSubmit() {
         name: form.name.trim(),
         email: form.email.trim(),
         message: form.message.trim(),
+        company: honeypot.value, // honeypot; the server drops anything with it set
       }),
     })
 

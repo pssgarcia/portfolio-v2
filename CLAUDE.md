@@ -16,7 +16,8 @@ This file is the fast orientation.
 - **simple-icons** (data package, tree-shaken) for the coloured project tech glyphs in `TechIcon.vue`
 - Fonts self-hosted via `@fontsource` (Bricolage Grotesque, Newsreader, Spline Sans Mono), imported in `src/main.js`, no third-party font request
 - `@` path alias resolves to `src/`
-- Deploy: Vercel (`vercel.json`: SPA rewrite to `/index.html`; framework auto-detected as Vite, build `npm run build`, output `dist`). Contact form POSTs JSON to `/api/contact` (endpoint not built yet, so submissions currently show the "email me directly" fallback).
+- Deploy: Vercel (`vercel.json`: SPA rewrite of all non-`/api` routes to `/index.html`; framework auto-detected as Vite, build `npm run build`, output `dist`).
+- Contact form: `ContactSection.vue` POSTs JSON to `/api/contact`, a Vercel serverless function (`api/contact.js`) that re-validates the payload, drops honeypot hits, and emails Pedro via **Resend**. Env vars `RESEND_API_KEY` and `CONTACT_FROM` (verified Resend domain) must be set on Vercel and in a local `.env` for `vercel dev`; see `.env.example`.
 
 ```bash
 npm install
@@ -31,6 +32,7 @@ There is no test suite and no linter configured.
 
 ```
 index.html                     entry + the direction contract (HTML comment in <body>)
+api/contact.js                 Vercel serverless function: validates the contact form, emails via Resend
 src/
   main.js                      app bootstrap + @fontsource imports + global CSS
   App.vue                      TheNavbar + <router-view> + TheFooter
