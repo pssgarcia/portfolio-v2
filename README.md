@@ -1,5 +1,7 @@
 # Portfólio Profissional — Pedro Soares
 
+# https://pedrossgarcia.com.br/
+
 Portfólio pessoal desenvolvido como projeto acadêmico das sprints de **Engenharia de Software da PUC Minas**. O site é um _single-page_ bilíngue (PT/EN) que apresenta a trajetória de **Pedro Soares**, desenvolvedor full-stack com foco em back-end e sistemas, em Belo Horizonte, organizado em quatro áreas de conteúdo: **Sobre**, **Experiência**, **Projetos** e **Contato**.
 
 O visual segue a direção **"The Engineer's Ledger"**: um mundo editorial _warm-dark_ (fundo marrom-escuro `#1B1815`, um único acento em latão `#C99B57`), estruturado por tipografia e fios de 1px — sem cards, sombras ou gradientes decorativos. Um tema claro (papel de pedra quente, acento azul-nanquim) é acessível pelo _toggle_ de tema no cabeçalho.
