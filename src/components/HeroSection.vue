@@ -62,7 +62,7 @@ const edgePath = ([a, b]) => {
           v-for="(f, i) in profile.hero.focus"
           :key="f"
         ><span class="tok-s">"{{ f }}"</span><span v-if="i < profile.hero.focus.length - 1">, </span></template>]</div>
-        <div class="hero__code-ln hero__code-ln--3">build(focus, { impact: <span class="tok-str">"real_world"</span> })<span class="hero__caret" aria-hidden="true"></span></div>
+        <div class="hero__code-ln hero__code-ln--3"><span class="hero__type">build(focus, { impact: <span class="tok-str">"real_world"</span> })</span><span class="hero__caret" aria-hidden="true"></span></div>
       </div>
     </div>
   </header>
@@ -149,27 +149,37 @@ const edgePath = ([a, b]) => {
   overflow-x: auto;
 }
 
-/* each line types itself out in turn */
-.hero__code-ln {
-  white-space: nowrap;
+.hero__code-ln { white-space: nowrap; }
+
+/* lines 1-2 wipe in quickly, then line 3 is typed out character by
+   character with the cursor visibly advancing to the closing " }) */
+.hero__code-ln--1,
+.hero__code-ln--2 {
   clip-path: inset(0 100% 0 0);
   animation: hero-type-ln 0.7s steps(24) both;
 }
-.hero__code-ln--1 { animation-delay: 0.5s; animation-duration: 0.55s; }
-.hero__code-ln--2 { animation-delay: 1.05s; animation-duration: 0.85s; }
-.hero__code-ln--3 { animation-delay: 1.95s; animation-duration: 0.95s; }
+.hero__code-ln--1 { animation-delay: 0.35s; animation-duration: 0.55s; }
+.hero__code-ln--2 { animation-delay: 0.9s; animation-duration: 0.85s; }
+
+.hero__type {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  width: 0;
+  animation: hero-type3 1.5s steps(38) 1.8s both;
+}
 
 .tok-c { color: var(--color-text-mute); }
 .tok-k { color: var(--color-text-soft); font-weight: 500; }
 .tok-s { color: var(--color-accent); }
 
-/* the impact string: types in as plain code, then a "selection" sweeps
-   across it and leaves it marked in accent (like a click-drag in an editor) */
+/* the one highlighted token: appears already marked as the cursor types past it */
 .tok-str {
-  padding: 0.05em 0.4em;
-  color: var(--color-accent);
-  background: linear-gradient(var(--color-accent), var(--color-accent)) left center / 0% 100% no-repeat;
-  animation: hero-select 0.34s steps(8) 3.15s forwards;
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  padding: 0.12em 0.2em;
+  margin: 0 -0.2em; /* keep the glyph advance at exactly 38ch for the typewriter */
 }
 
 .hero__caret {
@@ -179,16 +189,15 @@ const edgePath = ([a, b]) => {
   background: var(--color-text);
   vertical-align: -0.22em;
   margin-left: 0.14ch;
-  animation: hero-caret-blink 1.06s linear 2.95s infinite both;
+  opacity: 0;
+  /* fade in when line 3 starts, hold solid while typing, blink once idle */
+  animation: hero-caret-in 0.12s linear 1.8s forwards,
+             hero-caret-blink 1.06s linear 3.4s infinite;
 }
 
 @keyframes hero-type-ln { to { clip-path: inset(0 0 0 0); } }
-@keyframes hero-select {
-  0%   { background-size: 0% 100%; color: var(--color-accent); }
-  64%  { color: var(--color-accent); }
-  65%  { color: var(--color-on-accent); }
-  100% { background-size: 100% 100%; color: var(--color-on-accent); }
-}
+@keyframes hero-type3 { to { width: 38ch; } }
+@keyframes hero-caret-in { to { opacity: 1; } }
 /* a real text cursor: solid, hard on/off, no fade */
 @keyframes hero-caret-blink {
   0%, 50% { opacity: 1; }
@@ -206,7 +215,8 @@ const edgePath = ([a, b]) => {
     font-size: var(--t-caption);
     line-height: 1.8;
   }
-  .hero__code-ln {
+  .hero__code-ln--1,
+  .hero__code-ln--2 {
     white-space: normal;
     padding-left: 1.5ch;
     text-indent: -1.5ch;
@@ -217,16 +227,14 @@ const edgePath = ([a, b]) => {
   .hero__net-g,
   .hero__role,
   .hero__name { animation: none; }
-  .hero__code-ln { animation: none; clip-path: none; }
-  .tok-str {
-    animation: none;
-    background-size: 100% 100%;
-    color: var(--color-on-accent);
-  }
+  .hero__code-ln--1,
+  .hero__code-ln--2 { animation: none; clip-path: none; }
+  .hero__type { animation: none; width: auto; }
   /* The caret is a text cursor, not decorative motion: it keeps its plain blink
      even here (opacity-only, no movement). Deliberate override of the global
      reduced-motion guard, for this one element. */
   .hero__caret {
+    opacity: 1;
     animation: hero-caret-blink 1.06s linear infinite !important;
   }
 }
