@@ -3,9 +3,10 @@
 
 const contact = {
   channels: [
-    { label: 'github.com/pssgarcia', href: 'https://github.com/pssgarcia', icon: 'github' },
-    { label: 'linkedin.com/in/pedro-soares', href: 'https://www.linkedin.com/in/pedro-soares-b996a5263/', icon: 'linkedin' },
     { label: 'pedrossgarcia88@gmail.com', href: 'mailto:pedrossgarcia88@gmail.com', icon: 'email' },
+    { label: 'WhatsApp: +55 37 99993-1492', href: 'https://wa.me/5537999931492', icon: 'whatsapp' },
+    { label: 'linkedin.com/in/pedro-soares', href: 'https://www.linkedin.com/in/pedro-soares-b996a5263/', icon: 'linkedin' },
+    { label: 'github.com/pssgarcia', href: 'https://github.com/pssgarcia', icon: 'github' },
   ],
 }
 
