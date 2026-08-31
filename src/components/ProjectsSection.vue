@@ -9,12 +9,11 @@ const { targetRef, isVisible } = useIntersectionObserver()
 const { projects } = useContent()
 const { t } = useLanguage()
 
+// newest first; the three most recent show by default, the rest behind "show more"
+const LEAD = 3
 const showAll = ref(false)
-const featured = computed(() => projects.value.filter((p) => p.image))
-const collapsed = computed(() => projects.value.filter((p) => !p.image))
-const visible = computed(() => (showAll.value ? projects.value : featured.value))
-
-const pad = (n) => String(n + 1).padStart(2, '0')
+const visible = computed(() => (showAll.value ? projects.value : projects.value.slice(0, LEAD)))
+const hasMore = computed(() => projects.value.length > LEAD)
 </script>
 
 <template>
@@ -23,53 +22,54 @@ const pad = (n) => String(n + 1).padStart(2, '0')
       <div ref="targetRef" class="reveal" :class="{ 'is-visible': isVisible }">
         <h2 class="h-section">{{ t('projectsHeading') }}</h2>
 
-        <div class="projects">
-          <article
-            v-for="(project, i) in visible"
-            :key="project.title"
-            class="proj"
-            :class="{ 'proj--wide': project.image }"
-          >
-            <span class="proj__n">{{ pad(i) }}</span>
-            <div class="proj__body">
-              <div v-if="project.image" class="proj__shot">
+        <div class="timeline">
+          <span class="timeline__rail" aria-hidden="true"></span>
+
+          <article v-for="project in visible" :key="project.title" class="ptl">
+            <span class="ptl__node" aria-hidden="true"></span>
+
+            <div class="ptl__body">
+              <p class="ptl__when">{{ project.year }}</p>
+              <h3 class="ptl__title">{{ project.title }}</h3>
+
+              <div v-if="project.image" class="ptl__shot">
                 <img
-                  class="proj__shot-img"
+                  class="ptl__shot-img"
                   :src="project.image"
-                  :alt="`${project.title} — screenshot da landing`"
+                  :alt="`${project.title} — screenshot`"
                   loading="lazy"
                   decoding="async"
                 />
               </div>
-              <div class="proj__text">
-                <h3 class="proj__title">{{ project.title }}</h3>
-                <p class="proj__desc">{{ project.description }}</p>
-                <div class="proj__stack">
-                  <TechIcon v-for="tech in project.techs" :key="tech" :name="tech" />
-                </div>
-                <span class="proj__links">
-                  <a
-                    v-if="project.github"
-                    :href="project.github"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >{{ t('linkGithub') }}</a>
-                  <span v-else-if="project.repoPrivate" class="proj__links-muted">{{ t('linkPrivate') }}</span>
-                  <a
-                    v-if="project.demo"
-                    class="proj__links-live"
-                    :href="project.demo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >{{ t('linkDemo') }}</a>
-                </span>
+
+              <p class="ptl__desc">{{ project.description }}</p>
+
+              <div class="ptl__stack">
+                <TechIcon v-for="tech in project.techs" :key="tech" :name="tech" />
               </div>
+
+              <span class="ptl__links">
+                <a
+                  v-if="project.github"
+                  :href="project.github"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >{{ t('linkGithub') }}</a>
+                <span v-else-if="project.repoPrivate" class="ptl__links-muted">{{ t('linkPrivate') }}</span>
+                <a
+                  v-if="project.demo"
+                  class="ptl__links-live"
+                  :href="project.demo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >{{ t('linkDemo') }}</a>
+              </span>
             </div>
           </article>
         </div>
 
         <button
-          v-if="collapsed.length"
+          v-if="hasMore"
           type="button"
           class="projects__more"
           :class="{ 'is-open': showAll }"
@@ -83,109 +83,134 @@ const pad = (n) => String(n + 1).padStart(2, '0')
   </section>
 </template>
 
+
 <style scoped>
-.projects {
+.timeline {
+  position: relative;
+  max-width: 62rem;
+}
+
+/* the journey line, under the node column (oldest at top, newest at bottom) */
+.timeline__rail {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 2rem;
+  left: calc(0.875rem - 0.5px);
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-accent) 6%,
+    var(--color-accent) 94%,
+    transparent
+  );
+  opacity: 0.55;
+}
+
+.ptl {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0 3.25rem;
+  grid-template-columns: 1.75rem 1fr;
+  gap: 0 1.5rem;
+  padding: 1.6rem 0 2.4rem;
 }
 
-.proj {
-  display: grid;
-  grid-template-columns: 2.25rem 1fr;
-  gap: 0 1.1rem;
-  padding: 1.5rem 0.4rem;
-  border-top: 1px solid var(--color-rule);
+.ptl__node {
+  position: relative;
+  z-index: 1;
+  align-self: start;
+  justify-self: center;
+  margin-top: 0.5rem;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
+  transition: background 0.2s ease;
 }
-.proj--wide {
-  grid-column: 1 / -1;
-  padding: 2rem 0.4rem;
-}
-
-.proj__n {
-  font-family: var(--font-mono);
-  font-size: var(--t-label);
-  color: var(--color-accent);
-  padding-top: 0.3rem;
+.ptl:hover .ptl__node {
+  background: var(--color-accent);
 }
 
-.proj__body {
+.ptl__body {
   min-width: 0;
 }
 
-.proj__shot {
+.ptl__when {
+  font-family: var(--font-mono);
+  font-size: var(--t-label-sm);
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin: 0 0 0.5rem;
+}
+
+.ptl__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--t-role);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0 0 0.9rem;
+}
+
+.ptl__shot {
   padding: 0.45rem;
   background: var(--color-surface);
   border: 1px solid var(--color-rule-bold);
-  max-width: 46rem;
-  margin-bottom: 1.4rem;
+  max-width: 44rem;
+  margin: 0 0 1.1rem;
 }
-.proj__shot-img {
+.ptl__shot-img {
   display: block;
   width: 100%;
   aspect-ratio: 2.17;
   object-fit: cover;
 }
 
-.proj__title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--t-title-sm);
-  letter-spacing: -0.015em;
-  margin: 0 0 0.35rem;
-}
-
-.proj__desc {
-  font-size: var(--t-caption);
+.ptl__desc {
+  font-size: var(--t-body);
   color: var(--color-text-soft);
-  margin: 0 0 0.7rem;
-  max-width: 46ch;
+  margin: 0 0 0.9rem;
+  max-width: 58ch;
 }
 
-.proj__stack {
+.ptl__stack {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
-.proj__links {
+.ptl__links {
   display: flex;
   align-items: baseline;
   gap: 1.2rem;
+  max-width: 44rem;
   font-family: var(--font-mono);
   font-size: var(--t-label-sm);
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
-/* the live demo link sits at the right edge, opposite the repo link */
-.proj__links-live {
-  margin-left: auto;
-}
-.proj--wide .proj__links {
-  max-width: 46rem;
-}
-.proj__links a {
+.ptl__links a {
   color: var(--color-accent);
   text-decoration: none;
 }
-.proj__links a:hover {
+.ptl__links a:hover {
   text-decoration: underline;
 }
-.proj__links a.proj__links-live {
+.ptl__links a.ptl__links-live {
   color: var(--color-text);
+  margin-left: auto;
 }
-.proj__links-muted {
+.ptl__links-muted {
   color: var(--color-text-mute);
 }
 
 .projects__more {
   display: block;
-  width: 100%;
-  margin: -1px 0 0;
-  padding: 1.5rem 0.4rem;
+  margin: 0.5rem 0 0;
+  padding: 0.6rem 0;
   border: 0;
-  border-top: 1px solid var(--color-rule);
   background: transparent;
   font-family: var(--font-mono);
   font-size: var(--t-label);
@@ -207,15 +232,13 @@ const pad = (n) => String(n + 1).padStart(2, '0')
   color: var(--color-accent);
 }
 
-@media (max-width: 900px) {
-  .projects {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-}
 @media (max-width: 720px) {
-  .proj {
-    grid-template-columns: 1.8rem 1fr;
+  .timeline__rail {
+    left: calc(0.625rem - 0.5px);
+  }
+  .ptl {
+    grid-template-columns: 1.25rem 1fr;
+    gap: 0 1rem;
   }
 }
 </style>

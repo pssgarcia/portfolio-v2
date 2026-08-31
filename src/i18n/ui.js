@@ -21,9 +21,9 @@ export const ui = {
     aboutHeading: 'Where the work comes from',
     aboutStackMark: 'What I work with',
     experienceHeading: 'Experience',
-    projectsHeading: 'Selected work',
-    projectsMore: 'Show more',
-    projectsLess: 'Show less',
+    projectsHeading: 'Projects',
+    projectsMore: 'Show older',
+    projectsLess: 'Show fewer',
 
     // timeline
     timelineTo: 'to',
@@ -77,8 +77,8 @@ export const ui = {
     aboutHeading: 'De onde vem o trabalho',
     aboutStackMark: 'Com o que eu trabalho',
     experienceHeading: 'Experiência',
-    projectsHeading: 'Trabalhos selecionados',
-    projectsMore: 'Ver mais',
+    projectsHeading: 'Projetos',
+    projectsMore: 'Ver mais antigos',
     projectsLess: 'Ver menos',
 
     // timeline

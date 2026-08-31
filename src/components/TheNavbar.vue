@@ -11,12 +11,12 @@ const { lang, toggle: toggleLang, t } = useLanguage()
 // Kept in DOM order; navbar, sections, and scroll-spy all agree.
 const navLinks = [
   { key: 'navAbout', id: 'about' },
-  { key: 'navExperience', id: 'experience' },
   { key: 'navProjects', id: 'projects' },
+  { key: 'navExperience', id: 'experience' },
   { key: 'navContact', id: 'contact' },
 ]
 
-const { activeSection } = useActiveSection(['about', 'experience', 'projects', 'contact'])
+const { activeSection } = useActiveSection(['about', 'projects', 'experience', 'contact'])
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
