@@ -22,6 +22,12 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# Design exploration artifacts (canvas mockups, not shipping code)
+design/
+
+# Impeccable per-session detector cache (local churn)
+.impeccable/hook.cache.json
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
