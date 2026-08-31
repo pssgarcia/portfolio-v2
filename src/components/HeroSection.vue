@@ -35,28 +35,28 @@ const edgePath = ([a, b]) => {
   return `M${p.x} ${p.y}H${mx}V${q.y}H${q.x}`
 }
 
-// Type the code block out line by line, with a caret that advances char by char
-// and hops to the next line. Pure DOM animation so it survives i18n content.
-// Under prefers-reduced-motion it still types, just fast and with a static caret.
+// The first two code lines are just there; the last one (build(focus, ...)) types
+// itself out at a human pace, with the caret advancing char by char, then blinks.
+const CHAR_MS = 75 // matches the hero typewriter on perssua.com
+
 onMounted(async () => {
   const box = codeRef.value
   if (!box) return
 
   const lines = [...box.querySelectorAll('.hero__ln')]
+  const line = lines[lines.length - 1]
   const caret = box.querySelector('.hero__caret')
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
   const compact = matchMedia('(max-width: 720px)').matches
-  const k = reduce ? 0.3 : 1
 
-  // hide the lines up front (synchronously, before first paint) so JS drives the reveal;
-  // if the script never runs, the CSS default leaves them visible
-  if (!compact) lines.forEach((l) => (l.style.width = '0px'))
+  line.insertAdjacentElement('afterend', caret)
 
-  const park = () => {
-    lines[lines.length - 1].insertAdjacentElement('afterend', caret)
-    if (reduce) caret.style.opacity = '1'
-    else caret.classList.add('is-idle')
+  if (compact) {
+    caret.style.display = 'none'
+    return
   }
+
+  line.style.width = '0px' // hide only the last line up front
 
   if (document.fonts && document.fonts.ready) {
     await Promise.race([
@@ -66,38 +66,19 @@ onMounted(async () => {
     if (!codeRef.value) return
   }
 
-  if (compact) {
-    // narrow screens: fade each line in (wrapping text can't be typed by width)
-    lines.forEach((l) => (l.style.width = 'auto'))
-    let d = 200
-    lines.forEach((l) => {
-      l.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300 * k, delay: d, fill: 'both' })
-      d += 240 * k
-    })
-    setTimeout(park, d + 120)
-    return
+  line.style.width = 'auto'
+  const full = line.getBoundingClientRect().width
+  line.style.width = '0px'
+
+  const n = Math.max(1, line.textContent.trim().length)
+  const anim = line.animate(
+    [{ width: '0px' }, { width: `${full}px` }],
+    { duration: n * CHAR_MS, delay: 420, easing: `steps(${n})`, fill: 'forwards' },
+  )
+  anim.onfinish = () => {
+    line.style.width = 'auto'
+    if (!reduce) caret.classList.add('is-idle')
   }
-
-  const widths = lines.map((l) => {
-    l.style.width = 'auto'
-    const w = l.getBoundingClientRect().width
-    l.style.width = '0px'
-    return w
-  })
-
-  let delay = 320 * k
-  lines.forEach((line, i) => {
-    const n = Math.max(1, line.textContent.trim().length)
-    const dur = Math.max(180, Math.round(n * 40 * k))
-    setTimeout(() => line.insertAdjacentElement('afterend', caret), delay)
-    const anim = line.animate(
-      [{ width: '0px' }, { width: `${widths[i]}px` }],
-      { duration: dur, delay, easing: `steps(${n})`, fill: 'forwards' },
-    )
-    anim.onfinish = () => (line.style.width = 'auto')
-    delay += dur + 100 * k
-  })
-  setTimeout(park, delay)
 })
 </script>
 
@@ -246,14 +227,15 @@ onMounted(async () => {
 
 .hero__caret {
   display: inline-block;
-  width: 0.5ch;
+  width: 2px;
   height: 1.15em;
   background: var(--color-text);
-  vertical-align: -0.2em;
-  margin-left: 0.08ch;
+  vertical-align: -0.22em;
+  margin-left: 0.14ch;
 }
+/* solid while typing; hard on/off blink once the line is done */
 .hero__caret.is-idle {
-  animation: hero-caret-blink 1.05s steps(1, start) infinite;
+  animation: hero-caret-blink 1.05s step-end infinite;
 }
 
 @keyframes hero-caret-blink {
@@ -288,7 +270,7 @@ onMounted(async () => {
   .hero__net-g,
   .hero__role,
   .hero__name { animation: none; }
-  /* The code still types in (script runs it fast, ~1s) but the caret then
-     holds steady instead of blinking. */
+  /* The last line still types in, but the caret holds steady afterwards
+     instead of blinking. */
 }
 </style>
