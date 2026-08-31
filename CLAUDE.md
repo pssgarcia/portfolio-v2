@@ -37,11 +37,12 @@ src/
   main.js                      app bootstrap + @fontsource imports + global CSS
   App.vue                      TheNavbar + <router-view> + TheFooter
   router/index.js              single route "/" -> HomeView; smooth-scroll behavior
-  views/HomeView.vue           composes the 4 sections in order: Hero, About, Experience, Projects, Contact
+  views/HomeView.vue           composes the sections in order: Hero, About, Projects, Experience, Contact
   assets/styles/main.css       ALL design tokens (:root + [data-theme="light"]) + shared component classes
   components/
-    HeroSection / AboutSection / ExperienceSection / ProjectsSection / ContactSection
+    HeroSection / AboutSection / ProjectsSection / ExperienceSection / ContactSection
     TimelineItem               one Experience entry (rail node + content + Work/Education chip)
+    ProjectsSection             its own timeline: rail + node + year + techs + repo/demo links + screenshot; newest first, 3 shown then "show older"
     SkillBadge                 one emoji + name chip
     FlagIcon                   drawn BR / US flag SVG for the language toggle
     TechIcon                   coloured brand glyph + label for a project tech tag (simple-icons)
@@ -57,7 +58,7 @@ src/
   data/
     profile.js                 profileContent { en, pt }: name, hero (role/comment/focus), About prose, contact channels
     experience.js              experienceContent { en, pt }: roles + education (dateFrom/dateTo/title/org/type/points[])
-    projects.js                projectsContent { en, pt }: shared title/techs/urls, translated description; Tayro + Barbearia are lead entries with an `image` (landing screenshot shown at natural ratio)
+    projects.js                projectsContent { en, pt }: shared title/year/techs/urls, translated description; ordered newest to oldest; the recent ones carry an `image` (landing screenshot)
     skills.js                  skillsContent { en, pt }: { name, icon }, ordered backend-first
 ```
 
@@ -75,8 +76,8 @@ language toggle.
 - **Direction A (light):** warm paper `#EFECE4`, ink `#181613`, drafting-blue accent `#1D4664`.
 
 Rules that matter:
-- Structure is carried by **1px `--color-rule` hairlines** and the **type scale**, never by cards, panels, shadows, or gradients (the Experience rail's fade and the hero graph's fade mask are the exceptions).
-- **The accent** appears only on: links, one bold word in the contact line, the Experience rail/nodes, the contact icons, and the hero's confined uses (role line, code strings, caret, one token). Never a content fill elsewhere, never a second hue. The flag toggle is the one multi-colour element (drawn SVG, not emoji).
+- Structure is carried by **1px `--color-rule` hairlines** and the **type scale**, never by cards, panels, shadows, or gradients (the Projects/Experience rail fades and the hero graph's fade mask are the exceptions).
+- **The accent** appears only on: links, one bold word in the contact line, the Projects/Experience rails + nodes + year labels, the contact icons, and the hero's confined uses (role line, code strings, caret, one token). Never a content fill elsewhere, never a second hue. The flag toggle is the one multi-colour element (drawn SVG, not emoji); the project tech tags (`TechIcon`, simple-icons) are a sanctioned exception, confined to that component.
 - The **hero** is a code-editor scene (mono role line, name, self-typing code block, pulsing caret) over a faint drifting service graph. It is the one expressive surface; every section below stays quiet ledger.
 - **`border-radius: 0`** everywhere (the timeline node circle is geometry).
 - **Spline Sans Mono** is for data and the hero code: dates, labels, stack lists, the hero role line + code block. Never prose or `<h*>` headings. Never `Inter` or a system display face.

@@ -14,7 +14,7 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
 
 ### Principais características
 
-- **Quatro áreas de conteúdo** em _single-page_ com navegação por âncoras e _scroll-spy_: Sobre (`#about`), Experiência (`#experience`), Projetos (`#projects`), Contato (`#contact`).
+- **Quatro áreas de conteúdo** em _single-page_ com navegação por âncoras e _scroll-spy_: Sobre (`#about`), Projetos (`#projects`), Experiência (`#experience`), Contato (`#contact`).
 - **Layout com cabeçalho fixo, área de conteúdo e rodapé.** O cabeçalho tem menu mobile em _overlay_, _toggle_ de tema (sol/lua) e _toggle_ de idioma (bandeira BR/US).
 - **Internacionalização PT/EN** com o idioma escolhido **persistido** em `localStorage` (`portfolio-language`); `<html lang>` e `<title>` acompanham o idioma ativo. Padrão: **pt-BR**.
 - **Tema claro/escuro** persistido em `localStorage` (`portfolio-theme`).
@@ -68,8 +68,8 @@ O objetivo é um site moderno, responsivo e de fácil manutenção, servindo com
     │   ├── TheFooter.vue          # Rodapé: linha mono + "Voltar ao topo"
     │   ├── HeroSection.vue        # Cena de editor de código (linha de cargo, nome, bloco de código que se digita, cursor)
     │   ├── AboutSection.vue       # Bio + grade de tecnologias (SkillBadge)
-    │   ├── ExperienceSection.vue  # Timeline vertical (trabalho + formação)
-    │   ├── ProjectsSection.vue    # Projetos em destaque (com screenshot) + ledger 2-colunas
+    │   ├── ProjectsSection.vue    # Linha do tempo de projetos (ano, techs, links, screenshot), do mais recente ao mais antigo
+    │   ├── ExperienceSection.vue  # Linha do tempo (trabalho + formação)
     │   ├── ContactSection.vue     # Canais + formulário com validação inline (POST para /api/contact)
     │   ├── TimelineItem.vue       # Um item da timeline de experiência
     │   ├── SkillBadge.vue         # Chip de tecnologia (emoji + nome)
@@ -98,21 +98,21 @@ Hero como uma cena de editor de código (nome, cargo e a frase de posicionamento
 
 ![Seção Sobre](docs/sobre.jpg)
 
-### 2. Experiência (`#experience`)
+### 2. Projetos (`#projects`)
 
-Timeline vertical com o histórico profissional na Construsite Brasil (estágio → Desenvolvedor Júnior III) e a formação (PUC Minas, Tamwood International College).
-
-![Seção Experiência](docs/experiencia.jpg)
-
-### 3. Projetos (`#projects`)
-
-Projetos em destaque abrem com um screenshot da _landing_; os demais seguem em um _ledger_ de duas colunas. Cada entrada traz descrição, tecnologias (com ícone da marca) e links para repositório e demo.
+Linha do tempo dos projetos, do mais recente ao mais antigo. Cada entrada traz o ano, a descrição, as tecnologias (com ícone da marca), links para repositório e demo, e um screenshot da _landing_ nos projetos recentes. Os três mais novos aparecem por padrão; o restante fica atrás de um botão "Ver mais antigos".
 
 ![Seção Projetos](docs/projetos.jpg)
 
+### 3. Experiência (`#experience`)
+
+Linha do tempo com o histórico profissional na Construsite Brasil (estágio → Desenvolvedor Júnior III) e a formação (PUC Minas, Tamwood International College).
+
+![Seção Experiência](docs/experiencia.jpg)
+
 ### 4. Contato (`#contact`)
 
-Canais de contato (GitHub, LinkedIn, e-mail) e o formulário com validação _inline_ (envio por `POST` para `/api/contact`).
+Ícones clicáveis para e-mail, WhatsApp, LinkedIn e GitHub, e o formulário com validação _inline_ (envio por `POST` para `/api/contact`, com entrega por e-mail via Resend).
 
 ![Seção Contato](docs/contato.jpg)
 

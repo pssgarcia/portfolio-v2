@@ -181,11 +181,13 @@ A warm monochrome, brown-black through bone, with exactly one accent.
 ink `#181613`, ink-mute `#615D50`, accent `#1D4664`, rule `#D7D3C7` / `#B7B2A3`.
 
 ### Named Rules
-**The One Accent Rule.** Outside the hero, the accent appears on links, the Experience
-rail and nodes, the contact channel icons, and one bold word in the contact line. The
-hero adds three more, all confined to it: the role line, the code strings and caret, and
-one highlighted token. A second colour anywhere, or a brass fill on ordinary content,
-breaks the rule.
+**The One Accent Rule.** Outside the hero, the accent appears on links, the Projects and
+Experience rails + nodes + year labels, the contact channel icons, and one bold word in
+the contact line. The hero adds three more, all confined to it: the role line, the code
+strings and caret, and one highlighted token. The coloured project tech glyphs
+(`TechIcon`) and the flag toggle are sanctioned functional exceptions, each confined to
+its component. A second colour beyond those, or a brass fill on ordinary content, breaks
+the rule.
 
 **The Warm-Ground Rule.** The ground is always warm (brown-black or stone paper). A
 cool near-black or blue-grey slate is the AI-portfolio default this design exists to refuse.
@@ -252,15 +254,15 @@ Three internal structures:
   the left edge (role line, name, code block). A full-bleed SVG service graph sits behind it at
   ~0.34 opacity in `--color-rule-bold`, masked on a `105deg` gradient so it fades out
   under the text and reads only to the right. No section rule above the hero.
-- **Experience:** a vertical timeline, a 1px accent rail down a `1.75rem` node column,
-  a node dot per entry, and the entry content beside it. Client-pinned: the "journey
-  with icons" is kept from the previous design, re-skinned into this palette.
-- **Projects:** two equal columns (`repeat(2, 1fr)`, `gap: 0 3.25rem`), each row a
-  numbered entry with a hairline top border.
+- **Projects** and **Experience:** both are vertical timelines — a 1px accent rail down a
+  `1.75rem` node column, a node dot per entry, the entry content beside it, newest at the
+  top. Experience is client-pinned (the "journey with icons" kept from the previous
+  design, re-skinned). Projects add a year, tech tags, repo/demo links, and a landing
+  screenshot for the recent entries.
 
-**Responsive:** projects collapse to one column below 900px. Below 720px every internal
-grid collapses to a single column, the date column stacks above its entry, and the nav
-condenses to a hamburger overlay. `--nav-height` is `4.25rem`.
+**Responsive:** below 720px the node column narrows, the last hero code line still types
+on one line (the code font shrinks to fit), and the nav condenses to a hamburger
+overlay. `--nav-height` is `4.25rem`.
 
 ## Elevation & Depth
 
@@ -347,22 +349,20 @@ on the theme toggle, the language flag, the contact channel buttons, and the pro
 tech tags (`TechIcon`, simple-icons).
 
 ### Project Entry
-Numbered mono index, Bricolage 700 title, one-line description at ~46ch, a wrapped row
-of **tech tags** (mono `--t-label-sm` uppercase, each with a small coloured brand glyph
-from simple-icons; tags with no brand mark get a 1px hairline dash), then mono links:
-"GitHub" in accent, "Live demo" in full ink. Hairline top border on every entry.
+Projects share the **timeline** structure with Experience: the same `1.75rem` node
+column, accent rail, and a hollow brass ring per entry. Beside the node: the **year**
+(mono, accent), Bricolage 700 title, then — for the recent projects — a **screenshot**
+stacked above the text (the live landing, ~2.17:1 ratio, `object-fit: cover`,
+`max-width: 44rem`, in a `0.45rem` `--color-surface` mat with a `--color-rule-bold`
+border; a plate in the ledger, no shadow). Then a one-line description at ~58ch, a
+wrapped row of **tech tags** (mono `--t-label-sm` uppercase, each with a small coloured
+brand glyph from simple-icons; tags with no brand mark get a 1px hairline dash), and
+mono links: "GitHub" (or a muted "Private repo") in accent, "Live demo" pushed to the
+right edge in full ink.
 
-The three lead projects (**Tayro**, **Barbearia do Davi**, **Readvice**) are
-`grid-column: 1 / -1` full-width and open with a **screenshot** stacked above the text:
-the live landing, cropped at source to the same ~2.17:1 ratio so every shot renders at
-an identical size (`aspect-ratio: 2.17`, `object-fit: cover`, `max-width: 46rem`), in a
-`0.45rem` `--color-surface` mat with a `--color-rule-bold` border (a plate in the
-ledger, no shadow). Dark shots are brightness-lifted so they still read on the dark
-ground.
-
-The remaining (image-less) entries are **collapsed** behind a left-aligned mono
-`+ VER MAIS` / `– VER MENOS` toggle (its own hairline-topped ledger row, the `+`/`–` in
-accent); expanded, they fill the 2-up text ledger. No section subhead under the heading.
+Entries run **newest to oldest**. The 3 newest show by default; the rest sit behind a
+left-aligned mono `+ VER MAIS ANTIGOS` / `– VER MENOS` toggle (the `+`/`–` in accent).
+No section subhead under the heading.
 
 The coloured tech glyphs and the flag toggle are the only colour outside the accent;
 both are functional (identifying a stack, switching a language), confined to their
@@ -383,10 +383,11 @@ components, and drawn (not emoji).
 - **Text button (back-to-top):** mono, borderless, colour shift on hover.
 
 ### Contact Channels
-A horizontal row of three square `2.5rem` icon buttons (GitHub, LinkedIn, email), each a
-1px accent border around an accent glyph (filled brand marks for GitHub / LinkedIn, a
-drawn envelope for email). Hover fills the square with accent and flips the glyph to
-`--color-on-accent`. The URL / handle rides on each button's `aria-label`.
+A horizontal row of square `2.5rem` icon buttons (e-mail, WhatsApp, LinkedIn, GitHub),
+each a 1px accent border around an accent glyph (filled brand marks for WhatsApp /
+LinkedIn / GitHub, a drawn envelope for e-mail). Hover fills the square with accent and
+flips the glyph to `--color-on-accent`. The URL / handle rides on each button's
+`aria-label`.
 
 ### Footer
 A single mono line, copyright + city, and a "Back to top" text button. It does not
@@ -409,8 +410,9 @@ language swap can't collapse the space.
 
 ### Do:
 - **Do** carry structure with hairline `--color-rule` borders and the type scale.
-- **Do** keep the accent to links, the Experience rail, the contact icons, one bold
-  contact word, and the hero's confined uses (role line, code strings, caret, one token).
+- **Do** keep the accent to links, the Projects and Experience rails + year labels, the
+  contact icons, one bold contact word, and the hero's confined uses (role line, code
+  strings, caret, one token). The `TechIcon` brand glyphs are the one other exception.
 - **Do** set dates, labels, stack lists, and the hero code in Spline Sans Mono.
 - **Do** give every section one lead paragraph, then drop to body size + soft-bone.
 - **Do** keep the ground warm and stop all motion under `prefers-reduced-motion` (the
@@ -423,10 +425,10 @@ language swap can't collapse the space.
   outside the hero's one highlighted token. The navbar's BR / US flag toggle is the one
   multi-colour element; it is a drawn functional control, not decoration, and nothing
   else earns colour from it.
-- **Don't** round a corner, `border-radius` is `0` everywhere (the timeline node and the
-  hero graph rings are geometry, not containers).
-- **Don't** use a gradient as decoration, glow, or blur (allowed: the timeline rail's
-  fade, the hero graph's fade mask, the functional scrolled-nav blur).
+- **Don't** round a corner, `border-radius` is `0` everywhere (the Projects/Experience
+  timeline nodes and the hero graph rings are geometry, not containers).
+- **Don't** use a gradient as decoration, glow, or blur (allowed: the timeline rail
+  fades, the hero graph's fade mask, the functional scrolled-nav blur).
 - **Don't** add a decorative floating shape. The hero service graph is the one permitted
   background layer, and it is structural (real service names) and confined to the hero.
 - **Don't** use Spline Sans Mono for prose or a heading, or a system/`Inter` display face.
