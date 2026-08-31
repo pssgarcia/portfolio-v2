@@ -29,6 +29,7 @@
     --color-accent:     #c99b57;
     --color-on-accent:  #1b1815;
     --color-error:      #d98b6a;
+    --color-success:    #8faf6b;
 
     --font-display: "Bricolage Grotesque Variable", "Helvetica Neue", Arial, sans-serif;
     --font-body:    "Newsreader Variable", Georgia, "Times New Roman", serif;
@@ -69,6 +70,7 @@
     --color-accent:     #1d4664;
     --color-on-accent:  #efece4;
     --color-error:      #a3462a;
+    --color-success:    #2f6b30;
 
     color-scheme: light;
   }

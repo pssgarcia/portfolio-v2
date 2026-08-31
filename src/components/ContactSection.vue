@@ -330,7 +330,7 @@ async function handleSubmit() {
   font-size: var(--t-caption);
   margin: 0;
 }
-.contact__note--ok { color: var(--color-text-soft); }
+.contact__note--ok { color: var(--color-success); }
 .contact__note--err { color: var(--color-error); }
 
 @media (max-width: 720px) {
