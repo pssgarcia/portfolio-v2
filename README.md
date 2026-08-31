@@ -1,6 +1,6 @@
 # Portfólio Profissional — Pedro Soares
 
-# https://pedrossgarcia.com.br/
+https://pedrossgarcia.com.br/
 
 Portfólio pessoal desenvolvido como projeto acadêmico das sprints de **Engenharia de Software da PUC Minas**. O site é um _single-page_ bilíngue (PT/EN) que apresenta a trajetória de **Pedro Soares**, desenvolvedor full-stack com foco em back-end e sistemas, em Belo Horizonte, organizado em quatro áreas de conteúdo: **Sobre**, **Experiência**, **Projetos** e **Contato**.
 
