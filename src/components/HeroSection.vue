@@ -1,7 +1,9 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useContent } from '@/composables/useContent'
 
 const { profile } = useContent()
+const codeRef = ref(null)
 
 // Faint service-architecture graph behind the hero: decorative, inert to pointers.
 const nodes = [
@@ -32,6 +34,71 @@ const edgePath = ([a, b]) => {
   const mx = (p.x + q.x) / 2
   return `M${p.x} ${p.y}H${mx}V${q.y}H${q.x}`
 }
+
+// Type the code block out line by line, with a caret that advances char by char
+// and hops to the next line. Pure DOM animation so it survives i18n content.
+// Under prefers-reduced-motion it still types, just fast and with a static caret.
+onMounted(async () => {
+  const box = codeRef.value
+  if (!box) return
+
+  const lines = [...box.querySelectorAll('.hero__ln')]
+  const caret = box.querySelector('.hero__caret')
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const compact = matchMedia('(max-width: 720px)').matches
+  const k = reduce ? 0.3 : 1
+
+  // hide the lines up front (synchronously, before first paint) so JS drives the reveal;
+  // if the script never runs, the CSS default leaves them visible
+  if (!compact) lines.forEach((l) => (l.style.width = '0px'))
+
+  const park = () => {
+    lines[lines.length - 1].insertAdjacentElement('afterend', caret)
+    if (reduce) caret.style.opacity = '1'
+    else caret.classList.add('is-idle')
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    await Promise.race([
+      document.fonts.ready,
+      new Promise((r) => setTimeout(r, 1200)),
+    ])
+    if (!codeRef.value) return
+  }
+
+  if (compact) {
+    // narrow screens: fade each line in (wrapping text can't be typed by width)
+    lines.forEach((l) => (l.style.width = 'auto'))
+    let d = 200
+    lines.forEach((l) => {
+      l.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300 * k, delay: d, fill: 'both' })
+      d += 240 * k
+    })
+    setTimeout(park, d + 120)
+    return
+  }
+
+  const widths = lines.map((l) => {
+    l.style.width = 'auto'
+    const w = l.getBoundingClientRect().width
+    l.style.width = '0px'
+    return w
+  })
+
+  let delay = 320 * k
+  lines.forEach((line, i) => {
+    const n = Math.max(1, line.textContent.trim().length)
+    const dur = Math.max(180, Math.round(n * 40 * k))
+    setTimeout(() => line.insertAdjacentElement('afterend', caret), delay)
+    const anim = line.animate(
+      [{ width: '0px' }, { width: `${widths[i]}px` }],
+      { duration: dur, delay, easing: `steps(${n})`, fill: 'forwards' },
+    )
+    anim.onfinish = () => (line.style.width = 'auto')
+    delay += dur + 100 * k
+  })
+  setTimeout(park, delay)
+})
 </script>
 
 <template>
@@ -56,13 +123,19 @@ const edgePath = ([a, b]) => {
 
       <h1 class="hero__name h-display">{{ profile.name }}</h1>
 
-      <div class="hero__code">
-        <div class="hero__code-ln hero__code-ln--1"><span class="tok-c">// {{ profile.hero.comment }}</span></div>
-        <div class="hero__code-ln hero__code-ln--2"><span class="tok-k">const</span> focus = [<template
-          v-for="(f, i) in profile.hero.focus"
-          :key="f"
-        ><span class="tok-s">"{{ f }}"</span><span v-if="i < profile.hero.focus.length - 1">, </span></template>]</div>
-        <div class="hero__code-ln hero__code-ln--3"><span class="hero__type">build(focus, { impact: <span class="tok-str">"real_world"</span> })</span><span class="hero__caret" aria-hidden="true"></span></div>
+      <div ref="codeRef" class="hero__code">
+        <div class="hero__code-ln">
+          <span class="hero__ln"><span class="tok-c">// {{ profile.hero.comment }}</span></span>
+        </div>
+        <div class="hero__code-ln">
+          <span class="hero__ln"><span class="tok-k">const</span> focus = [<template
+            v-for="(f, i) in profile.hero.focus"
+            :key="f"
+          ><span class="tok-s">"{{ f }}"</span><span v-if="i < profile.hero.focus.length - 1">, </span></template>]</span>
+        </div>
+        <div class="hero__code-ln">
+          <span class="hero__ln">build(focus, { impact: <span class="tok-str">"real_world"</span> })</span><span class="hero__caret" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
   </header>
@@ -151,54 +224,38 @@ const edgePath = ([a, b]) => {
 
 .hero__code-ln { white-space: nowrap; }
 
-/* lines 1-2 wipe in quickly, then line 3 is typed out character by
-   character with the cursor visibly advancing to the closing " }) */
-.hero__code-ln--1,
-.hero__code-ln--2 {
-  clip-path: inset(0 100% 0 0);
-  animation: hero-type-ln 0.7s steps(24) both;
-}
-.hero__code-ln--1 { animation-delay: 0.35s; animation-duration: 0.55s; }
-.hero__code-ln--2 { animation-delay: 0.9s; animation-duration: 0.85s; }
-
-.hero__type {
+/* each line is typed by animating this wrapper's width down from auto (see script) */
+.hero__ln {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   vertical-align: bottom;
-  width: 0;
-  animation: hero-type3 1.5s steps(38) 1.8s both;
 }
 
 .tok-c { color: var(--color-text-mute); }
 .tok-k { color: var(--color-text-soft); font-weight: 500; }
 .tok-s { color: var(--color-accent); }
 
-/* the one highlighted token: appears already marked as the cursor types past it */
+/* the one highlighted token */
 .tok-str {
   color: var(--color-on-accent);
   background: var(--color-accent);
-  padding: 0.12em 0.2em;
-  margin: 0 -0.2em; /* keep the glyph advance at exactly 38ch for the typewriter */
+  padding: 0.12em 0.22em;
+  margin: 0 -0.22em; /* keep the glyph advance exact for the typewriter */
 }
 
 .hero__caret {
   display: inline-block;
-  width: 2px;
+  width: 0.5ch;
   height: 1.15em;
   background: var(--color-text);
-  vertical-align: -0.22em;
-  margin-left: 0.14ch;
-  opacity: 0;
-  /* fade in when line 3 starts, hold solid while typing, blink once idle */
-  animation: hero-caret-in 0.12s linear 1.8s forwards,
-             hero-caret-blink 1.06s linear 3.4s infinite;
+  vertical-align: -0.2em;
+  margin-left: 0.08ch;
+}
+.hero__caret.is-idle {
+  animation: hero-caret-blink 1.05s steps(1, start) infinite;
 }
 
-@keyframes hero-type-ln { to { clip-path: inset(0 0 0 0); } }
-@keyframes hero-type3 { to { width: 38ch; } }
-@keyframes hero-caret-in { to { opacity: 1; } }
-/* a real text cursor: solid, hard on/off, no fade */
 @keyframes hero-caret-blink {
   0%, 50% { opacity: 1; }
   50.001%, 100% { opacity: 0; }
@@ -215,27 +272,23 @@ const edgePath = ([a, b]) => {
     font-size: var(--t-caption);
     line-height: 1.8;
   }
-  .hero__code-ln--1,
-  .hero__code-ln--2 {
+  .hero__code-ln { white-space: normal; }
+  .hero__ln {
+    display: block;
+    width: auto;
+    overflow: visible;
     white-space: normal;
     padding-left: 1.5ch;
     text-indent: -1.5ch;
   }
+  .hero__caret { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero__net-g,
   .hero__role,
   .hero__name { animation: none; }
-  .hero__code-ln--1,
-  .hero__code-ln--2 { animation: none; clip-path: none; }
-  .hero__type { animation: none; width: auto; }
-  /* The caret is a text cursor, not decorative motion: it keeps its plain blink
-     even here (opacity-only, no movement). Deliberate override of the global
-     reduced-motion guard, for this one element. */
-  .hero__caret {
-    opacity: 1;
-    animation: hero-caret-blink 1.06s linear infinite !important;
-  }
+  /* The code still types in (script runs it fast, ~1s) but the caret then
+     holds steady instead of blinking. */
 }
 </style>
