@@ -24,7 +24,7 @@ export default {
     extend: {
       fontFamily: {
         display: ['Bricolage Grotesque', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        body: ['Spectral', 'Georgia', 'Times New Roman', 'serif'],
+        body: ['Newsreader Variable', 'Georgia', 'Times New Roman', 'serif'],
         mono: ['Spline Sans Mono', 'ui-monospace', 'SF Mono', 'Menlo', 'monospace'],
       },
       colors: {
